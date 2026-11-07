@@ -1,6 +1,6 @@
 // Service worker de la PPV Draft League: la pagina siempre se pide a la red primero (para ver lo mas nuevo)
 // y se guarda una copia para abrirla sin conexion; logos, sprites y fuentes se sirven desde cache.
-const V = "ppv-v1";
+const V = "ppv-v2";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "logos/logo-ppv-white.png", "meta/favicon.png", "meta/icon-192.png", "media/hero-poster.jpg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
