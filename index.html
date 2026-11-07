@@ -901,7 +901,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .hof-r .ic .boxi{width:60px;height:46px}
 .hof-r .label{font-size:.68rem}
 .hof-r strong{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.2rem;line-height:1.05;min-width:0;overflow-wrap:anywhere}
-.hof-r b{font-family:var(--f-display);font-weight:900;font-size:1.5rem;color:var(--volt);line-height:1}
+.hof-r b{font-family:var(--f-display);font-weight:900;font-size:1.5rem;color:var(--rc,var(--volt));line-height:1}
 .hof-note{color:var(--mute);font-size:.85rem;margin:14px 0 0}
 
 /* ---------- MOVIMIENTOS ---------- */
@@ -1829,7 +1829,7 @@ const bestDiff=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
 document.getElementById("leaders").innerHTML=[
   ["Lider FireRed",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
   ["Lider LeafGreen",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
-  ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--volt)"]
+  ["Mejor diff",bestDiff,sign(bestDiff.d),CONF[bestDiff.c].v]
 ].map(([lab,t,val,c])=>`<div class="ld" style="--c:${c}">${crest(t)}<div><span class="label">${lab}</span><strong>${esc(t.n)}</strong></div><b class="num">${val}</b></div>`).join("");
 
 const topBy=k=>MONS_FULL.slice().sort((a,b)=>b[k]-a[k])[0];
@@ -2370,14 +2370,14 @@ function renderHof(){
   const mk=all.slice().sort((a,b)=>b[0][6]-a[0][6])[0],kd=all.filter(x=>x[0][6]>=8).sort((a,b)=>(b[0][6]/(b[0][7]||1))-(a[0][6]/(a[0][7]||1)))[0];
   const cnt={};GAMES.forEach(g=>g.forEach(gm=>gm.forEach(side=>side.forEach(n=>{cnt[n]=(cnt[n]||0)+1;}))));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
   const sweeps=MATCHES.filter(m=>m.seq.length===2).length,threes=MATCHES.length-sweeps;
-  const rec=(ic,lab,name,val,href)=>`<div class="hof-r"><span class="ic">${ic}</span><span class="label">${lab}</span><strong>${href?`<a class="nm" href="${href}">${name}</a>`:name}</strong><b class="num">${val}</b></div>`;
+  const rec=(ic,lab,name,val,href,rc)=>`<div class="hof-r"${rc?` style="--rc:${rc}"`:""}><span class="ic">${ic}</span><span class="label">${lab}</span><strong>${href?`<a class="nm" href="${href}">${name}</a>`:name}</strong><b class="num">${val}</b></div>`;
   document.getElementById("hofRecords").innerHTML=[
     rec(crest(TEAMS[champ4]),"Campeon",esc(TEAMS[champ4].n),"🏆","#team-"+slug(TEAMS[champ4])),
-    rec(crest(best),"Mejor record",esc(best.n),`${best.w}-${best.l}`,"#team-"+slug(best)),
-    rec(crest(bestD),"Mejor balance de KOs",esc(bestD.n),sign(bestD.d),"#team-"+slug(bestD)),
-    rec(box(mk[0][0],""),"Mas KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]])),
-    rec(box(kd[0][0],""),"Mejor K/D (8+ KOs)",`${esc(kd[0][0])} · #${TEAMS[kd[1]].ab}`,(kd[0][6]/(kd[0][7]||1)).toFixed(2),"#team-"+slug(TEAMS[kd[1]])),
-    rec(box(top[0],""),"Pokemon mas usado",esc(top[0]),`${top[1]} juegos`,""),
+    rec(crest(best),"Mejor record",esc(best.n),`${best.w}-${best.l}`,"#team-"+slug(best),CONF[best.c].v),
+    rec(crest(bestD),"Mejor balance de KOs",esc(bestD.n),sign(bestD.d),"#team-"+slug(bestD),CONF[bestD.c].v),
+    rec(box(mk[0][0],""),"Mas KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]]),CONF[TEAMS[mk[1]].c].v),
+    rec(box(kd[0][0],""),"Mejor K/D (8+ KOs)",`${esc(kd[0][0])} · #${TEAMS[kd[1]].ab}`,(kd[0][6]/(kd[0][7]||1)).toFixed(2),"#team-"+slug(TEAMS[kd[1]]),CONF[TEAMS[kd[1]].c].v),
+    rec(box(top[0],""),"Pokemon mas usado",esc(top[0]),`${top[1]} juegos`,"",OWNER[top[0]]!=null?CONF[TEAMS[OWNER[top[0]]].c].v:""),
     rec('<span class="crest" style="--sz:52px;--h1:hsl(45 90% 55%);--h2:hsl(35 90% 40%)">2-0</span>',"Series 2-0","Ganadas sin perder un juego",sweeps,""),
     rec('<span class="crest" style="--sz:52px;--h1:hsl(200 80% 55%);--h2:hsl(220 80% 40%)">3</span>',"Series a 3 juegos","Las mas peleadas",threes,"")
   ].join("");
@@ -3016,10 +3016,11 @@ document.addEventListener("keydown",e=>{
 function renderHomeExtras(){document.getElementById("homePower").innerHTML=powerTable(WEEKS).slice(0,5).map(pwRow).join("");
   document.getElementById("hpLabel").textContent=`Semana ${WEEKS} de ${WEEKS} · top 5 de 18`;document.getElementById("homePotw").innerHTML=potwCard(WEEKS);}
 renderHomeExtras();
-/* mejor K/D del leaderboard: color de la conferencia del equipo dueño del Pokemon */
-(()=>{const n=MONS_FULL.slice().sort((a,b)=>b.kd-a.kd)[0].n,o=OWNER[n];if(o==null)return;const C=CONF[TEAMS[o].c].v;
-  const st=document.querySelector("#bars .note strong");if(st)st.style.color=C;
-  const tl=[...document.querySelectorAll("#mtiles .mt")].find(t=>t.textContent.includes("Mejor K/D"));if(tl)tl.style.setProperty("--c",C);})();
+/* leaderboard: cada Pokemon destacado toma el color de la conferencia de su equipo */
+(()=>{const cc=n=>{const o=OWNER[n];return o!=null?CONF[TEAMS[o].c].v:null;};
+  const kdN=MONS_FULL.slice().sort((a,b)=>b.kd-a.kd)[0].n,st=document.querySelector("#bars .note strong");if(st&&cc(kdN))st.style.color=cc(kdN);
+  document.querySelectorAll("#mtiles .mt").forEach(t=>{const c=cc(t.querySelector("strong").textContent.trim());if(c)t.style.setProperty("--c",c);});
+  const tp=document.querySelector("#bars .bar.top .p");if(tp&&cc(MONS[0][0]))tp.style.color=cc(MONS[0][0]);})();
 renderMatches(); // vuelve a pintar Matches ahora que el Pokemon de la semana ya se puede calcular
 
 refreshLeaderNicks();
