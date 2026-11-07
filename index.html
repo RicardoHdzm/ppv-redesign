@@ -1442,7 +1442,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section id="prBody"></section>
-    <section><div class="sec-head"><div><div class="label" id="prTabLabel"></div><h2>Tabla de <em>aciertos</em></h2></div></div><div id="prTable"></div></section>
+    <section><div class="sec-head"><div><div class="label" id="prTabLabel"></div><h2>Tabla de <em>aciertos</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="pickTable" id="prTabShare" hidden>⤴ Compartir tabla</button></div><div id="prTable"></div></section>
   </div>
 </main>
 
@@ -2817,6 +2817,26 @@ async function drawPicks(w,fmt){
   return f.cv;
 }
 
+/* 13. tabla de aciertos de pronosticos */
+async function drawPickTable(fmt){
+  const {ms,rows,lab}=pickRows();
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","TABLA DE ACIERTOS");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,"PRONOSTICOS · "+lab.toUpperCase(),`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?40:28;
+  const rh=story?64:46,L=80,R=W-80;
+  rows.forEach((r,k)=>{const t=r.t,cy=y+rh/2,me=r.ti===ME,fs=story?34:26;
+    x.fillStyle=me?"#2a2614":k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);x.fillStyle=me?P.VO:confHex(t.c);x.fillRect(L,y,6,rh);
+    txt(x,String(r.pos),`900 ${story?40:30}px ${FD}`,r.pos<=3?P.VO:P.CH,"left",L+22,cy+(story?14:10));
+    fit(x,imgs[r.ti],L+(story?120:100),cy,rh-12);
+    const nf=`800 ${fs}px ${FD}`;x.font=nf;const nm=ell(x,PROFILES[r.ti][0].toUpperCase()+(me?" (TU)":""),story?440:420);
+    txt(x,nm,nf,P.CH,"left",L+(story?164:136),cy+(story?12:9));x.font=nf;const nw=x.measureText(nm).width;
+    txt(x,"#"+t.ab,`700 ${story?22:18}px ${FL}`,P.MU,"left",L+(story?164:136)+nw+12,cy+(story?10:8));
+    txt(x,`${r.ok}/${ms.length}`,`900 ${story?36:28}px ${FD}`,P.CH,"right",R-(story?140:120),cy+(story?13:10));
+    txt(x,Math.round(r.ok/ms.length*100)+"%",`700 ${story?30:24}px ${FD}`,P.MU,"right",R-20,cy+(story?11:8));
+    y+=rh;});
+  return f.cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -2831,6 +2851,7 @@ const SHARE_KINDS={
   potw:a=>{const w=a||WEEKS,p=potwOf(w);return {kind:"Pokemon de la semana",title:p?p.n:`Semana ${w}`,file:`pokemon-semana-${w}`,accent:p?CONF[TEAMS[p.ti].c].v:"var(--volt)",text:p?`${p.n} de ${TEAMS[p.ti].n}, Pokemon de la semana ${w} en la PPV Draft League`:"Pokemon de la semana",draw:f=>drawPotw(w,f)};},
   h2h:()=>{const [a,b]=h2;return {kind:"Cara a cara",title:`${TEAMS[a].ab} vs ${TEAMS[b].ab}`,file:`h2h-${TEAMS[a].ab}-${TEAMS[b].ab}`.toLowerCase(),accent:CONF[TEAMS[a].c].v,text:`${TEAMS[a].n} vs ${TEAMS[b].n} en la PPV Draft League`,draw:f=>drawH2H(a,b,f)};},
   picks:a=>{const w=a||prWeek,wk=MATCHES.filter(m=>m.w===w),st=prState(w),h=wk.filter(m=>st.p[m.i]===winSide(m)).length;return {kind:"Pronosticos",title:`Mis pronosticos · Semana ${w}`,file:`pronosticos-s${w}`,accent:"var(--volt)",text:st.rev?`Atine ${h} de ${wk.length} en la semana ${w} de la PPV Draft League`:`Mis pronosticos de la semana ${w} en la PPV Draft League`,draw:f=>drawPicks(w,f)};},
+  pickTable:()=>{const {rows}=pickRows(),me=rows.find(r=>r.ti===ME);return {kind:"Pronosticos",title:"Tabla de aciertos",file:"pronosticos-tabla",accent:"var(--volt)",text:me?`Voy #${me.pos} en los pronosticos de la PPV Draft League`:"Tabla de aciertos de los pronosticos de la PPV Draft League",draw:drawPickTable};},
   draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Asi quedo el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
@@ -2992,12 +3013,15 @@ function renderPicks(){const wk=MATCHES.filter(m=>m.w===prWeek),st=prState(prWee
     <div class="pr-bar">${st.rev?`<span class="pr-score num">${hits}<small>/ ${wk.length} aciertos</small></span><div class="pr-acts"><button type="button" class="btn ghost sh-sm" data-sharek="picks" data-arg="${prWeek}" ${done?"":"disabled"} title="${done?"Compartir tus pronosticos":"Elige al menos una serie para compartir"}">⤴ Compartir</button><button type="button" class="btn ghost sh-sm" id="prReset">Volver a jugar la semana</button></div>`:`<span class="label">${done} de ${wk.length} series elegidas</span><div class="pr-acts"><button type="button" class="btn ghost sh-sm" data-sharek="picks" data-arg="${prWeek}" ${done?"":"disabled"} title="${done?"Compartir tus pronosticos":"Elige al menos una serie para compartir"}">⤴ Compartir</button><button type="button" class="btn" id="prReveal" ${done<wk.length?"disabled":""}>Revelar resultados</button></div>`}</div>
     <div class="pr-g">${wk.map(m=>prCard(m,st)).join("")}</div>`;
   renderPickTable();}
-function renderPickTable(){const revW=Object.keys(PICKS).filter(w=>PICKS[w].rev).map(Number).sort((a,b)=>a-b),ms=MATCHES.filter(m=>revW.includes(m.w));
-  const lab=document.getElementById("prTabLabel"),box_=document.getElementById("prTable");
-  if(!ms.length){lab.textContent="Revela al menos una semana";box_.innerHTML=`<div class="empty">Cuando reveles una semana, aqui veras como vas contra los demas trainers.</div>`;return;}
+function pickRows(){const revW=Object.keys(PICKS).filter(w=>PICKS[w].rev).map(Number).sort((a,b)=>a-b),ms=MATCHES.filter(m=>revW.includes(m.w));
   const rows=TEAMS.map((t,ti)=>{const ok=ms.filter(m=>(ti===ME?PICKS[m.w].p[m.i]:simPick(ti,m))===winSide(m)).length;return {t,ti,ok};}).sort((a,b)=>b.ok-a.ok||(a.ti===ME?-1:b.ti===ME?1:a.t.n.localeCompare(b.t.n)));
   rows.forEach((r,k)=>r.pos=k&&rows[k-1].ok===r.ok?rows[k-1].pos:k+1);
-  lab.textContent=`${revW.length===1?"Semana "+revW[0]:revW.length+" semanas reveladas"} · ${ms.length} series`;
+  return {revW,ms,rows,lab:`${revW.length===1?"Semana "+revW[0]:revW.length+" semanas reveladas"} · ${ms.length} series`};}
+function renderPickTable(){const {revW,ms,rows,lab:tabLab}=pickRows();
+  const lab=document.getElementById("prTabLabel"),box_=document.getElementById("prTable");
+  document.getElementById("prTabShare").hidden=!ms.length;
+  if(!ms.length){lab.textContent="Revela al menos una semana";box_.innerHTML=`<div class="empty">Cuando reveles una semana, aqui veras como vas contra los demas trainers.</div>`;return;}
+  lab.textContent=tabLab;
   box_.innerHTML=`<div class="table" style="--c:var(--volt)"><div class="rows"><table class="st pr-st"><thead><tr><th class="l">#</th><th class="l">Trainer</th><th>Aciertos</th><th>%</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r.pos<=3?"in":"out"}${r.ti===ME?" mine":""}" style="--c:${CONF[r.t.c].v}"><td class="pos l">${r.pos}</td><td class="l"><span class="tm">${crest(r.t)}<span class="nm">${esc(PROFILES[r.ti][0])}</span><span class="label">#${r.t.ab}</span>${r.ti===ME?'<span class="you">Tu</span>':""}</span></td><td class="pts">${r.ok}<small style="font-size:.9rem;color:var(--mute)">/${ms.length}</small></td><td>${Math.round(r.ok/ms.length*100)}%</td></tr>`).join("")}</tbody></table></div></div>
   <p class="pr-note">Demo: tus pronosticos se guardan en este navegador y los de los demas trainers son simulados. En el sitio real cada trainer haria los suyos con su sesion.</p>`;}
 document.getElementById("prWeeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
