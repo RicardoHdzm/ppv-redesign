@@ -2963,8 +2963,9 @@ async function drawOverlay(mi){
   x.fillStyle=CA;x.fillRect(0,G.y,5,G.h);x.fillStyle=CB;x.fillRect(W-5,G.y,5,G.h);
   // roster: sprite HOME + costo de draft, ordenado por costo
   const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-30,112);
-    ro.forEach((r,k)=>{const top=G.y+sh*k,cy=top+(sh-22)/2+2;poly([[cx-G.x/2+18,top+5],[cx+G.x/2-12,top+5],[cx+G.x/2-18,top+sh-5],[cx-G.x/2+12,top+sh-5]],P.INK3);poly([[cx-G.x/2+18,top+5],[cx-G.x/2+23,top+5],[cx-G.x/2+17,top+sh-5],[cx-G.x/2+12,top+sh-5]],C);
-      fit(x,imgs[k],cx,cy,sz);txt(x,`${r[1]} PTS`,`700 17px ${FL}`,C,"center",cx,top+sh-12);});};
+    const q=Math.min(G.x-28,sh-10);
+    ro.forEach((r,k)=>{const top=G.y+sh*k+(sh-q)/2;x.fillStyle=P.INK3;x.fillRect(cx-q/2,top,q,q);
+      fit(x,imgs[k],cx,top+(q-20)/2+2,Math.min(q-24,sz));txt(x,`${r[1]} PTS`,`700 16px ${FL}`,C,"center",cx,top+q-8);});};
   await col(m.a,G.x/2,CA);await col(m.b,W-G.x/2,CB);
   // barra superior con entradas diagonales detras de cada equipo
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
@@ -2991,7 +2992,9 @@ async function drawOverlay(mi){
   txt(x,"TEMPORADA 5 · EVOLUTION",`700 20px ${FL}`,P.VO,"left",440,fy+39);
   poly([[W-430,fy],[W,fy],[W,H],[W-402,H]],P.INK3);txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
   // ventana del juego: transparente con borde
-  x.clearRect(G.x,G.y,G.w,G.h);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(G.x-2,G.y-2,G.w+4,G.h+4);
+  x.clearRect(G.x,G.y,G.w,G.h);x.lineWidth=4;
+  x.strokeStyle=CA;x.beginPath();x.moveTo(G.x+G.w/2,G.y-2);x.lineTo(G.x-2,G.y-2);x.lineTo(G.x-2,G.y+G.h+2);x.lineTo(G.x+G.w/2,G.y+G.h+2);x.stroke();
+  x.strokeStyle=CB;x.beginPath();x.moveTo(G.x+G.w/2,G.y-2);x.lineTo(G.x+G.w+2,G.y-2);x.lineTo(G.x+G.w+2,G.y+G.h+2);x.lineTo(G.x+G.w/2,G.y+G.h+2);x.stroke();
   return cv;
 }
 async function drawIntro(mi){
@@ -3009,10 +3012,10 @@ async function drawIntro(mi){
     txt(x,`TRAINER ${PROFILES[ti][0].toUpperCase()}`,`800 32px ${FD}`,C,"center",cx,574);
     txt(x,`${CONF[t.c].name.toUpperCase()} #${t.rank} · ${t.w}-${t.l} · ${sign(t.d)} KOS`,`700 24px ${FL}`,P.MU,"center",cx,610);
     // roster: 4 columnas x 2 filas, ordenado por costo de draft
-    const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),cw=196,chh=150,gx=10,cols=4,y0=640;
+    const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),cw=150,chh=150,gx=12,cols=4,y0=640;
     ro.forEach((r,k)=>{const rows=Math.ceil(ro.length/cols),row=Math.floor(k/cols),inRow=row<rows-1?cols:ro.length-cols*(rows-1),rw=inRow*cw+(inRow-1)*gx;
-      const bx=cx-rw/2+(k%cols)*(cw+gx),by=y0+row*(chh+gx);x.fillStyle=P.INK3;x.fillRect(bx,by,cw,chh);x.fillStyle=C;x.fillRect(bx,by,cw,4);
-      fit(x,imgs[k],bx+cw/2,by+56,104);const nk=getNick(ti,r[0]),lf=`700 22px ${FL}`;x.font=lf;txt(x,ell(x,(nk||r[0]).toUpperCase(),cw-16),lf,P.CH,"center",bx+cw/2,by+chh-32);
+      const bx=cx-rw/2+(k%cols)*(cw+gx),by=y0+row*(chh+gx);x.fillStyle=P.INK3;x.fillRect(bx,by,cw,chh);
+      fit(x,imgs[k],bx+cw/2,by+54,96);const nk=getNick(ti,r[0]),lf=`700 22px ${FL}`;x.font=lf;txt(x,ell(x,(nk||r[0]).toUpperCase(),cw-16),lf,P.CH,"center",bx+cw/2,by+chh-32);
       txt(x,nk?r[0].toUpperCase():`${r[1]} PTS`,`600 16px ${FL}`,P.MU,"center",bx+cw/2,by+chh-12);});};
   await card(A,la,CA,W*.25);await card(B,lb,CB,W*.75);
   txt(x,"VS",`900 200px ${FD}`,P.VO,"center",W/2,420);
