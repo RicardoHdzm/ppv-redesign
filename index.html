@@ -1023,9 +1023,13 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   .pw .logo,.pw .crest{--sz:32px}
 }
 /* Home: power ranking + Pokemon de la semana */
-.hp-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
-.hp-side{display:grid;gap:16px}
-@media (max-width:900px){.hp-grid{grid-template-columns:1fr}}
+.potw-w{margin-top:24px}
+.potw-w .potw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 32px;align-items:center}
+.potw-w .potw-h,.potw-w .potw-note{grid-column:1/-1}
+.potw-w .potw-b{margin:6px 0}
+@media (max-width:760px){.potw-w .potw{grid-template-columns:1fr}}
+.pr-promos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.pr-promos{grid-template-columns:1fr}}
 .potw{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 22%,var(--ink-2)),var(--ink-2) 60%);border:1px solid var(--line);border-top:4px solid var(--c);padding:18px 20px}
 .potw-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .potw-h .sh-sm{padding:6px 12px}
@@ -1293,6 +1297,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         </div>
         <div class="bars" id="bars"></div>
       </div>
+      <div class="potw-w" id="homePotw"></div>
     </div>
   </section>
 
@@ -1303,14 +1308,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <div><div class="label" id="hpLabel">Power ranking</div><h2>Power <em>ranking</em></h2></div>
         <div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="power">⤴ Compartir</button><a class="link" href="#standings" data-goview="power">Ranking completo</a></div>
       </div>
-      <div class="hp-grid">
-        <ol class="pw-list compact" id="homePower"></ol>
-        <div class="hp-side">
-          <div id="homePotw"></div>
-          <a class="pr-promo" href="#pronosticos"><div><span class="label">Juego de la comunidad</span><b>Pronosticos</b><p>Elige quien gana cada serie y compite contra los demas trainers.</p></div><span class="arr" aria-hidden="true">→</span></a>
-          <a class="pr-promo" href="#h2h" style="border-left-color:var(--rojo)"><div><span class="label">Comparador</span><b>Cara a cara</b><p>Dos equipos lado a lado: numeros, historial y ventaja de tipos.</p></div><span class="arr" aria-hidden="true">→</span></a>
-        </div>
-      </div>
+      <ol class="pw-list" id="homePower"></ol>
     </div>
   </section>
 
@@ -1322,6 +1320,15 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <div class="step"><div class="label">Fase 2</div><h3>Trades</h3><p>Intercambios entre entrenadores para ajustar el equipo.</p></div>
         <div class="step"><div class="label">Fase 3</div><h3>Waivers</h3><p>Pokemon libres disponibles para reforzarse a media temporada.</p></div>
         <div class="step now"><div class="label">En curso</div><h3>Playoffs</h3><p>Los 8 mejores pelean por el campeonato.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="label">Mas de la liga</div><h2>Juega y <em>compara</em></h2></div></div>
+      <div class="pr-promos">
+        <a class="pr-promo" href="#pronosticos"><div><span class="label">Juego de la comunidad</span><b>Pronosticos</b><p>Elige quien gana cada serie y compite contra los demas trainers.</p></div><span class="arr" aria-hidden="true">→</span></a>
+        <a class="pr-promo" href="#h2h" style="border-left-color:var(--rojo)"><div><span class="label">Comparador</span><b>Cara a cara</b><p>Dos equipos lado a lado: numeros, historial y ventaja de tipos.</p></div><span class="arr" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
