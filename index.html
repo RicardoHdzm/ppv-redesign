@@ -493,6 +493,9 @@ table.st.m{min-width:560px}
 .wk .r{font-family:var(--f-display);font-weight:900;font-size:1.7rem;line-height:1}
 .wk .s{font-family:var(--f-label);font-weight:600;font-size:.78rem;color:var(--mute)}
 .wk .logo,.wk .crest{--sz:30px}
+.wk .op{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:.78rem;line-height:1.05;text-align:center;color:var(--chalk);text-decoration:none;min-height:2.1em;display:flex;align-items:center;justify-content:center;overflow-wrap:anywhere;padding:0 2px}
+.wk .op:hover{text-decoration:underline}
+.wk.l .op{color:var(--mute)}
 .wk.w{border-top:4px solid var(--c)}
 .wk.w .r{color:var(--c)}
 .wk.l{border-top:4px solid color-mix(in srgb,var(--mute) 55%,var(--ink))}
@@ -1472,7 +1475,7 @@ function renderProfile(ti){
     const w=i+1,m=ms.find(x=>x.w===w);
     if(!m)return `<div class="wk b"><span class="label">Sem ${w}</span><span class="r">DESCANSO</span></div>`;
     const won=m.ga>m.gb,o=TEAMS[m.b];
-    return `<div class="wk ${won?"w":"l"}" title="vs ${esc(o.n)}"><span class="label">Sem ${w}</span><span class="r">${won?"W":"L"}</span>${crest(o)}<span class="s num">${m.ga}-${m.gb}</span></div>`;
+    return `<div class="wk ${won?"w":"l"}" title="vs ${esc(o.n)}"><span class="label">Sem ${w}</span><span class="r">${won?"W":"L"}</span><a class="op" href="#team-${slug(o)}">${esc(o.n)}</a><span class="s num">${m.ga}-${m.gb}</span></div>`;
   }).join("");
   const pk=r=>{
     const [n,cost,types,ab,obt,g,k,d]=r,ts=types.split("/"),c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
