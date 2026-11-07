@@ -2053,8 +2053,8 @@ async function makeShareImage(ti,fmt){
   y+=ch+(story?70:52);
   // coach
   x.textAlign="center";x.textBaseline="alphabetic";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("COACH",W/2,y);
-  y+=story?52:44;x.fillStyle=CH;x.font=`800 ${story?52:44}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((coach+(title&&title!=="-"?`  ·  “${title}”`:"")).toUpperCase(),W/2,y);
-  y+=story?70:50;
+  y+=story?66:54;x.fillStyle=CH;x.font=`800 ${story?52:44}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((coach+(title&&title!=="-"?`  ·  “${title}”`:"")).toUpperCase(),W/2,y);
+  y+=story?66:44;
   // cifras
   let gw=0,gl=0;seriesFor(ti).forEach(m=>{gw+=m.ga;gl+=m.gb;});
   const stats=[[`${t.w}-${t.l}`,"RÉCORD"],[`${gw}-${gl}`,"JUEGOS"],[sign(t.d),"DIFF"],[String(t.pts),"PUNTOS"]];
