@@ -1164,7 +1164,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .pr-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .pr-score{font-family:var(--f-display);font-weight:900;font-size:2.4rem;line-height:1}
 .pr-score small{font-size:1rem;color:var(--mute);margin-left:4px}
-.pr-bar .btn{margin-left:auto}
+.pr-acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pr-acts .btn[disabled]{opacity:.45;cursor:not-allowed}
 .pr-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:10px}
 .pr{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);align-items:stretch;gap:8px;background:var(--ink-2);padding:8px}
 .pr-opt{appearance:none;font:inherit;color:var(--chalk);text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--ink-3);border:2px solid transparent;font-weight:700;min-width:0}
@@ -2790,6 +2791,32 @@ async function drawH2H(a,b,fmt){
   return f.cv;
 }
 
+/* 12. mis pronosticos de la semana */
+async function drawPicks(w,fmt){
+  const wk=MATCHES.filter(m=>m.w===w),st=prState(w),rev=st.rev,hits=wk.filter(m=>st.p[m.i]===winSide(m)).length;
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","PRONOSTICOS");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,`SEMANA ${w} · TRAINER ${PROFILES[ME][0].toUpperCase()}`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?24:14;
+  if(rev){txt(x,`${hits}/${wk.length}`,`900 ${story?110:80}px ${FD}`,P.CH,"center",W/2,y+(story?100:72));
+    txt(x,"ACIERTOS",`700 ${story?28:22}px ${FL}`,P.MU,"center",W/2,y+(story?140:100));y+=story?170:118;}
+  else y+=story?20:10;
+  const rh=story?130:(rev?78:88),L=80,R=W-80,ls=rh-(story?40:24);
+  wk.forEach((m,k)=>{const cy=y+rh/2,pk=st.p[m.i],ws=winSide(m);x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);
+    const side=(s,left)=>{const ti=s==="a"?m.a:m.b,t=TEAMS[ti],on=pk===s,C=confHex(t.c);x.save();if(pk&&!on)x.globalAlpha=.4;
+      if(on){x.fillStyle=C;x.fillRect(left?L:R-8,y,8,rh);}
+      fit(x,imgs[ti],left?L+28+ls/2:R-28-ls/2,cy,ls);
+      const ax=left?L+28+ls+16:R-28-ls-16;
+      txt(x,"#"+t.ab,`900 ${story?50:38}px ${FD}`,on?P.CH:P.MU,left?"left":"right",ax,cy+(on?(story?2:1):(story?16:12)));
+      if(on)txt(x,"MI PICK",`700 ${story?22:18}px ${FL}`,C,left?"left":"right",ax,cy+(story?32:26));
+      x.restore();};
+    side("a",true);side("b",false);
+    if(rev){const ok=pk===ws;txt(x,`${m.ga} - ${m.gb}`,`900 ${story?54:42}px ${FD}`,P.CH,"center",W/2,cy+(story?6:4));
+      txt(x,pk?(ok?"ACIERTO":"FALLO"):"SIN PICK",`700 ${story?22:18}px ${FL}`,pk?(ok?P.GO:P.RO):P.MU,"center",W/2,cy+(story?36:28));}
+    else txt(x,"VS",`900 ${story?44:34}px ${FD}`,P.MU,"center",W/2,cy+(story?14:11));
+    y+=rh;});
+  return f.cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -2803,6 +2830,7 @@ const SHARE_KINDS={
   power:a=>{const w=a||pWeek;return {kind:"Power ranking",title:`Power ranking · Semana ${w}`,file:`power-ranking-s${w}`,accent:"var(--volt)",text:`Power ranking de la semana ${w} en la PPV Draft League`,draw:f=>drawPower(w,f)};},
   potw:a=>{const w=a||WEEKS,p=potwOf(w);return {kind:"Pokemon de la semana",title:p?p.n:`Semana ${w}`,file:`pokemon-semana-${w}`,accent:p?CONF[TEAMS[p.ti].c].v:"var(--volt)",text:p?`${p.n} de ${TEAMS[p.ti].n}, Pokemon de la semana ${w} en la PPV Draft League`:"Pokemon de la semana",draw:f=>drawPotw(w,f)};},
   h2h:()=>{const [a,b]=h2;return {kind:"Cara a cara",title:`${TEAMS[a].ab} vs ${TEAMS[b].ab}`,file:`h2h-${TEAMS[a].ab}-${TEAMS[b].ab}`.toLowerCase(),accent:CONF[TEAMS[a].c].v,text:`${TEAMS[a].n} vs ${TEAMS[b].n} en la PPV Draft League`,draw:f=>drawH2H(a,b,f)};},
+  picks:a=>{const w=a||prWeek,wk=MATCHES.filter(m=>m.w===w),st=prState(w),h=wk.filter(m=>st.p[m.i]===winSide(m)).length;return {kind:"Pronosticos",title:`Mis pronosticos · Semana ${w}`,file:`pronosticos-s${w}`,accent:"var(--volt)",text:st.rev?`Atine ${h} de ${wk.length} en la semana ${w} de la PPV Draft League`:`Mis pronosticos de la semana ${w} en la PPV Draft League`,draw:f=>drawPicks(w,f)};},
   draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Asi quedo el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
@@ -2961,7 +2989,7 @@ function prCard(m,st){const pk=st.p[m.i],rev=st.rev,ws=winSide(m);
 function renderPicks(){const wk=MATCHES.filter(m=>m.w===prWeek),st=prState(prWeek),done=wk.filter(m=>st.p[m.i]).length,hits=wk.filter(m=>st.p[m.i]===winSide(m)).length;
   document.querySelectorAll("#prWeeks button").forEach(b=>{const w=+b.dataset.w,s=PICKS[w];b.setAttribute("aria-pressed",w===prWeek);b.querySelector("small").textContent=s&&s.rev?"Revelada":"Semana";});
   document.getElementById("prBody").innerHTML=`<p class="pr-intro">Elige quien gana cada serie de la semana y revela los resultados para ver cuantas atinaste. Por ahora se juega con las semanas ya disputadas. Cuando arranque la temporada, los pronosticos se cerraran antes de cada jornada.</p>
-    <div class="pr-bar">${st.rev?`<span class="pr-score num">${hits}<small>/ ${wk.length} aciertos</small></span><button type="button" class="btn ghost sh-sm" id="prReset">Volver a jugar la semana</button>`:`<span class="label">${done} de ${wk.length} series elegidas</span><button type="button" class="btn" id="prReveal" ${done<wk.length?"disabled":""}>Revelar resultados</button>`}</div>
+    <div class="pr-bar">${st.rev?`<span class="pr-score num">${hits}<small>/ ${wk.length} aciertos</small></span><div class="pr-acts"><button type="button" class="btn ghost sh-sm" data-sharek="picks" data-arg="${prWeek}" ${done?"":"disabled"} title="${done?"Compartir tus pronosticos":"Elige al menos una serie para compartir"}">⤴ Compartir</button><button type="button" class="btn ghost sh-sm" id="prReset">Volver a jugar la semana</button></div>`:`<span class="label">${done} de ${wk.length} series elegidas</span><div class="pr-acts"><button type="button" class="btn ghost sh-sm" data-sharek="picks" data-arg="${prWeek}" ${done?"":"disabled"} title="${done?"Compartir tus pronosticos":"Elige al menos una serie para compartir"}">⤴ Compartir</button><button type="button" class="btn" id="prReveal" ${done<wk.length?"disabled":""}>Revelar resultados</button></div>`}</div>
     <div class="pr-g">${wk.map(m=>prCard(m,st)).join("")}</div>`;
   renderPickTable();}
 function renderPickTable(){const revW=Object.keys(PICKS).filter(w=>PICKS[w].rev).map(Number).sort((a,b)=>a-b),ms=MATCHES.filter(m=>revW.includes(m.w));
