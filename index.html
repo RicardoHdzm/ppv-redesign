@@ -1,0 +1,1687 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PPV Draft League</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<style>
+[hidden]{display:none!important}
+html,body{margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+/* Layout: broadcast-style — skewed bands, live ticker, conference split (RojoFuego / VerdeHoja) on a carbon-black ground */
+:root{
+  --ink:#0B0B0C;        /* carbon */
+  --ink-2:#151517;      /* panel */
+  --ink-3:#202024;      /* raised */
+  --line:#2F2F35;
+  --chalk:#F2F2F0;      /* text */
+  --mute:#9C9CA4;
+  --rojo:#FF4B2B;      /* RojoFuego conference */
+  --azul:#3B8CFF;      /* blue: only for "immune" type cells */
+  --verde:#7ED13A;     /* VerdeHoja conference */
+  --volt:#FFB62E;       /* highlight / live */
+  --good:#36E3A0;
+  --bad:#6E6E76;
+  --f-display:"Big Shoulders Display","Impact","Arial Narrow",sans-serif;
+  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-label:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --gut-l:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+/* scrollbar minimalista */
+html{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--chalk) 22%,transparent) transparent}
+*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--chalk) 22%,transparent) transparent}
+::-webkit-scrollbar{width:8px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--chalk) 18%,transparent);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:color-mix(in srgb,var(--chalk) 38%,transparent);background-clip:padding-box}
+::-webkit-scrollbar-corner{background:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--chalk);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
+.wrap{max-width:1240px;margin-inline:auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.label{font-family:var(--f-label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;color:var(--mute)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Ticker ---------- */
+.ticker{background:var(--rojo);color:#fff;overflow:hidden;font-family:var(--f-label);font-weight:600;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;display:flex}
+.ticker .tag{flex:none;background:var(--ink);color:var(--volt);padding:6px 14px 6px max(14px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:8px;position:relative;z-index:2}
+.ticker .tag::after{content:"";position:absolute;right:-12px;top:0;bottom:0;width:24px;background:var(--ink);transform:skewX(-20deg)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 0 var(--volt);animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.ticker .track{display:flex;gap:40px;white-space:nowrap;padding:6px 0 6px 40px;animation:scroll 60s linear infinite}
+.ticker .track span b{color:var(--ink)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- Nav ---------- */
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mark{width:46px;height:46px;flex:none;display:grid;place-items:center}
+.brand .mark img{width:100%;height:100%;object-fit:contain;filter:invert(1) drop-shadow(0 0 8px color-mix(in srgb,var(--rojo) 55%,transparent))}
+.flogo{height:36px;width:auto;object-fit:contain;filter:invert(1);vertical-align:middle;margin-right:10px}
+.brand .name{font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;line-height:1}
+.brand .name small{display:block;font-family:var(--f-label);font-size:.66rem;letter-spacing:.3em;color:var(--verde);font-weight:600}
+.brand{flex:none}
+.brand .name{white-space:nowrap}
+@media (max-width:860px){.brand .name{font-size:1.02rem}.brand .mark{width:40px;height:40px}}
+.nav nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav nav::-webkit-scrollbar{display:none}
+.nav nav a{font-family:var(--f-label);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.92rem;text-decoration:none;color:var(--mute);padding:8px 12px;position:relative;white-space:nowrap}
+.nav nav a:hover{color:var(--chalk)}
+.nav nav a.on{color:var(--chalk)}
+.nav nav a.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-14px;height:3px;background:var(--rojo);transform:skewX(-20deg)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-label);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.95rem;text-decoration:none;border:0;cursor:pointer;padding:12px 22px;color:var(--ink);background:var(--volt);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px);background:#fff}
+.btn.ghost{background:transparent;color:var(--chalk);box-shadow:inset 0 0 0 2px var(--line)}
+.btn.ghost:hover{background:var(--ink-3)}
+.nav .btn{padding:9px 18px;font-size:.85rem}
+@media (max-width:860px){.nav .btn{display:none}.nav .wrap{gap:12px}.brand .name small{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(115deg,transparent 0 52%,color-mix(in srgb,var(--rojo) 22%,transparent) 52% 60%,transparent 60% 64%,color-mix(in srgb,var(--verde) 16%,transparent) 64% 72%,transparent 72%),
+  radial-gradient(60% 80% at 85% 30%,color-mix(in srgb,var(--volt) 14%,transparent),transparent 70%)}
+.hero::after{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,color-mix(in srgb,var(--chalk) 5%,transparent) 0 1px,transparent 1px 80px);mask-image:linear-gradient(transparent,#000 40%,transparent)}
+.hero>.wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:48px;padding-block:64px 72px;align-items:center}
+.season{display:inline-flex;align-items:center;gap:0;font-family:var(--f-label);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.85rem}
+.season span{padding:6px 14px;transform:skewX(-14deg)}
+.season span>i{display:inline-block;transform:skewX(14deg);font-style:normal}
+.season .a{background:var(--chalk);color:var(--ink)}
+.season .b{background:var(--volt);color:var(--ink)}
+.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;font-size:clamp(3.2rem,8.4vw,7.4rem);margin:22px 0 22px;text-wrap:balance}
+.hero h1 .ln{display:block;animation:slam .7s cubic-bezier(.2,.9,.2,1) both}
+.hero h1 .ln:nth-child(2){animation-delay:.08s}
+.hero h1 .ln:nth-child(3){animation-delay:.16s}
+.hero h1 .k{color:var(--rojo)}
+.hero h1 .o{-webkit-text-stroke:2px var(--chalk);color:transparent}
+.hero h1 .j{color:var(--verde)}
+@keyframes slam{from{transform:translateX(-40px) skewX(-10deg)}to{transform:none}}
+.hero p.lede{max-width:52ch;color:color-mix(in srgb,var(--chalk) 82%,var(--mute));font-size:1.12rem;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+
+/* hero scoreboard card */
+.board{background:var(--ink-2);border:1px solid var(--line);position:relative;transform:perspective(1200px) rotateY(-6deg);box-shadow:30px 30px 0 -6px color-mix(in srgb,var(--rojo) 30%,transparent),0 30px 60px #0008}
+.board header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--ink-3)}
+.board header strong{font-family:var(--f-display);font-weight:800;font-size:1.3rem;text-transform:uppercase;letter-spacing:.02em}
+.live{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.14em;color:var(--volt);text-transform:uppercase}
+.seeds{display:grid;grid-template-columns:1fr 1fr}
+.seeds .conf{padding:14px 16px 18px;display:grid;gap:8px;min-width:0}
+.seeds .conf+.conf{border-left:1px solid var(--line)}
+.seeds h4{margin:0 0 4px;font-family:var(--f-label);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.78rem}
+.seed{display:grid;grid-template-columns:22px 22px 1fr auto;align-items:center;gap:8px;font-weight:600;font-size:.92rem}
+.seed .s{font-family:var(--f-display);font-weight:900;font-size:1.25rem;line-height:1;color:var(--mute)}
+.seed .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.seed .r{font-family:var(--f-label);font-weight:600;color:var(--mute);font-size:.85rem}
+.board footer{padding:12px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-size:.85rem;color:var(--mute)}
+.board footer a{color:var(--volt);font-weight:600;text-decoration:none}
+@media (max-width:960px){.hero>.wrap{grid-template-columns:1fr;padding-block:44px 52px}.board{transform:none}}
+
+/* ---------- HERO A PANTALLA COMPLETA ---------- */
+.hero{display:flex;flex-direction:column;min-height:calc(100vh - 98px);min-height:calc(100svh - 98px)}
+.hero>.wrap{flex:1;width:100%;align-content:center;padding-block:56px}
+.hero h1{font-size:clamp(3.6rem,10.5vw,9.6rem)}
+.hero p.lede{font-size:clamp(1.12rem,1.6vw,1.35rem)}
+/* ---------- HERO VIDEO ----------
+   Video: media/hero-web.mp4 (version ligera de media/hero.mp4, sin audio) y poster media/hero-poster.jpg.
+   Mientras no exista, el hero se ve con su fondo de franjas. */
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-media video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;filter:brightness(.62) saturate(1.05) contrast(1.05)}
+.hero-media.is-ready video{opacity:1}
+.hero-media::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,color-mix(in srgb,var(--ink) 92%,transparent) 0%,color-mix(in srgb,var(--ink) 72%,transparent) 55%,color-mix(in srgb,var(--ink) 52%,transparent) 100%),
+  linear-gradient(0deg,var(--ink) 0%,transparent 35%)}
+.hero::before,.hero::after{z-index:1}
+.hero>.wrap{z-index:2}
+.video-toggle{position:absolute;z-index:3;right:max(16px,env(safe-area-inset-right,0px));top:16px;display:none;align-items:center;gap:8px;background:color-mix(in srgb,var(--ink) 70%,transparent);border:1px solid var(--line);color:var(--chalk);font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:7px 12px;cursor:pointer;backdrop-filter:blur(6px)}
+.hero-media.is-ready~.video-toggle{display:inline-flex}
+.video-toggle:hover{border-color:var(--volt)}
+/* ---------- Stat strip ---------- */
+.strip{background:var(--chalk);color:var(--ink);overflow:hidden}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:20px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;border-right:2px solid var(--ink);min-width:0}
+.stat:last-child{border-right:0}
+.stat b{font-family:var(--f-display);font-weight:900;font-size:clamp(2.4rem,5vw,3.6rem);line-height:.9}
+.stat span{font-family:var(--f-label);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;line-height:1.15}
+@media (max-width:700px){.strip .wrap{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:2px solid var(--ink)}}
+
+/* ---------- Sections ---------- */
+section.block{padding-block:72px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.sec-head h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.6rem);line-height:.9;margin:6px 0 0;text-wrap:balance}
+.sec-head h2 em{font-style:normal;color:var(--volt)}
+.link{font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--chalk);border-bottom:2px solid var(--rojo);padding-bottom:2px}
+.link:hover{color:var(--rojo)}
+
+/* standings */
+.confs{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.table{background:var(--ink-2);border:1px solid var(--line);min-width:0}
+.table .th{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;position:relative;overflow:hidden}
+.table .th h3{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.7rem;line-height:1;position:relative}
+.table .th::before{content:"";position:absolute;inset:0;background:var(--c);clip-path:polygon(0 0,62% 0,54% 100%,0 100%)}
+.table .th h3{color:var(--ink)}
+.table .th .label{position:relative}
+.rows{overflow-x:auto}
+.row{display:grid;grid-template-columns:30px minmax(0,1fr) 54px 46px 92px 42px;align-items:center;gap:10px;padding:10px 18px;border-top:1px solid var(--line);font-weight:600;min-width:440px}
+.row.hd{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--mute);padding-block:8px}
+.row .pos{font-family:var(--f-display);font-weight:900;font-size:1.3rem;color:var(--mute)}
+.row.in .pos{color:var(--c)}
+.row .tm{display:flex;align-items:center;gap:10px;min-width:0}
+.row .tm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row.out{color:color-mix(in srgb,var(--chalk) 62%,var(--ink))}
+.row.cut{border-top:2px dashed var(--c)}
+.diffbar{height:6px;background:var(--ink-3);position:relative}
+.diffbar i{position:absolute;top:0;bottom:0;left:50%}
+.diffbar i.p{background:var(--good)}
+.diffbar i.n{background:var(--bad);transform:translateX(-100%)}
+.row .pts{font-family:var(--f-display);font-weight:800;font-size:1.25rem;text-align:right}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;color:var(--mute);font-size:.85rem}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:22px;border-top:2px dashed var(--chalk)}
+@media (max-width:960px){.confs{grid-template-columns:1fr}}
+
+/* crest */
+.crest{--sz:30px;width:var(--sz);height:var(--sz);flex:none;display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:calc(var(--sz)*.42);color:var(--ink);background:linear-gradient(160deg,var(--h1),var(--h2));clip-path:polygon(50% 0,100% 22%,100% 70%,50% 100%,0 70%,0 22%);letter-spacing:-.02em}
+
+.logo{--sz:30px;width:var(--sz);height:var(--sz);flex:none;display:grid;place-items:center}
+.logo img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 4px #0009)}
+.card .logo{--sz:76px;background:radial-gradient(closest-side,color-mix(in srgb,var(--cc) 30%,transparent),transparent);transition:transform .25s}
+.card .crest{--sz:62px}
+.drawer .logo{--sz:120px;background:radial-gradient(closest-side,color-mix(in srgb,var(--cc) 35%,transparent),transparent)}
+.seed .logo,.seed .crest{--sz:22px}
+
+/* leaderboard */
+.lead{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:stretch}
+.mvp{position:relative;overflow:hidden;background:var(--volt);color:var(--ink);padding:28px;display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+.mvp::before{content:"24";position:absolute;right:-10px;bottom:-60px;font-family:var(--f-display);font-weight:900;font-size:22rem;line-height:1;color:transparent;-webkit-text-stroke:3px color-mix(in srgb,var(--ink) 22%,transparent)}
+.mvp .label{color:var(--ink)}
+.mvp h3{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(3rem,7vw,5.2rem);line-height:.85;margin:10px 0 0;position:relative}
+.mvp .kd{display:flex;gap:28px;position:relative;flex-wrap:wrap}
+.mvp .kd div b{display:block;font-family:var(--f-display);font-weight:900;font-size:2.6rem;line-height:1}
+.mvp .kd div span{font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem}
+.bars{background:var(--ink-2);border:1px solid var(--line);padding:8px 0;display:grid;min-width:0}
+.bar{display:grid;grid-template-columns:24px minmax(90px,130px) 1fr 44px;gap:12px;align-items:center;padding:9px 20px}
+.bar .i{font-family:var(--f-display);font-weight:900;color:var(--mute);font-size:1.1rem}
+.bar .p{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .t{height:12px;background:var(--ink-3);position:relative;transform:skewX(-18deg)}
+.bar .t i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--rojo),var(--verde));animation:grow 1s cubic-bezier(.2,.9,.2,1) both}
+@keyframes grow{from{transform:scaleX(.15);transform-origin:left}}
+.bar .v{font-family:var(--f-display);font-weight:800;font-size:1.2rem;text-align:right}
+.bar.top .p{color:var(--volt)}
+.note{color:var(--mute);font-size:.85rem;padding:8px 20px 4px}
+@media (max-width:960px){.lead{grid-template-columns:1fr}.mvp{min-height:280px}}
+
+/* PPV pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+.pill{padding:28px 26px 30px;position:relative;overflow:hidden;min-width:0}
+.pill+.pill{border-left:1px solid var(--line)}
+.pill .L{font-family:var(--f-display);font-weight:900;font-size:9rem;line-height:.75;color:transparent;-webkit-text-stroke:2px var(--c);display:block;margin-bottom:16px;transition:color .25s,transform .25s}
+.pill:hover .L{color:var(--c);transform:skewX(-8deg)}
+.pill h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.8rem;margin:0 0 6px;line-height:1}
+.pill p{margin:0;color:var(--mute);max-width:34ch}
+@media (max-width:800px){.pillars{grid-template-columns:1fr}.pill+.pill{border-left:0;border-top:1px solid var(--line)}}
+
+/* season format */
+.format{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.step{background:var(--ink-2);padding:20px 22px 22px;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);padding-left:36px;min-width:0}
+.step:first-child{clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%);padding-left:22px}
+.step.now{background:var(--volt);color:var(--ink)}
+.step.now .label{color:var(--ink)}
+.step h3{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.7rem;margin:4px 0 4px;line-height:1}
+.step p{margin:0;font-size:.92rem;color:var(--mute)}
+.step.now p{color:var(--ink)}
+@media (max-width:860px){.format{grid-template-columns:1fr 1fr}.step,.step:first-child{clip-path:none;padding-left:22px}}
+@media (max-width:480px){.format{grid-template-columns:1fr}}
+
+footer.site{border-top:1px solid var(--line);background:linear-gradient(180deg,var(--ink-2),var(--ink));color:var(--mute);font-size:.9rem;margin-top:24px}
+footer.site::before{content:"";display:block;height:4px;background:linear-gradient(90deg,var(--rojo) 0 50%,var(--verde) 50%)}
+.f-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:36px;padding-block:52px 40px}
+.f-brand{display:grid;gap:14px;align-content:start;max-width:36ch}
+.f-brand .f-id{display:flex;align-items:center;gap:12px}
+.f-brand .flogo{height:46px;width:auto;margin:0;filter:invert(1)}
+.f-brand strong{font-family:var(--f-display);font-weight:900;font-size:1.5rem;letter-spacing:.03em;color:var(--chalk);line-height:1}
+.f-brand strong small{display:block;font-family:var(--f-label);font-size:.66rem;letter-spacing:.28em;color:var(--volt);font-weight:600;margin-top:4px}
+.f-brand p{margin:0;line-height:1.55}
+.f-social{display:flex;gap:10px;flex-wrap:wrap}
+.f-social a{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);color:var(--chalk);text-decoration:none;font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem;transition:border-color .15s,color .15s,background .15s}
+.f-social a:hover{border-color:var(--chalk);background:var(--ink-3)}
+.f-social a:first-child:hover{color:#FF4E45}
+.f-social a:last-child:hover{color:#E1306C}
+.f-social svg{width:18px;height:18px}
+.f-col h4{font-family:var(--f-label);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.75rem;color:var(--chalk);margin:4px 0 16px}
+.f-col ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.f-col a{color:var(--mute);text-decoration:none;transition:color .15s}
+.f-col a:hover{color:var(--chalk)}
+.f-col .soon{opacity:.55}
+.f-col .soon::after{content:" · pronto";font-size:.75rem}
+.f-col dl{margin:0;display:grid;gap:10px}
+.f-col dl div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.f-col dt{color:var(--mute)}
+.f-col dd{margin:0;color:var(--chalk);font-weight:600;text-align:right}
+.f-col .dot-r,.f-col .dot-a{display:inline-block;width:8px;height:8px;margin-right:8px;transform:skewX(-14deg)}
+.f-col .dot-r{background:var(--rojo)}
+.f-col .dot-a{background:var(--verde)}
+.f-bottom{border-top:1px solid var(--line);padding-block:18px;display:flex;justify-content:space-between;gap:10px 24px;flex-wrap:wrap;font-size:.8rem}
+.f-bottom a{color:var(--chalk)}
+.f-up{background:none;border:1px solid var(--line);color:var(--chalk);font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;padding:6px 12px;cursor:pointer}
+.f-up:hover{border-color:var(--volt);color:var(--volt)}
+@media (max-width:900px){.f-top{grid-template-columns:1fr 1fr}.f-brand{grid-column:1/-1}}
+@media (max-width:480px){.f-top{grid-template-columns:1fr}}
+
+/* ---------- TEAMS ---------- */
+.t-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
+  linear-gradient(100deg,color-mix(in srgb,var(--rojo) 20%,transparent) 0 50%,color-mix(in srgb,var(--verde) 18%,transparent) 50%)}
+.t-hero::after{content:"VS";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) skewX(-10deg);font-family:var(--f-display);font-weight:900;font-size:22rem;line-height:1;color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--chalk) 8%,transparent);pointer-events:none}
+.t-hero .wrap{position:relative;z-index:1;padding-block:48px 40px;display:grid;gap:26px}
+.t-hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(3rem,8vw,6.4rem);line-height:.85;margin:8px 0 0}
+.confsum{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cs{display:flex;align-items:center;gap:16px;padding:14px 18px;background:color-mix(in srgb,var(--ink) 70%,transparent);border-left:6px solid var(--c);min-width:0}
+.cs b{font-family:var(--f-display);font-weight:900;font-size:2.2rem;line-height:1;text-transform:uppercase}
+.cs .label{display:block}
+.cs .lead-t{margin-left:auto;text-align:right;min-width:0}
+.cs .lead-t div{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:700px){.confsum{grid-template-columns:1fr}}
+
+.toolbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);z-index:40;background:var(--ink);border-bottom:1px solid var(--line)}
+.toolbar .wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-block:12px}
+.seg{display:flex;background:var(--ink-2);border:1px solid var(--line)}
+.seg button{font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.85rem;background:none;border:0;color:var(--mute);padding:9px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--chalk);color:var(--ink)}
+.seg button[data-f="rojo"][aria-pressed="true"]{background:var(--rojo);color:#fff}
+.seg button[data-f="azul"][aria-pressed="true"]{background:var(--verde)}
+.search{flex:1;min-width:180px;max-width:320px;display:flex;align-items:center;background:var(--ink-2);border:1px solid var(--line);padding:0 12px}
+.search input{flex:1;min-width:0;background:none;border:0;color:var(--chalk);font:inherit;padding:9px 8px;outline:none}
+.search:focus-within{border-color:var(--volt)}
+.search svg{flex:none}
+select#sort{background:var(--ink-2);color:var(--chalk);border:1px solid var(--line);font-family:var(--f-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;font-size:.85rem}
+.count{margin-left:auto}
+@media (max-width:640px){.count{display:none}.search{max-width:none}}
+
+.grid-sec{padding-block:36px 72px;display:grid;gap:44px}
+.conf-title{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.conf-title h2{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2.2rem;line-height:1}
+.conf-title .rule{flex:1;height:4px;background:repeating-linear-gradient(-60deg,var(--c) 0 8px,transparent 8px 14px)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{position:relative;overflow:hidden;background:var(--ink-2);border:1px solid var(--line);padding:18px 18px 16px;display:grid;gap:14px;text-align:left;color:inherit;font:inherit;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;min-width:0}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--cc)}
+.card::after{content:attr(data-rank);position:absolute;right:-6px;top:-26px;font-family:var(--f-display);font-weight:900;font-size:8.5rem;line-height:1;color:transparent;-webkit-text-stroke:2px color-mix(in srgb,var(--cc) 34%,transparent);pointer-events:none;transition:transform .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--cc);box-shadow:0 18px 40px -18px color-mix(in srgb,var(--cc) 70%,transparent)}
+.card:hover::after{transform:translateX(-8px) skewX(-8deg)}
+.card .top{display:flex;align-items:center;gap:14px;position:relative;z-index:1;min-width:0}
+.card .crest{--sz:62px}
+.card h3{margin:0;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.45rem;line-height:1;text-wrap:balance}
+.card .chips{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.chip{font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.7rem;padding:3px 8px;transform:skewX(-12deg);display:inline-block}
+.chip>i{display:inline-block;transform:skewX(12deg);font-style:normal}
+.chip.cf{background:color-mix(in srgb,var(--cc) 20%,transparent);color:var(--cc)}
+.chip.q{background:var(--good);color:var(--ink)}
+.chip.x{background:var(--ink-3);color:var(--mute)}
+.card .nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding-top:12px;position:relative;z-index:1}
+.card .nums div+div{border-left:1px solid var(--line);padding-left:12px}
+.card .nums b{display:block;font-family:var(--f-display);font-weight:800;font-size:1.6rem;line-height:1}
+.card .nums span{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;color:var(--mute)}
+.form{display:flex;gap:4px;position:relative;z-index:1}
+.form i{flex:1;height:6px;background:var(--ink-3);transform:skewX(-20deg)}
+.form i.w{background:var(--cc)}
+.card.out{opacity:.82}
+.empty{padding:40px;text-align:center;color:var(--mute);border:1px dashed var(--line)}
+
+/* drawer */
+.drawer{position:fixed;inset:0;z-index:80;display:flex;justify-content:flex-end;background:#000000b3}
+.drawer .panel{width:min(460px,100%);height:100%;overflow:auto;background:var(--ink-2);border-left:4px solid var(--cc);padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) 24px 24px;display:grid;align-content:start;gap:20px;animation:slide .3s cubic-bezier(.2,.9,.2,1)}
+@keyframes slide{from{transform:translateX(40px)}}
+.drawer .close{justify-self:end;background:none;border:1px solid var(--line);color:var(--chalk);font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer}
+.drawer .crest{--sz:96px}
+.drawer h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2.8rem;line-height:.9;margin:0}
+.dstats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.dstats div{background:var(--ink-2);padding:12px}
+.dstats b{display:block;font-family:var(--f-display);font-weight:900;font-size:1.9rem;line-height:1}
+.dstats span{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;color:var(--mute)}
+.roster{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.roster div{aspect-ratio:1;max-width:100%;border:1px dashed var(--line);display:grid;place-items:center;color:var(--mute);font-family:var(--f-label);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:6px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--chalk);color:var(--ink);font-weight:600;padding:10px 16px;z-index:90;max-width:calc(100% - 32px)}
+
+/* ---------- STANDINGS ---------- */
+.s-hero::after{content:"PTS"}
+.leaders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ld{display:flex;align-items:center;gap:14px;padding:14px 18px;background:color-mix(in srgb,var(--ink) 70%,transparent);border-left:6px solid var(--c);min-width:0}
+.ld .logo,.ld .crest{--sz:52px}
+.ld>div{min-width:0}
+.ld strong{display:block;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.25rem;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ld b{margin-left:auto;font-family:var(--f-display);font-weight:900;font-size:2.2rem;line-height:1;color:var(--c)}
+@media (max-width:860px){.leaders{grid-template-columns:1fr}}
+.s-body{padding-block:36px 72px;display:grid;gap:56px}
+#stables{display:grid;gap:28px}
+.jump{background:none;border:0;cursor:pointer;font-size:.95rem;padding:0 0 2px}
+table.st{width:100%;border-collapse:collapse;min-width:760px;font-variant-numeric:tabular-nums}
+table.st.m{min-width:560px}
+.st th{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--mute);text-align:right;padding:10px 14px;border-top:1px solid var(--line);white-space:nowrap}
+.st th.l,.st td.l{text-align:left}
+.st th button{all:unset;cursor:pointer;letter-spacing:inherit}
+.st th button:hover,.st th[aria-sort="ascending"] button,.st th[aria-sort="descending"] button{color:var(--chalk)}
+.st th button:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
+.st th[aria-sort="descending"] button::after{content:" ↓";color:var(--volt)}
+.st th[aria-sort="ascending"] button::after{content:" ↑";color:var(--volt)}
+.st td{padding:10px 14px;border-top:1px solid var(--line);text-align:right;font-weight:600;white-space:nowrap}
+.st tbody tr{transition:background .15s}
+.st tbody tr:hover{background:var(--ink-3)}
+.st td.pos{font-family:var(--f-display);font-weight:900;font-size:1.45rem;color:var(--mute);width:48px}
+.st tr.in td.pos{color:var(--c)}
+.st tr.out td{color:color-mix(in srgb,var(--chalk) 62%,var(--ink))}
+.st tr.cut td{border-top:2px dashed var(--c)}
+.st .tm{display:flex;align-items:center;gap:12px}
+.st .tm .logo,.st .tm .crest{--sz:34px}
+.st .nm{font-weight:700;color:var(--chalk)}
+.st tr.out .nm{color:inherit}
+.st .tm .chip{margin-left:4px}
+.st td.up{color:var(--good)}
+.st td.pts{font-family:var(--f-display);font-weight:900;font-size:1.5rem;color:var(--chalk)}
+.wp{display:inline-block;width:72px;height:6px;background:var(--ink-3);vertical-align:middle;margin-right:10px;transform:skewX(-18deg);position:relative}
+.wp i{position:absolute;inset:0 auto 0 0;background:var(--c)}
+.wpn{display:inline-block;min-width:4ch}
+.kc{display:inline-flex;align-items:center;gap:12px}
+.kb{display:inline-block;width:110px;height:10px;background:var(--ink-3);transform:skewX(-18deg);position:relative}
+.kb i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--rojo),var(--verde))}
+.kc b{font-family:var(--f-display);font-weight:900;font-size:1.4rem;min-width:2ch;color:var(--chalk)}
+.st td.best{color:var(--volt)}
+#mons-sec{scroll-margin-top:140px}
+.mtiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.mt{background:var(--ink-2);border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;position:relative;overflow:hidden;min-width:0}
+.mt::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--c)}
+.mt>div{min-width:0}
+.mt strong{display:block;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.7rem;line-height:1;margin-top:4px}
+.mt b{font-family:var(--f-display);font-weight:900;font-size:3rem;line-height:.85;color:var(--c)}
+@media (max-width:760px){.mtiles{grid-template-columns:1fr}}
+/* ---------- MATCHES ---------- */
+.m-hero::after{content:"BO3"}
+.weeks{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.weeks::-webkit-scrollbar{display:none}
+.weeks button{flex:none;min-width:66px;font-family:var(--f-display);font-weight:900;font-size:1.5rem;line-height:1;background:var(--ink-2);border:0;color:var(--mute);padding:8px 16px 9px;cursor:pointer;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:background .15s,color .15s}
+.weeks button small{display:block;font-family:var(--f-label);font-size:.62rem;letter-spacing:.16em;font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.weeks button:hover{color:var(--chalk);background:var(--ink-3)}
+.weeks button[aria-pressed="true"]{background:var(--volt);color:var(--ink)}
+#mteam{background:var(--ink-2);color:var(--chalk);border:1px solid var(--line);font-family:var(--f-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;font-size:.85rem;max-width:100%}
+.seg button[data-mc="rojo"][aria-pressed="true"]{background:var(--rojo);color:#fff}
+.seg button[data-mc="azul"][aria-pressed="true"]{background:var(--verde);color:var(--ink)}
+.wsum{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline}
+.wsum h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,5vw,3.4rem);line-height:.9;margin:0 12px 0 0}
+.wsum div{display:flex;align-items:baseline;gap:8px}
+.wsum b{font-family:var(--f-display);font-weight:900;font-size:1.8rem;line-height:1;color:var(--volt)}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.mcols.one{grid-template-columns:1fr}
+.mcol{min-width:0}
+.mlist{display:grid;gap:12px}
+.mcols.one .mlist{grid-template-columns:repeat(auto-fill,minmax(440px,1fr))}
+.mc{background:var(--ink-2);border:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.mc:hover{border-color:var(--c);transform:translateX(3px)}
+.mc::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--c)}
+.sides{display:grid;min-width:0}
+.side{display:grid;grid-template-columns:40px minmax(0,1fr) auto 28px;align-items:center;gap:12px;padding:10px 14px 10px 18px}
+.side+.side{border-top:1px solid var(--line)}
+.side .logo,.side .crest{--sz:40px}
+.side .nm{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.2rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gd{display:flex;gap:4px}
+.gd i{width:10px;height:10px;transform:skewX(-18deg);background:var(--ink-3)}
+.gd i.w{background:var(--c)}
+.side .sc{font-family:var(--f-display);font-weight:900;font-size:2.2rem;line-height:1;text-align:right}
+.side.win .sc{color:var(--c)}
+.side.lose{color:color-mix(in srgb,var(--chalk) 48%,var(--ink))}
+.side.lose .logo{filter:grayscale(.75) opacity(.65)}
+.mc .meta{border-left:1px solid var(--line);display:grid;align-content:center;justify-items:center;gap:8px;padding:10px 14px;min-width:104px;background:color-mix(in srgb,var(--ink-3) 60%,var(--ink-2))}
+.mc .meta .label{font-size:.68rem;text-align:center}
+.rps{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.rp{font-family:var(--f-label);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;text-decoration:none;color:var(--chalk);border:1px solid var(--line);padding:3px 8px;transition:border-color .15s,color .15s}
+.rp:hover{border-color:var(--volt);color:var(--volt)}
+.rps .none{font-size:.75rem;color:var(--mute)}
+.res{font-family:var(--f-display);font-weight:900;font-size:1.3rem;line-height:1;padding:2px 8px;transform:skewX(-12deg)}
+.res.w{background:var(--good);color:var(--ink)}
+.res.l{background:var(--ink-3);color:var(--mute)}
+.bye{border:1px dashed var(--line);padding:10px 18px;display:flex;align-items:center;gap:12px;color:var(--mute);font-size:.92rem}
+.bye .logo,.bye .crest{--sz:28px;opacity:.6}
+.bye strong{color:var(--chalk);font-weight:600}
+.tsum{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px;padding:18px 22px;background:var(--ink-2);border:1px solid var(--line);border-left:6px solid var(--c)}
+.tsum .logo,.tsum .crest{--sz:80px}
+.tsum h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2rem,5vw,3rem);line-height:.9;margin:4px 0 0}
+.tsum .kv b{display:block;font-family:var(--f-display);font-weight:900;font-size:2rem;line-height:1}
+.tsum .clear{margin-left:auto}
+@media (max-width:960px){.mcols{grid-template-columns:1fr}.mcols.one .mlist{grid-template-columns:1fr}}
+@media (max-width:440px){.mc{grid-template-columns:1fr}.mc .meta{border-left:0;border-top:1px solid var(--line);grid-auto-flow:column;justify-content:space-between;align-items:center}.side{grid-template-columns:34px minmax(0,1fr) auto 24px;gap:10px}.side .logo,.side .crest{--sz:34px}}
+/* ---------- TEAM PROFILE ---------- */
+.p-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(110deg,color-mix(in srgb,var(--c) 32%,var(--ink)) 0 46%,color-mix(in srgb,var(--c) 10%,var(--ink)) 46% 50%,var(--ink) 50%)}
+.p-hero .wrap{position:relative;z-index:1;padding-block:26px 46px;display:grid;gap:20px}
+.p-rank{position:absolute;right:-10px;bottom:-70px;font-family:var(--f-display);font-weight:900;font-size:clamp(12rem,30vw,22rem);line-height:1;color:transparent;-webkit-text-stroke:3px color-mix(in srgb,var(--c) 45%,transparent);pointer-events:none}
+.back{font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--chalk);font-size:.85rem;justify-self:start;opacity:.8}
+.back:hover{opacity:1}
+.p-id{display:flex;align-items:center;gap:20px 36px;flex-wrap:wrap}
+.p-id>div{min-width:0;flex:1 1 320px}
+.p-id .logo,.p-id .crest{--sz:clamp(120px,18vw,190px)}
+.p-id .logo img{filter:drop-shadow(0 14px 30px #000c)}
+.p-id .chips{display:flex;gap:6px;flex-wrap:wrap}
+.p-id h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(3rem,8vw,6.6rem);line-height:.85;margin:12px 0 16px;text-wrap:balance}
+.p-coach{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.p-coach strong{font-family:var(--f-display);font-weight:800;font-size:1.6rem;text-transform:uppercase;line-height:1}
+.p-title{font-style:italic;color:var(--volt);font-weight:600}
+@media (min-width:1001px){.p-strip .wrap{grid-template-columns:repeat(6,1fr)}}
+.p-cid{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.cid{font-family:var(--f-label);font-weight:600;font-size:.95rem;letter-spacing:.12em;color:color-mix(in srgb,var(--chalk) 80%,var(--mute));background:none;border:0;padding:0;user-select:all}
+.cid.none{font-family:var(--f-label);font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);user-select:auto}
+.cid-copy{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.66rem;background:none;color:var(--mute);border:1px solid var(--line);padding:3px 8px;cursor:pointer}
+.cid-copy:hover{color:var(--chalk);border-color:var(--mute)}
+
+.p-strip .stat b{font-size:clamp(2rem,4vw,3rem);white-space:nowrap}
+.s-body>*,#stables>*,.grid-sec>*{min-width:0}
+@media (max-width:1000px) and (min-width:701px){.p-strip .wrap{grid-template-columns:repeat(3,1fr)}.p-strip .stat:nth-child(3n){border-right:0}.p-strip .stat:nth-child(-n+3){border-bottom:2px solid var(--ink)}}
+@media (max-width:700px){.p-strip .stat:nth-child(2n){border-right:0}.p-strip .stat:nth-child(-n+4){border-bottom:2px solid var(--ink)}}
+.path-w{overflow-x:auto}
+.path{display:grid;grid-template-columns:repeat(9,minmax(64px,1fr));gap:6px;min-width:620px}
+.wk{background:var(--ink-2);border:1px solid var(--line);padding:10px 6px 12px;display:grid;justify-items:center;gap:6px;min-width:0}
+.wk .label{font-size:.64rem}
+.wk .r{font-family:var(--f-display);font-weight:900;font-size:1.7rem;line-height:1}
+.wk .s{font-family:var(--f-label);font-weight:600;font-size:.78rem;color:var(--mute)}
+.wk .logo,.wk .crest{--sz:30px}
+.wk.w{border-top:4px solid var(--c)}
+.wk.w .r{color:var(--c)}
+.wk.l{border-top:4px solid color-mix(in srgb,var(--mute) 55%,var(--ink))}
+.wk.l .r{color:var(--mute)}
+.wk.b{border-style:dashed;align-content:center}
+.wk.b .r{color:var(--mute);font-size:.95rem;letter-spacing:.06em}
+.roster-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.pk{position:relative;overflow:hidden;background:var(--ink-2);border:1px solid var(--line);padding:16px 16px 14px;display:grid;gap:10px;align-content:start;min-width:0;transition:transform .2s,border-color .2s}
+.pk:hover{transform:translateY(-3px);border-color:var(--t1)}
+.pk::before{content:"";position:absolute;inset:0 0 auto;height:78px;background:linear-gradient(120deg,var(--t1),var(--t2));opacity:.25;clip-path:polygon(0 0,100% 0,100% 62%,0 100%)}
+.pk>*{position:relative}
+.pk .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pk h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.45rem;line-height:1;margin:0;text-wrap:balance;min-width:0}
+.pk .cost{font-family:var(--f-display);font-weight:900;font-size:1.7rem;line-height:.9;text-align:right;flex:none}
+.pk .cost small{display:block;font-family:var(--f-label);font-size:.62rem;letter-spacing:.14em;font-weight:700;color:var(--mute)}
+.types{display:flex;gap:4px;flex-wrap:wrap}
+.ty{font-family:var(--f-label);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;padding:2px 8px;color:#16161a;background:var(--tc);transform:skewX(-12deg)}
+.ty>i{display:inline-block;transform:skewX(12deg);font-style:normal}
+.pk .ab{font-size:.82rem;color:var(--mute);line-height:1.35;margin:0}
+.pk .gkd{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:10px}
+.pk .gkd div+div{border-left:1px solid var(--line);padding-left:10px}
+.pk .gkd b{display:block;font-family:var(--f-display);font-weight:800;font-size:1.35rem;line-height:1}
+.pk .gkd span{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.64rem;color:var(--mute)}
+.pk.star{border-color:var(--volt)}
+.pk .tag{position:absolute;top:0;right:0;background:var(--volt);color:var(--ink);font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.64rem;padding:3px 10px 3px 14px;clip-path:polygon(8px 0,100% 0,100% 100%,0 100%)}
+.pk.star .hd{padding-top:10px}
+.p-note{display:flex;flex-wrap:wrap;gap:6px 22px;color:var(--mute);font-size:.92rem;margin:-14px 0 18px}
+.p-note strong{color:var(--chalk)}
+.p-note span{display:inline-flex;align-items:center;gap:6px}
+.spr-f{width:56px;height:56px;object-fit:contain;image-rendering:pixelated;margin:-16px 0 -16px -8px;filter:drop-shadow(0 4px 6px #0009)}
+.p-body .sec-head h2 em{color:var(--c)}
+.p-series .res.w{background:var(--c);color:var(--ink)}
+.p-series .res.l{background:var(--ink-3);color:var(--mute)}
+.p-series{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px}
+@media (max-width:520px){.p-series{grid-template-columns:1fr}}
+.p-nav{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.p-nav a{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--ink-2);border:1px solid var(--line);text-decoration:none;min-width:0;transition:border-color .2s}
+.p-nav a:hover{border-color:var(--c)}
+.p-nav a.nx{justify-content:flex-end;text-align:right}
+.p-nav a>div{min-width:0}
+.p-nav strong{display:block;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.3rem;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-nav .logo,.p-nav .crest{--sz:44px}
+@media (max-width:560px){.p-nav{grid-template-columns:1fr}}
+a.nm{text-decoration:none;color:inherit}
+a.nm:hover{text-decoration:underline;text-decoration-color:var(--c);text-underline-offset:3px}
+/* ---------- SPRITES (PokeAPI official artwork) ---------- */
+.pk .hd{align-items:center;min-height:92px}
+.pk .hd>div{min-width:0}
+.pk .cost{text-align:left;margin-top:6px;display:flex;align-items:baseline;gap:4px}
+.pk .cost small{display:inline}
+.pk .spr{width:96px;height:96px;flex:none;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 8px 12px #000b);transition:transform .25s;margin:-6px -6px -6px 0}
+.pk.star .hd{padding-top:12px}
+.spr-s{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;vertical-align:middle;margin:-8px 8px -8px 0}
+.mvp-art{position:absolute;right:16px;top:16px;width:min(36%,190px);image-rendering:pixelated;height:auto;filter:drop-shadow(0 14px 22px #0007);pointer-events:none;z-index:0}
+.mvp>*{position:relative;z-index:1}
+.mvp>.mvp-art{position:absolute}
+
+/* ---------- TYPE CHART (perfil) ---------- */
+.tchart-w{overflow-x:auto;background:var(--ink-2);border:1px solid var(--line)}
+table.tc{border-collapse:collapse;width:100%;min-width:940px;font-variant-numeric:tabular-nums}
+.tc th,.tc td{padding:6px 3px;text-align:center;border-top:1px solid var(--line);font-family:var(--f-label);font-weight:700;font-size:.85rem;white-space:nowrap}
+.tc thead th{border-top:0;padding:12px 3px 10px}
+.tc .tyh{display:inline-block;min-width:38px;padding:3px 4px;background:var(--tc);color:#16161a;font-size:.64rem;letter-spacing:.06em;transform:skewX(-12deg)}
+.tc .tyh>i{display:inline-block;transform:skewX(12deg);font-style:normal}
+.tc .pkn{text-align:left;padding-left:12px;padding-right:12px;font-family:var(--f-body);font-weight:700;font-size:.88rem;color:var(--chalk);position:sticky;left:0;background:var(--ink-2);z-index:1;min-width:170px}
+.tc thead .pkn{font-family:var(--f-label);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.tc td.x4{background:color-mix(in srgb,var(--rojo) 62%,transparent);color:#fff}
+.tc td.x2{background:color-mix(in srgb,var(--rojo) 22%,transparent);color:#ffb3bd}
+.tc td.r2{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good)}
+.tc td.r4{background:color-mix(in srgb,var(--good) 32%,transparent);color:#d8fff0}
+.tc td.im{background:color-mix(in srgb,var(--azul) 30%,transparent);color:#d3e4ff;font-size:.7rem;letter-spacing:.06em}
+.tc tfoot th,.tc tfoot td{border-top:2px solid var(--line);font-size:.95rem}
+.tc tfoot tr+tr th,.tc tfoot tr+tr td{border-top:1px solid var(--line)}
+.tc tfoot td.hot{background:color-mix(in srgb,var(--rojo) 26%,transparent);color:#fff}
+.tc tfoot td.cool{color:var(--good)}
+.tc tfoot td.zero{color:var(--mute);font-weight:500}
+.tlegend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;color:var(--mute);font-size:.85rem;align-items:center}
+.tlegend span{display:inline-flex;align-items:center;gap:6px}
+.tlegend i{display:inline-grid;place-items:center;min-width:30px;padding:2px 4px;font-style:normal;font-family:var(--f-label);font-weight:700;font-size:.78rem}
+.tlegend i.x4{background:color-mix(in srgb,var(--rojo) 62%,transparent);color:#fff}
+.tlegend i.x2{background:color-mix(in srgb,var(--rojo) 22%,transparent);color:#ffb3bd}
+.tlegend i.r2{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good)}
+.tlegend i.r4{background:color-mix(in srgb,var(--good) 32%,transparent);color:#d8fff0}
+.tlegend i.im{background:color-mix(in srgb,var(--azul) 30%,transparent);color:#d3e4ff;font-size:.66rem}
+.tlegend i.hot{background:color-mix(in srgb,var(--rojo) 26%,transparent);color:#fff}
+/* ---------- PLAYOFFS ---------- */
+.po-hero::after{content:"FINAL"}
+.po-status{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline}
+.po-status div{display:flex;align-items:baseline;gap:8px}
+.po-status b{font-family:var(--f-display);font-weight:900;font-size:1.8rem;line-height:1;color:var(--volt)}
+.bk-w{overflow-x:auto;padding-bottom:6px}
+.bk{--rh:190px;--rg:32px;--gap:56px;display:grid;grid-template-columns:repeat(3,minmax(200px,1fr)) minmax(260px,1.2fr);grid-template-rows:40px var(--rh) var(--rh);column-gap:var(--gap);row-gap:var(--rg);min-width:980px;position:relative}
+.bk .rl{grid-row:1;align-self:end;padding-bottom:4px;font-family:var(--f-label);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.75rem;color:var(--mute)}
+.bk .rl.fin{color:var(--volt)}
+.bk .row-h{position:absolute;left:calc(-1 * var(--gap) / 2);font-family:var(--f-label);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.66rem;color:var(--mute);writing-mode:vertical-rl;transform:rotate(180deg)}
+.pm{position:relative;align-self:center;background:var(--ink-2);border:1px solid var(--line);min-width:0;transition:border-color .2s}
+.pm:hover{border-color:color-mix(in srgb,var(--chalk) 30%,var(--line))}
+.pm header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--ink-3)}
+.pm header .label{font-size:.68rem}
+.pm .st{font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.64rem;color:var(--mute)}
+.pm .st.live{color:var(--volt)}
+.ps{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 14px;min-height:60px}
+.ps+.ps{border-top:1px solid var(--line)}
+.ps .logo,.ps .crest{--sz:36px}
+.ps .nm{min-width:0;display:grid;gap:4px;line-height:1.1}
+.ps .nm a,.ps .nm>span{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.15rem;line-height:1;text-decoration:none;color:var(--chalk);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps .nm a:hover{text-decoration:underline;text-decoration-color:var(--c);text-underline-offset:3px}
+.ps .nm small{font-family:var(--f-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.66rem;color:var(--c)}
+.ps .sc{font-family:var(--f-display);font-weight:900;font-size:1.7rem;line-height:1;min-width:1ch;text-align:right}
+.ps.win .sc{color:var(--volt)}
+.ps.lose{opacity:.45}
+.ps.tbd .q{width:36px;height:36px;display:grid;place-items:center;border:1px dashed var(--line);color:var(--mute);font-family:var(--f-display);font-weight:900}
+.ps.tbd .nm>span{font-family:var(--f-label);font-weight:600;font-size:.82rem;letter-spacing:.08em;color:var(--mute);white-space:normal}
+/* connectors */
+.pm.to-r::after{content:"";position:absolute;left:100%;top:50%;width:var(--gap);border-top:2px solid var(--line);pointer-events:none}
+.pm.to-fd::after,.pm.to-fu::after{content:"";position:absolute;left:100%;width:calc(var(--gap)/2 + 1px);height:calc(var(--rh)/2 + var(--rg)/2);border-right:2px solid var(--line);pointer-events:none}
+.pm.to-fd::after{top:50%;border-top:2px solid var(--line)}
+.pm.to-fu::after{bottom:50%;border-bottom:2px solid var(--line)}
+.fin{grid-column:4;grid-row:2 / span 2;align-self:center;position:relative;min-width:0}
+.pm.final::before{content:"";position:absolute;right:100%;top:50%;width:calc(var(--gap)/2);border-top:2px solid var(--line);pointer-events:none}
+.pm.final{border:2px solid var(--volt);box-shadow:0 0 0 6px color-mix(in srgb,var(--volt) 12%,transparent),0 24px 60px -24px color-mix(in srgb,var(--volt) 60%,transparent)}
+.pm.final header{background:var(--volt);border-bottom-color:var(--volt)}
+.pm.final header .label,.pm.final header .st{color:var(--ink)}
+.champ{display:flex;align-items:center;gap:14px;padding:16px 14px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,color-mix(in srgb,var(--volt) 16%,transparent),transparent 70%)}
+.champ svg{width:44px;height:auto;flex:none;filter:drop-shadow(0 6px 14px color-mix(in srgb,var(--volt) 45%,transparent))}
+.champ .logo,.champ .crest{--sz:60px}
+.champ>div{min-width:0}
+.champ strong{display:block;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.7rem;line-height:1;color:var(--volt);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.champ.tbd strong{color:var(--chalk)}
+@media (max-width:999px){
+  .bk-w{overflow:visible}
+  .bk{display:grid;grid-template-columns:1fr;grid-template-rows:none;min-width:0;row-gap:12px}
+  .bk>*{grid-column:auto!important;grid-row:auto!important}
+  .bk .rl,.bk .row-h{display:none}
+  .pm::before,.pm::after{display:none}
+  .pm,.fin{order:var(--o)}
+  .bk .side-h{display:block!important;order:var(--o);font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.6rem;margin-top:12px}
+}
+.bk .side-h{display:none}
+.seeds-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.sd{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:center;padding:14px 16px;background:var(--ink-2);border:1px solid var(--line);border-left:4px solid var(--c);text-decoration:none;color:inherit;transition:border-color .2s,transform .2s;min-width:0}
+.sd:hover{transform:translateY(-3px);border-color:var(--c)}
+.sd .logo,.sd .crest{--sz:56px;grid-row:span 2}
+.sd>div{min-width:0}
+.sd strong{display:block;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.3rem;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd .entry{font-size:.85rem;color:var(--mute)}
+.sd .entry b{color:var(--chalk);font-weight:600}
+/* ---------- SESIÓN (demo: Richampions VGC) ---------- */
+.nav-sep{width:1px;height:20px;background:var(--line);align-self:center;margin:0 6px;flex:none}
+.me-chip{display:flex;align-items:center;gap:10px;padding:5px 12px 5px 6px;border:1px solid var(--line);text-decoration:none;color:var(--chalk);background:var(--ink-2);flex:none;transition:border-color .15s}
+.me-chip:hover{border-color:var(--c)}
+.me-chip .logo,.me-chip .crest{--sz:30px}
+.me-chip span{display:grid;line-height:1.05}
+.me-chip b{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1rem}
+.me-chip small{font-family:var(--f-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.62rem;color:var(--c)}
+@media (max-width:860px){.me-chip span{display:none}.me-chip{padding:4px}}
+.you{display:inline-block;margin-left:8px;font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.62rem;padding:2px 7px;background:var(--chalk);color:var(--ink);vertical-align:middle;transform:skewX(-12deg)}
+.st tr.mine td{background:color-mix(in srgb,var(--c) 10%,transparent)}
+.st tr.mine td:first-child{box-shadow:inset 4px 0 0 var(--c)}
+.st .chip.q{background:var(--volt);color:var(--ink)}
+.p-id .chip.q{background:var(--volt);color:var(--ink)}
+.card.mine{border-color:var(--cc);box-shadow:0 0 0 1px var(--cc)}
+.chip.me{background:var(--chalk);color:var(--ink)}
+.mc.mine{border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
+
+/* ---------- POKÉDEX ---------- */
+.dx-hero::after{content:"PTS"}
+.dx-stats{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline}
+.dx-stats div{display:flex;align-items:baseline;gap:8px}
+.dx-stats b{font-family:var(--f-display);font-weight:900;font-size:1.8rem;line-height:1;color:var(--volt)}
+#dxType{background:var(--ink-2);color:var(--chalk);border:1px solid var(--line);font-family:var(--f-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;font-size:.85rem}
+.tier{display:grid;gap:16px}
+.tier-h{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.tier-h h2{margin:0;font-family:var(--f-display);font-weight:900;font-size:3rem;line-height:.9}
+.tier-h h2 small{font-size:1.1rem;color:var(--mute);margin-left:4px}
+.tier-h .rule{flex:1;min-width:40px;height:4px;align-self:center;background:repeating-linear-gradient(-60deg,var(--line) 0 8px,transparent 8px 14px)}
+.dx-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+@media (max-width:400px){.dx-g{grid-template-columns:1fr 1fr;gap:8px}.dx h3{font-size:.95rem}}
+.dx{position:relative;background:var(--ink-2);border:1px solid var(--line);padding:12px 12px 10px;display:grid;gap:8px;align-content:start;min-width:0;transition:transform .2s,border-color .2s}
+.dx:hover{transform:translateY(-3px);border-color:var(--t1)}
+.dx::before{content:"";position:absolute;inset:0 0 auto;height:56px;background:linear-gradient(120deg,var(--t1),var(--t2));opacity:.18;pointer-events:none}
+.dx>*{position:relative}
+.dx .dx-spr{width:80px;height:80px;object-fit:contain;image-rendering:pixelated;justify-self:center;margin:-6px 0 -10px;filter:drop-shadow(0 6px 8px #0009)}
+.dx h3{margin:0;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.08rem;line-height:1.05;text-wrap:balance}
+.dx .own{border-top:1px solid var(--line);padding-top:8px;min-height:30px;display:flex;align-items:center}
+.dx .own a{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--mute);font-size:.8rem;font-weight:600;min-width:0}
+.dx .own a span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dx .own a:hover{color:var(--chalk)}
+.dx .own .logo,.dx .own .crest{--sz:22px}
+.dx.free{border-color:color-mix(in srgb,var(--volt) 45%,var(--line))}
+.chip.lib{background:none;color:var(--volt);box-shadow:inset 0 0 0 1px var(--volt)}
+.dx.mine{border-color:var(--chalk)}
+.dx .mine-tag{position:absolute;top:0;right:0;background:var(--chalk);color:var(--ink);font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.6rem;padding:3px 8px 3px 12px;clip-path:polygon(8px 0,100% 0,100% 100%,0 100%)}
+
+/* ---------- DRAFT ---------- */
+.dr-hero::after{content:"PICK"}
+.my-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.mp{background:var(--ink-2);border:1px solid var(--line);border-top:3px solid var(--c);padding:12px 14px;display:grid;grid-template-columns:64px 1fr;gap:4px 12px;align-items:center;min-width:0}
+.mp img{width:64px;height:64px;object-fit:contain;image-rendering:pixelated;grid-row:span 3}
+.mp .label{font-size:.62rem}
+.mp strong{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.15rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp .meta{font-size:.78rem;color:var(--mute)}
+.mp .meta b{color:var(--chalk)}
+.mp.gone{border-top-color:var(--line);opacity:.62}
+.mp.empty{grid-template-columns:1fr;opacity:.55}
+.my-sum{display:flex;flex-wrap:wrap;gap:10px 28px;margin:-10px 0 18px;color:var(--mute);font-size:.92rem}
+.my-sum b{color:var(--chalk)}
+.db-w{overflow-x:auto;border:1px solid var(--line);background:var(--ink-2)}
+table.db{border-collapse:collapse;min-width:100%}
+.db th,.db td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:0;vertical-align:top}
+.db thead th{position:sticky;top:0;background:var(--ink-3);z-index:1;padding:10px 6px;min-width:112px}
+.db thead th a{display:grid;justify-items:center;gap:6px;text-decoration:none;color:var(--chalk);font-family:var(--f-label);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.68rem;text-align:center;line-height:1.1}
+.db thead th .logo,.db thead th .crest{--sz:34px}
+.db thead th .dpos{font-family:var(--f-display);font-weight:900;font-size:1rem;color:var(--mute)}
+.db .rc{position:sticky;left:0;z-index:2;background:var(--ink-3);min-width:64px;width:64px;padding:10px 8px;text-align:center;font-family:var(--f-display);font-weight:900;font-size:1.3rem;color:var(--chalk)}
+.db .rc span{display:block;font-family:var(--f-label);font-size:.9rem;color:var(--volt);margin-top:2px}
+.db thead .rc{z-index:3;font-size:.68rem;font-family:var(--f-label);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);vertical-align:bottom}
+.db td>div{display:grid;justify-items:center;gap:2px;padding:6px 6px 8px;text-align:center;min-height:104px}
+.db .pn{justify-self:start;font-family:var(--f-label);font-weight:700;font-size:.62rem;letter-spacing:.06em;color:var(--mute)}
+.db .db-spr{width:56px;height:56px;object-fit:contain;image-rendering:pixelated;margin:-6px 0 -4px}
+.db td b{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:.82rem;line-height:1.05}
+.db td small{font-family:var(--f-label);font-weight:600;font-size:.66rem;color:var(--volt);letter-spacing:.06em}
+.db td em{font-style:normal;font-family:var(--f-label);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);align-self:center;margin-top:24px}
+.db tr:hover td{background:color-mix(in srgb,var(--chalk) 3%,transparent)}
+.db .mine{background:color-mix(in srgb,var(--c) 12%,transparent)}
+.db thead th.mine{background:color-mix(in srgb,var(--c) 30%,var(--ink-3));box-shadow:inset 0 -3px 0 var(--c)}
+.fa-note{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 16px;border:1px dashed var(--line);color:var(--mute);margin-bottom:14px;font-size:.92rem}
+.fa-note b{color:var(--chalk)}
+.fa{width:100%;border-collapse:collapse;min-width:620px}
+.fa td,.fa th{padding:8px 14px;border-top:1px solid var(--line);text-align:left}
+.fa th{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;color:var(--mute)}
+.fa .fa-n{display:flex;align-items:center;gap:10px;font-weight:700}
+.fa .fa-n img{width:44px;height:44px;object-fit:contain;image-rendering:pixelated;margin:-8px 0}
+.fa .pts{font-family:var(--f-display);font-weight:900;font-size:1.3rem;color:var(--volt)}
+.fa-btn{font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.7rem;background:none;color:var(--chalk);border:1px solid var(--line);padding:6px 10px;cursor:pointer}
+.fa-btn:hover{border-color:var(--volt);color:var(--volt)}
+.me-out{background:none;border:0;color:var(--mute);font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.7rem;cursor:pointer;padding:6px;flex:none}
+.me-out:hover{color:var(--chalk)}
+@media (max-width:860px){.me-out{display:none}}
+/* sprites de caja */
+.boxi{image-rendering:pixelated;object-fit:contain}
+.spr-s.boxi{width:40px;height:30px;margin:-6px 6px -6px -2px}
+.db .db-spr.boxi{width:64px;height:48px;margin:-2px 0 0}
+.fa .fa-n img.boxi{width:52px;height:40px;margin:-6px 0}
+/* tablero girado: equipos en filas, rondas en columnas */
+table.db.v{width:100%;min-width:1080px;table-layout:fixed}
+.db.v col.c-tm{width:190px}
+.db.v thead th{position:sticky;top:0;min-width:0;padding:10px 8px;text-align:left;font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;color:var(--mute);background:var(--ink-3)}
+.db.v thead th span{margin-left:6px;color:var(--volt);font-size:.9rem}
+.db.v thead th.tmh{position:sticky;left:0;z-index:3}
+.db.v th.tm{position:sticky;left:0;z-index:2;background:var(--ink-3);padding:0;text-align:left}
+.db.v th.tm a{display:flex;align-items:center;gap:8px;padding:8px 10px;text-decoration:none;color:var(--chalk);min-width:0;height:100%}
+.db.v th.tm .dpos{font-family:var(--f-display);font-weight:900;font-size:1rem;color:var(--mute);min-width:1.4em}
+.db.v th.tm .logo,.db.v th.tm .crest{--sz:30px}
+.db.v th.tm .tn{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:.88rem;line-height:1;min-width:0;overflow-wrap:anywhere}
+.db.v th.tm .you{margin-left:auto;flex:none}
+.db.v td>div{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:6px;align-items:center;justify-items:start;text-align:left;min-height:0;padding:6px 8px}
+.db.v td .db-spr.boxi{grid-row:1 / span 2;width:44px;height:34px;margin:0}
+.db.v td b{font-size:.78rem;line-height:1;max-width:100%;align-self:end;overflow-wrap:anywhere}
+.db.v td small{font-size:.62rem;align-self:start}
+.db.v td>div.empty{grid-template-columns:1fr;opacity:.5}
+.db.v td>div.empty b{font-family:var(--f-label);font-weight:600;letter-spacing:.1em;font-size:.68rem;color:var(--mute)}
+.db.v tbody tr:hover td,.db.v tbody tr:hover th.tm{background:color-mix(in srgb,var(--chalk) 4%,var(--ink-2))}
+.db.v tr.mine td{background:color-mix(in srgb,var(--c) 12%,transparent)}
+.db.v tr.mine th.tm{background:color-mix(in srgb,var(--c) 26%,var(--ink-3));box-shadow:inset 4px 0 0 var(--c)}
+/* abreviaciones de equipo */
+.chip.ab{background:none;color:var(--chalk);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--chalk) 45%,transparent);letter-spacing:.16em}
+.db.v th.tm .tn b.ab{display:block;font-size:1.05rem;letter-spacing:.06em}
+.db.v th.tm .tn small{display:block;font-family:var(--f-label);font-weight:600;font-size:.6rem;letter-spacing:.04em;color:var(--mute);margin-top:2px}
+.nm .short{display:none}
+@media (max-width:440px){.nm .full{display:none}.nm .short{display:inline;letter-spacing:.06em}}
+/* tablero: celdas uniformes */
+.db.v td,.db.v th.tm{vertical-align:middle}
+.db.v td>div{box-sizing:border-box;height:var(--cellh,auto);align-content:center}
+.db.v th.tm a{box-sizing:border-box;height:var(--cellh,auto)}
+/* hover: aumento sutil de logos y sprites */
+.logo,.crest,img.spr,.dx-spr,.db-spr,.boxi,.spr-s,.mp img{transition:transform .2s ease}
+.card:hover .logo,.card:hover .crest,.pk:hover .spr,.dx:hover .dx-spr,.mp:hover img,.sd:hover .logo,.sd:hover .crest,
+.mc:hover .side .logo,.mc:hover .side .crest,.ld:hover .logo,.ld:hover .crest,.ps:hover .logo,.ps:hover .crest,
+.p-nav a:hover .logo,.p-nav a:hover .crest,.me-chip:hover .logo,
+.st tbody tr:hover .tm .logo,.st tbody tr:hover .tm .crest,.db.v td:hover .db-spr,.db.v th.tm a:hover .logo,.db.v th.tm a:hover .crest,
+.fa tbody tr:hover img,.bar:hover img,.tc tbody tr:hover img,#mtable tbody tr:hover img,.row:hover .tm .logo,.wk:hover .logo,.wk:hover .crest{transform:scale(1.1)}
+.pk .spr.anim{object-fit:scale-down}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div class="ticker" aria-label="Resumen de la temporada">
+  <div class="tag"><span class="dot"></span>Temporada 5</div>
+  <div class="track" id="ticker"></div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="PPV Draft League, inicio">
+      <span class="mark"><img src="logos/logo-ppv.png" alt=""></span>
+      <span class="name">PPV DRAFT LEAGUE<small>Evolution · S5</small></span>
+    </a>
+    <nav aria-label="Principal">
+      <a href="#home" data-page="home">Home</a>
+      <a href="#standings" data-page="standings">Standings</a>
+      <a href="#matches" data-page="matches">Matches</a>
+      <a href="#playoffs" data-page="playoffs">Playoffs</a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="#teams" data-page="teams">Conferencias</a>
+      <a href="#draft" data-page="draft">Draft</a>
+      <a href="#pokedex" data-page="pokedex">Pokedex</a>
+    </nav>
+    <a class="me-chip" id="meChip" href="#"></a>
+    <button type="button" class="me-out" id="meOut">Salir</button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main id="page-home">
+  <section class="hero">
+    <div class="hero-media" id="heroMedia" aria-hidden="true">
+      <video id="heroVideo" muted loop playsinline preload="metadata" poster="media/hero-poster.jpg">
+        <source src="media/hero-web.mp4" type="video/mp4">
+      </video>
+    </div>
+    <button type="button" class="video-toggle" id="videoToggle" aria-pressed="false">❚❚ Pausar video</button>
+    <div class="wrap">
+      <div>
+        <div class="season"><span class="a"><i>Temporada 5</i></span><span class="b"><i>Playoffs</i></span></div>
+        <h1><span class="ln k">Vive cada pick.</span><span class="ln j">Gana cada</span><span class="ln j">semana.</span></h1>
+        <p class="lede">18 coaches, dos conferencias y un solo campeón. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al título.</p>
+        <div class="cta">
+          <a class="btn" href="#playoffs">Ver playoffs</a>
+          <a class="btn ghost" href="#teams">Conoce los equipos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="strip">
+    <div class="wrap">
+      <div class="stat"><b>18</b><span>Equipos en liga</span></div>
+      <div class="stat"><b>2</b><span>Conferencias RojoFuego · VerdeHoja</span></div>
+      <div class="stat"><b>8</b><span>Semanas de fase regular</span></div>
+      <div class="stat"><b>8</b><span>Boletos a playoffs</span></div>
+    </div>
+  </div>
+
+
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="label">Fase regular · Final</div><h2>Tabla de <em>posiciones</em></h2></div>
+        <a class="link" href="#standings">Standings completos</a>
+      </div>
+      <div class="confs" id="tables"></div>
+      <div class="legend"><span><i></i>Línea de playoffs</span><span>Victoria = 3 pts</span><span>Diff = diferencia de Pokémon restantes</span></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="label">Pokémon Leaderboard</div><h2>Los que más <em>KOs</em> dejan</h2></div>
+        <a class="link" href="#" data-soon>Ver Pokedex</a>
+      </div>
+      <div class="lead">
+        <div class="mvp">
+          <div><div class="label">Líder en KOs · Temporada 5</div><h3>Blastoise</h3></div>
+          <img class="mvp-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/9.gif" alt="">
+          <div class="kd">
+            <div><b class="num">24</b><span>Kills</span></div>
+            <div><b class="num">8</b><span>Deaths</span></div>
+            <div><b class="num">18</b><span>Partidas</span></div>
+            <div><b class="num">3.00</b><span>K/D</span></div>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><div><div class="label">Formato de la temporada</div><h2>Del draft al <em>título</em></h2></div></div>
+      <div class="format">
+        <div class="step"><div class="label">Fase 1</div><h3>Draft</h3><p>Cada coach arma su roster pick por pick.</p></div>
+        <div class="step"><div class="label">Fase 2</div><h3>Trades</h3><p>Intercambios entre coaches para ajustar el equipo.</p></div>
+        <div class="step"><div class="label">Fase 3</div><h3>Waivers</h3><p>Pokémon libres disponibles para reforzarse a media temporada.</p></div>
+        <div class="step now"><div class="label">En curso</div><h3>Playoffs</h3><p>Los 8 mejores pelean por el campeonato.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= TEAMS ================= -->
+<main id="page-teams" hidden>
+  <section class="t-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution</div><h1>Conferencias</h1></div>
+      <div class="confsum" id="confsum"></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="seg" role="group" aria-label="Filtrar por conferencia">
+        <button type="button" data-f="all" aria-pressed="true">Todos</button>
+        <button type="button" data-f="rojo" aria-pressed="false">RojoFuego</button>
+        <button type="button" data-f="azul" aria-pressed="false">VerdeHoja</button>
+      </div>
+      <label class="search" for="q">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="q" type="search" placeholder="Buscar equipo" autocomplete="off">
+      </label>
+      <select id="sort" aria-label="Ordenar equipos">
+        <option value="rank">Por posición</option>
+        <option value="az">A – Z</option>
+        <option value="diff">Por diff</option>
+      </select>
+      <span class="label count" id="count"></span>
+    </div>
+  </div>
+  <div class="wrap grid-sec" id="grid"></div>
+</main>
+
+<!-- ================= STANDINGS ================= -->
+<main id="page-standings" hidden>
+  <section class="t-hero s-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution · Fase regular</div><h1>Standings</h1></div>
+      <div class="leaders" id="leaders"></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="seg" role="group" aria-label="Vista de la tabla" id="sview">
+        <button type="button" data-v="conf" aria-pressed="true">Por conferencia</button>
+        <button type="button" data-v="all" aria-pressed="false">General</button>
+      </div>
+      <button type="button" class="link jump" id="toMons">Pokémon Leaderboard ↓</button>
+      <span class="label count">Top 4 de cada conferencia van a playoffs · Victoria = 3 pts</span>
+    </div>
+  </div>
+  <div class="wrap s-body">
+    <div id="stables"></div>
+    <section id="mons-sec">
+      <div class="sec-head"><div><div class="label">Rendimiento individual</div><h2>Pokémon <em>Leaderboard</em></h2></div></div>
+      <div class="mtiles" id="mtiles"></div>
+      <div class="table"><div class="rows"><table class="st m" id="mtable"></table></div></div>
+    </section>
+  </div>
+</main>
+
+<!-- ================= MATCHES ================= -->
+<main id="page-matches" hidden>
+  <section class="t-hero m-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution · Series al mejor de 3</div><h1>Matches</h1></div>
+      <div class="weeks" id="weeks" role="group" aria-label="Elegir semana"></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="seg" role="group" aria-label="Filtrar por conferencia" id="mconf">
+        <button type="button" data-mc="all" aria-pressed="true">Todas</button>
+        <button type="button" data-mc="rojo" aria-pressed="false">RojoFuego</button>
+        <button type="button" data-mc="azul" aria-pressed="false">VerdeHoja</button>
+      </div>
+      <select id="mteam" aria-label="Ver las series de un equipo"><option value="">Todos los equipos</option></select>
+      <span class="label count" id="mcount"></span>
+    </div>
+  </div>
+  <div class="wrap s-body" id="mbody"></div>
+</main>
+
+<!-- ================= PLAYOFFS ================= -->
+<main id="page-playoffs" hidden>
+  <section class="t-hero po-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution · Fase final</div><h1>Playoffs</h1></div>
+      <div class="po-status" id="po-status"></div>
+    </div>
+  </section>
+  <div class="wrap s-body">
+    <section>
+      <div class="sec-head"><div><div class="label">Formato escalera · Series al mejor de 3 · Cruce de conferencias</div><h2>El <em>bracket</em></h2></div></div>
+      <div class="bk-w" id="bracket"></div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">Cómo se llega al título</div><h2>El camino a la <em>final</em></h2></div></div>
+      <div class="format" id="po-format">
+        <div class="step" data-r="wc"><div class="label">Ronda 1</div><h3>Wild Card</h3><p>El #3 de cada conferencia contra el #4 de la otra.</p></div>
+        <div class="step" data-r="qf"><div class="label">Ronda 2</div><h3>Cuartos</h3><p>El ganador enfrenta al #2 de la conferencia contraria.</p></div>
+        <div class="step" data-r="sf"><div class="label">Ronda 3</div><h3>Semifinal</h3><p>Los #1 de conferencia esperan aquí con doble bye.</p></div>
+        <div class="step" data-r="final"><div class="label">Ronda 4</div><h3>Gran Final</h3><p>Los ganadores de cada lado juegan por el título.</p></div>
+      </div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">Ocho boletos</div><h2>Los <em>clasificados</em></h2></div></div>
+      <div class="seeds-g" id="po-seeds"></div>
+    </section>
+  </div>
+</main>
+
+<!-- ================= POKÉDEX ================= -->
+<main id="page-pokedex" hidden>
+  <section class="t-hero dx-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution · Pool del draft</div><h1>Pokedex</h1></div>
+      <div class="dx-stats" id="dxStats"></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="seg" role="group" aria-label="Filtrar por disponibilidad" id="dxSeg">
+        <button type="button" data-s="all" aria-pressed="true">Todos</button>
+        <button type="button" data-s="free" aria-pressed="false">Libres</button>
+        <button type="button" data-s="owned" aria-pressed="false">Con dueño</button>
+        <button type="button" data-s="mine" aria-pressed="false">Mi equipo</button>
+      </div>
+      <label class="search" for="dxQ">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="dxQ" type="search" placeholder="Buscar Pokémon" autocomplete="off">
+      </label>
+      <select id="dxType" aria-label="Filtrar por tipo"></select>
+      <span class="label count" id="dxCount"></span>
+    </div>
+  </div>
+  <div class="wrap s-body" id="dxBody"></div>
+</main>
+
+<!-- ================= DRAFT ================= -->
+<main id="page-draft" hidden>
+  <section class="t-hero dr-hero">
+    <div class="wrap">
+      <div><div class="label">Temporada 5 · Evolution · Formato snake</div><h1>Draft</h1></div>
+      <div class="dx-stats" id="drStats"></div>
+    </div>
+  </section>
+  <div class="wrap s-body">
+    <section>
+      <div class="sec-head"><div><div class="label">Richampions VGC</div><h2>Tu <em>draft</em></h2></div></div>
+      <div class="my-sum" id="drMineSum"></div>
+      <div class="my-g" id="drMine"></div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">Una fila por equipo en orden de draft · ↓ ↑ indican el sentido de cada ronda (snake)</div><h2>El <em>tablero</em></h2></div></div>
+      <div class="db-w" id="drBoard"></div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label" id="drFaCount"></div><h2>Free <em>agency</em></h2></div><a class="link" href="#pokedex">Ver Pokedex completa</a></div>
+      <div class="fa-note" id="drFaNote"></div>
+      <div class="table"><div class="rows"><table class="fa" id="drFa"></table></div></div>
+    </section>
+  </div>
+</main>
+
+<!-- ================= TEAM PROFILE ================= -->
+<main id="page-profile" hidden></main>
+
+<footer class="site">
+  <div class="wrap f-top">
+    <div class="f-brand">
+      <div class="f-id"><img class="flogo" src="logos/logo-ppv.png" alt=""><strong>PPV DRAFT LEAGUE<small>Temporada 5 · Evolution</small></strong></div>
+      <p>Una comunidad de coaches que arma su equipo pick por pick, negocia trades y se juega cada semana en series al mejor de 3.</p>
+      <div class="f-social">
+        <a href="https://www.youtube.com/@PPVDRAFTLEAGUE-f5z" target="_blank" rel="noopener" aria-label="YouTube de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9L15.5 12z"/></svg><span>YouTube</span></a>
+        <a href="https://www.instagram.com/ppvstagram/" target="_blank" rel="noopener" aria-label="Instagram de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5z"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg><span>Instagram</span></a>
+      </div>
+    </div>
+    <nav class="f-col" aria-label="Navegación del pie">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#standings">Standings</a></li>
+        <li><a href="#matches">Matches</a></li>
+        <li><a href="#playoffs">Playoffs</a></li>
+        <li><a href="#teams">Conferencias</a></li>
+      </ul>
+    </nav>
+    <div class="f-col">
+      <h4>La liga</h4>
+      <ul>
+        <li><a href="#teams"><span class="dot-r" aria-hidden="true"></span>Conferencia RojoFuego</a></li>
+        <li><a href="#teams"><span class="dot-a" aria-hidden="true"></span>Conferencia VerdeHoja</a></li>
+        <li><a href="#draft">Draft</a></li>
+        <li><a href="#pokedex">Pokedex</a></li>
+        <li><a href="#" id="fMine">Mi equipo</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Temporada 5</h4>
+      <dl>
+        <div><dt>Campeón</dt><dd id="fChamp">Por definir</dd></div>
+        <div><dt>Equipos</dt><dd>18</dd></div>
+        <div><dt>Fase regular</dt><dd>9 semanas</dd></div>
+        <div><dt>Formato</dt><dd>Series al mejor de 3</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="wrap f-bottom">
+    <span>© 2026 PPV Draft League. Proyecto de fans sin fines de lucro, no afiliado a Nintendo, Game Freak ni The Pokémon Company.</span>
+    <span>Sprites: <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a> · <button type="button" class="f-up" id="fUp">↑ Volver arriba</button></span>
+  </div>
+</footer>
+
+<div class="drawer" id="drawer" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+// Datos reales de la fase regular (ppvdraftleague.com/standings). Un nombre se reemplazó por un marcador.
+const TEAMS=[
+ {n:"Inter Di Lorenzo",c:"rojo",w:7,l:1,d:13,h:[350,320]},
+ {n:"CanoLovers",c:"rojo",w:7,l:1,d:9,h:[28,10]},
+ {n:"Chaewons",c:"rojo",w:5,l:3,d:5,h:[200,230]},
+ {n:"Clangourous Chromes",c:"rojo",w:5,l:3,d:2,h:[270,300]},
+ {n:"Vampotros",c:"rojo",w:4,l:4,d:1,h:[290,250]},
+ {n:"Blue Cock",c:"rojo",w:4,l:4,d:0,h:[210,190]},
+ {n:"Mamitas La Paz",c:"rojo",w:2,l:6,d:-8,h:[320,280]},
+ {n:"Nombre por definir",c:"rojo",w:1,l:7,d:-11,h:[20,0],ph:true},
+ {n:"Canolo Haters",c:"rojo",w:1,l:7,d:-11,h:[0,340]},
+ {n:"Los Griyos",c:"azul",w:7,l:1,d:11,h:[30,50]},
+ {n:"Mega Avinites",c:"azul",w:7,l:1,d:10,h:[190,170]},
+ {n:"Los Pats",c:"azul",w:6,l:2,d:8,h:[280,320]},
+ {n:"Richampions VGC",c:"azul",w:5,l:3,d:5,h:[0,20]},
+ {n:"Golden Tapus",c:"azul",w:5,l:3,d:3,h:[45,35]},
+ {n:"Brandogerpons",c:"azul",w:2,l:6,d:-6,h:[140,110]},
+ {n:"Pokevmon",c:"azul",w:2,l:6,d:-7,h:[220,0]},
+ {n:"Winstoni",c:"azul",w:2,l:6,d:-9,h:[30,15]},
+ {n:"Browtlans",c:"azul",w:0,l:8,d:-15,h:[170,200]},
+];
+const MONS=[["Blastoise",24,3.00],["Primarina",22,2.44],["Scovillain",21,2.63],["Sylveon",17,3.40],["Ditto",17,1.89],["Ceruledge",16,8.00],["Gyarados",16,2.67],["Garchomp",16,2.29]];
+// Sprites de 5.a generacion (Black/White) de PokeAPI: sprites fijos
+const SPR_BASE="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/";
+const SPR_IDS={"Mantine":226,"Totodile":158,"Rillaboom":812,"Ninetales":38,"Cloyster":91,"Typhlosion":157,"Rhyhorn":111,"Wobbuffet":202,"Dialga":483,"Rowlet":722,"Maushold":925,"Paldean Tauros Aqua":10252,"Bellibolt":939,"Ceruledge":937,"Basculegion-Female":10248,"Palafin":964,"Paldean Tauros Blaze":10251,"Hydrapple":1019,"Kingambit":983,"Archaludon":1018,"Armarouge":936,"Glimmora":970,"Scovillain":952,"Skeledirge":911,"Runerigus":867,"Wyrdeer":899,"Kleavor":900,"Ditto":132,"Basculegion-Male":902,"Tinkaton":959,"Sinistcha":1013,"Espathra":956,"Garganacl":934,"Orthworm":968,"Sneasler":903,"Hisuian Zoroark":10239,"Hisuian Typhlosion":10233,"Dragapult":887,"Hisuian Goodra":10242,"Hatterene":858,"Mr. Rime":866,"Corviknight":823,"Hisuian Samurott":10236,"Meowscarada":908,"Morpeko":877,"Floette":670,"Araquanid":752,"Mudsdale":750,"Toucannon":733,"Aegislash":681,"Toxapex":748,"Farigiraf":981,"Hisuian Arcanine":10230,"Tsareena":763,"Vivillon":666,"Primarina":730,"Galarian Slowbro":10165,"Galarian Slowking":10172,"Alolan Ninetales":10104,"Mimikyu":778,"Heliolisk":695,"Talonflame":663,"Klefki":707,"Alolan Raichu":10100,"Vanilluxe":584,"Oranguru":765,"Incineroar":727,"Drampa":780,"Whimsicott":547,"Salazzle":758,"Chandelure":609,"Meowstic Female":10025,"Kommo-o":784,"Greninja":658,"Sylveon":700,"Aurorus":699,"Meowstic Male":678,"Chesnaught":652,"Excadrill":530,"Liepard":510,"Delphox":655,"Rotom-Wash":10009,"Volcarona":637,"Rotom-Heat":10008,"Rotom-Fan":10011,"Conkeldurr":534,"Emboar":500,"Hawlucha":701,"Noivern":715,"Golurk":623,"Reuniclus":579,"Rotom-Mow":10012,"Rotom-Frost":10010,"Hydreigon":635,"Krookodile":553,"Hippowdon":450,"Mamoswine":473,"Rampardos":409,"Manectric":310,"Lopunny":428,"Pidgeot":18,"Garchomp":445,"Ariados":168,"Gliscor":472,"Pelipper":279,"Milotic":350,"Empoleon":395,"Froslass":478,"Infernape":392,"Banette":354,"Politoed":186,"Arcanine":59,"Umbreon":197,"Toxicroak":454,"Torkoal":324,"Skarmory":227,"Starmie":121,"Meganium":154,"Chimecho":358,"Scizor":212,"Raichu":26,"Jolteon":135,"Rhyperior":464,"Altaria":334,"Azumarill":184,"Gardevoir":282,"Gallade":475,"Aerodactyl":142,"Pikachu":25,"Heracross":214,"Gyarados":130,"Sableye":302,"Aggron":306,"Venusaur":3,"Slowking":199,"Alakazam":65,"Gengar":94,"Tyranitar":248,"Blastoise":9,"Charizard":6,"Clefable":36,"Kangaskhan":115,"Dragonite":149,"Slowbro":80,"Snorlax":143};
+const spr=(n,cls="spr")=>SPR_IDS[n]?`<img class="${cls}" src="${SPR_BASE}${SPR_IDS[n]}.png" alt="" loading="lazy" decoding="async">`:"";
+// Sprites de caja (PC) para los lugares pequeños: Autumnchi/coloured-box-sprites
+const BOX_BASE="https://raw.githubusercontent.com/Autumnchi/coloured-box-sprites/main/";
+const BOX={"Charizard":"charizard","Floette":"floette","Gengar":"gengar","Incineroar":"incineroar","Tyranitar":"tyranitar","Whimsicott":"whimsicott","Dragonite":"dragonite","Garchomp":"garchomp","Gardevoir":"gardevoir","Kangaskhan":"kangaskhan","Kingambit":"kingambit","Pelipper":"pelipper","Sinistcha":"sinistcha","Sneasler":"sneasler","Volcarona":"volcarona","Aegislash":"aegislash","Aerodactyl":"aerodactyl","Archaludon":"archaludon","Clefable":"clefable","Excadrill":"excadrill","Farigiraf":"farigiraf","Froslass":"froslass","Gallade":"gallade","Glimmora":"glimmora","Gyarados":"gyarados","Starmie":"starmie","Venusaur":"venusaur","Alolan Ninetales":"ninetales-alola","Arcanine":"arcanine","Basculegion-Male":"basculegion","Dragapult":"dragapult","Hisuian Typhlosion":"typhlosion-hisui","Maushold":"maushold","Meganium":"meganium","Palafin":"palafin","Primarina":"primarina","Talonflame":"talonflame","Banette":"banette","Blastoise":"blastoise","Chandelure":"chandelure","Delphox":"delphox","Drampa":"drampa","Feraligatr":"feraligatr","Greninja":"greninja","Heracross":"heracross","Hisuian Zoroark":"zoroark-hisui","Lopunny":"lopunny","Lucario":"lucario","Manectric":"manectric","Medicham":"medicham","Milotic":"milotic","Politoed":"politoed","Rotom-Wash":"rotom-wash","Scizor":"scizor","Sharpedo":"sharpedo","Slowbro":"slowbro","Torkoal":"torkoal","Corviknight":"corviknight","Hatterene":"hatterene","Hisuian Arcanine":"arcanine-hisui","Mamoswine":"mamoswine","Meowscarada":"meowscarada","Mimikyu":"mimikyu","Rotom-Heat":"rotom-heat","Sylveon":"sylveon","Vivillon":"vivillon","Abomasnow":"abomasnow","Aggron":"aggron","Alakazam":"alakazam","Altaria":"altaria","Ampharos":"ampharos","Azumarill":"azumarill","Beedrill":"beedrill","Camerupt":"camerupt","Conkeldurr":"conkeldurr","Crabominable":"crabominable","Ditto":"ditto","Empoleon":"empoleon","Galarian Slowbro":"slowbro-galar","Galarian Slowking":"slowking-galar","Garganacl":"garganacl","Golurk":"golurk","Hawlucha":"hawlucha","Hippowdon":"hippowdon","Hisuian Goodra":"goodra-hisui","Houndoom":"houndoom","Hydreigon":"hydreigon","Klefki":"klefki","Liepard":"liepard","Meowstic Male":"meowstic","Oranguru":"oranguru","Orthworm":"orthworm","Pinsir":"pinsir","Sableye":"sableye","Serperior":"serperior","Weavile":"weavile","Araquanid":"araquanid","Armarouge":"armarouge","Basculegion-Female":"basculegion-f","Kommo-o":"kommo-o","Meowstic Female":"meowstic-f","Paldean Tauros Aqua":"tauros-paldea-water","Paldean Tauros Blaze":"tauros-paldea-fire","Scovillain":"scovillain","Slowking":"slowking","Snorlax":"snorlax","Tsareena":"tsareena","Umbreon":"umbreon","Wyrdeer":"wyrdeer","Absol":"absol","Alcremie":"alcremie","Beartic":"beartic","Ceruledge":"ceruledge","Chesnaught":"chesnaught","Chimecho":"chimecho","Clawitzer":"clawitzer","Emboar":"emboar","Espathra":"espathra","Glalie":"glalie","Goodra":"goodra","Hisuian Decidueye":"decidueye-hisui","Hydrapple":"hydrapple","Infernape":"infernape","Kleavor":"kleavor","Krookodile":"krookodile","Machamp":"machamp","Ninetales":"ninetales","Noivern":"noivern","Pidgeot":"pidgeot","Raichu":"raichu","Reuniclus":"reuniclus","Rhyperior":"rhyperior","Rotom-Mow":"rotom-mow","Salazzle":"salazzle","Skarmory":"skarmory","Skeledirge":"skeledirge","Steelix":"steelix","Tinkaton":"tinkaton","Toxicroak":"toxicroak","Vanilluxe":"vanilluxe","Victreebel":"victreebel","Zoroark":"zoroark","Alolan Raichu":"raichu-alola","Audino":"audino","Diggersby":"diggersby","Glaceon":"glaceon","Hisuian Samurott":"samurott-hisui","Leafeon":"leafeon","Mudsdale":"mudsdale","Pangoro":"pangoro","Passimian":"passimian","Quaquaval":"quaquaval","Rotom-Frost":"rotom-frost","Toxapex":"toxapex","Typhlosion":"typhlosion","Aromatisse":"aromatisse","Hisuian Avalugg":"avalugg-hisui","Jolteon":"jolteon","Luxray":"luxray","Lycanroc (Midday)":"lycanroc","Lycanroc (Midnight)":"lycanroc-midnight","Pikachu":"pikachu","Polteageist":"polteageist","Runerigus":"runerigus","Simipour":"simipour","Simisage":"simisage","Simisear":"simisear","Toucannon":"toucannon","Trevenant":"trevenant","Vaporeon":"vaporeon","Appletun":"appletun","Arbok":"arbok","Aurorus":"aurorus","Avalugg":"avalugg","Bastiodon":"bastiodon","Bellibolt":"bellibolt","Cofagrigus":"cofagrigus","Decidueye":"decidueye","Espeon":"espeon","Flapple":"flapple","Flareon":"flareon","Florges":"florges","Furfrou":"furfrou","Gliscor":"gliscor","Gourgeist":"gourgeist","Heliolisk":"heliolisk","Lycanroc (Dusk)":"lycanroc-dusk","Morpeko":"morpeko","Mr. Rime":"mr-rime","Rampardos":"rampardos","Roserade":"roserade","Rotom-Fan":"rotom-fan","Samurott":"samurott","Sandaconda":"sandaconda","Tauros":"tauros","Torterra":"torterra","Tyrantrum":"tyrantrum","Ariados":"ariados","Castform":"castform","Dedenne":"dedenne","Emolga":"emolga","Forretress":"forretress","Galarian Stunfisk":"stunfisk-galar","Garbodor":"garbodor","Rotom":"rotom","Slurpuff":"slurpuff","Spiritomb":"spiritomb","Stunfisk":"stunfisk","Watchog":"watchog"};
+const BOX_DATA={};
+const box=(n,cls="")=>BOX[n]?`<img class="${cls} boxi" src="${BOX_DATA[BOX[n]]||BOX_BASE+BOX[n]+".png"}" alt="" loading="lazy" decoding="async">`:spr(n,cls);
+document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&/spr|mvp-art|boxi/.test(t.className))t.remove();},true);
+const CONF={rojo:{name:"RojoFuego",v:"var(--rojo)"},azul:{name:"VerdeHoja",v:"var(--verde)"}};
+
+const ME=12; // sesión simulada: Richampions VGC
+// abreviaciones: primeras 3 consonantes; si el nombre empieza con vocal, esa vocal es la inicial (de palabras cortas como Los/La/Di solo la inicial; si se repite, se usa la siguiente consonante)
+const ABBR=["INT","CNL","CHW","CLN","VMP","BLC","MMT","NMB","CNH","LGR","MGV","LPT","RCH","GLD","BRN","PKV","WNS","BRW"];
+TEAMS.forEach((t,i)=>{t.pts=t.w*3;t.ab=ABBR[i];});
+["rojo","azul"].forEach(c=>TEAMS.filter(t=>t.c===c).forEach((t,i)=>{t.rank=i+1;t.q=i<4;}));
+
+const esc=s=>s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const initials=n=>n.ph?"?":n.n.replace(/^(Los|Las|La|El)\s+/i,"").split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const slug=t=>t.n.toLowerCase().replace(/\s+/g,"-");
+const LOGO_FILE={"richampions-vgc":"richampions-vgc.png"}; // logos que no son .webp
+const crest=t=>t.ph?hexCrest(t):`<span class="logo lg-${slug(t)}" aria-hidden="true"><img src="logos/${LOGO_FILE[slug(t)]||slug(t)+".webp"}" alt="" loading="lazy" decoding="async"></span>`;
+const hexCrest=t=>`<span class="crest" style="--h1:hsl(${t.h[0]} 85% 62%);--h2:hsl(${t.h[1]} 80% 42%)" aria-hidden="true">${initials(t)}</span>`;
+const by=c=>TEAMS.filter(t=>t.c===c);
+
+/* ticker */
+const tk=TEAMS.filter(t=>t.q).map(t=>`<span><b>#${t.ab}</b> ${CONF[t.c].name} ${t.rank}º · ${t.w}-${t.l} · ${t.d>0?"+":""}${t.d}</span>`).join("")+MONS.slice(0,3).map(m=>`<span>Leaderboard · <b>${m[0]}</b> ${m[1]} KOs</span>`).join("");
+document.getElementById("ticker").innerHTML=tk+tk;
+
+
+/* standings */
+document.getElementById("tables").innerHTML=["rojo","azul"].map(c=>`
+ <div class="table" style="--c:${CONF[c].v}">
+  <div class="th"><h3>${CONF[c].name}</h3><span class="label">Conferencia</span></div>
+  <div class="rows">
+   <div class="row hd"><span>#</span><span>Equipo</span><span>W-L</span><span>Diff</span><span></span><span style="text-align:right">Pts</span></div>
+   ${by(c).map(t=>`<div class="row ${t.q?"in":"out"} ${t.rank===5?"cut":""}">
+     <span class="pos num">${t.rank}</span>
+     <span class="tm">${crest(t)}<span>${esc(t.n)}</span></span>
+     <span class="num">${t.w}-${t.l}</span>
+     <span class="num">${t.d>0?"+":""}${t.d}</span>
+     <span class="diffbar" aria-hidden="true"><i class="${t.d>=0?"p":"n"}" style="width:${Math.abs(t.d)/15*50}%"></i></span>
+     <span class="pts num">${t.pts}</span></div>`).join("")}
+  </div></div>`).join("");
+
+/* bars */
+const max=MONS[0][1];
+document.getElementById("bars").innerHTML=MONS.map((m,i)=>`<div class="bar ${i===0?"top":""}"><span class="i num">${i+1}</span><span class="p">${box(m[0],"spr-s")}${m[0]}</span><span class="t"><i style="width:${m[1]/max*100}%;animation-delay:${i*.06}s"></i></span><span class="v num">${m[1]}</span></div>`).join("")+`<div class="note">Mejor K/D de la temporada: <strong style="color:var(--volt)">Ceruledge, 8.00</strong> (16 KOs, 2 caídas)</div>`;
+
+/* teams page */
+document.getElementById("confsum").innerHTML=["rojo","azul"].map(c=>{const l=by(c)[0];return `<div class="cs" style="--c:${CONF[c].v}"><div><span class="label">Conferencia</span><b style="color:${CONF[c].v}">${CONF[c].name}</b></div><div class="lead-t"><span class="label">${by(c).length} equipos · Líder</span><div>${esc(l.n)} ${l.w}-${l.l}</div></div></div>`}).join("");
+
+let filter="all";
+const q=document.getElementById("q"),sortSel=document.getElementById("sort");
+function card(t){
+  const form=Array.from({length:8},(_,i)=>`<i class="${i<t.w?"w":""}"></i>`).join("");
+  return `<button type="button" class="card ${t.q?"":"out"} ${TEAMS.indexOf(t)===ME?"mine":""}" data-i="${TEAMS.indexOf(t)}" data-rank="${t.rank}" style="--cc:${CONF[t.c].v}" aria-label="${esc(t.n)}, ${t.w} ganados, ${t.l} perdidos">
+   <div class="top">${crest(t)}<div style="min-width:0"><h3>${esc(t.n)}</h3><div class="chips"><span class="chip ab"><i>#${t.ab}</i></span><span class="chip cf"><i>${CONF[t.c].name} #${t.rank}</i></span>${TEAMS.indexOf(t)===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}${t.q?`<span class="chip q"><i>Playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div></div></div>
+   <div class="form" aria-hidden="true" title="Victorias sobre 8 semanas">${form}</div>
+   <div class="nums"><div><b class="num">${t.w}-${t.l}</b><span>Récord</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
+  </button>`;
+}
+function renderTeams(){
+  const term=q.value.trim().toLowerCase();
+  const s=sortSel.value;
+  const sorter=s==="az"?(a,b)=>a.n.localeCompare(b.n):s==="diff"?(a,b)=>b.d-a.d:(a,b)=>a.rank-b.rank;
+  const confs=filter==="all"?["rojo","azul"]:[filter];
+  let total=0;
+  const html=confs.map(c=>{
+    const list=by(c).filter(t=>t.n.toLowerCase().includes(term)).sort(sorter);
+    total+=list.length;
+    if(!list.length)return "";
+    return `<section style="--c:${CONF[c].v}"><div class="conf-title"><h2 style="color:${CONF[c].v}">${CONF[c].name}</h2><span class="label">${list.length} equipos</span><span class="rule"></span></div><div class="cards">${list.map(card).join("")}</div></section>`;
+  }).join("");
+  document.getElementById("grid").innerHTML=html||`<div class="empty">Ningún equipo coincide con “${esc(q.value)}”. Prueba con otro nombre.</div>`;
+  document.getElementById("count").textContent=`${total} de ${TEAMS.length} equipos`;
+}
+document.querySelectorAll("#page-teams .seg button").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.f;document.querySelectorAll("#page-teams .seg button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderTeams();}));
+q.addEventListener("input",renderTeams);sortSel.addEventListener("change",renderTeams);
+renderTeams();
+
+/* drawer */
+const drawer=document.getElementById("drawer");
+document.getElementById("grid").addEventListener("click",e=>{const cc=e.target.closest(".card");if(cc){location.hash="team-"+slug(TEAMS[+cc.dataset.i]);return;}
+  const c=e.target.closest(".card");if(!c)return;
+  const t=TEAMS[+c.dataset.i];
+  drawer.innerHTML=`<div class="panel" style="--cc:${CONF[t.c].v}" role="dialog" aria-modal="true" aria-label="${esc(t.n)}">
+    <button type="button" class="close" id="closeD">Cerrar</button>
+    <div style="display:flex;gap:18px;align-items:center">${crest(t)}<div><div class="label" style="color:${CONF[t.c].v}">${CONF[t.c].name} · #${t.rank}</div><h2>${esc(t.n)}</h2></div></div>
+    <div class="dstats"><div><b class="num">${t.w}</b><span>W</span></div><div><b class="num">${t.l}</b><span>L</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
+    <div><div class="label" style="margin-bottom:10px">Roster drafteado</div><div class="roster">${Array.from({length:12},(_,i)=>`<div>Pick ${i+1}</div>`).join("")}</div></div>
+    <p style="color:var(--mute);margin:0;font-size:.9rem">En el sitio real, aquí van el coach, los sprites del roster y los resultados semana a semana.</p>
+  </div>`;
+  drawer.hidden=false;document.getElementById("closeD").focus();
+});
+const closeD=()=>{drawer.hidden=true;drawer.innerHTML="";};
+drawer.addEventListener("click",e=>{if(e.target===drawer||e.target.id==="closeD")closeD();});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)closeD();});
+
+/* standings */
+const sign=x=>x>0?"+"+x:""+x;
+TEAMS.slice().sort((a,b)=>b.pts-a.pts||b.d-a.d||a.n.localeCompare(b.n)).forEach((t,i)=>t.gr=i+1);
+const MONS_FULL=[["Blastoise",18,24,8],["Primarina",19,22,9],["Scovillain",15,21,8],["Sylveon",13,17,5],["Ditto",15,17,9],["Ceruledge",9,16,2],["Gyarados",12,16,6],["Garchomp",13,16,7],["Mudsdale",13,16,8],["Floette",15,15,7]].map(([n,g,k,d])=>({n,g,k,d,kd:k/d}));
+const SDEF={rank:1,n:1,w:-1,l:1,d:-1,pts:-1};
+let sView="conf",sKey="rank",sDir=1;
+const sortBy=(list,key,dir,tie)=>list.slice().sort((a,b)=>{const x=a[key],y=b[key];const r=typeof x==="string"?x.localeCompare(y):x-y;return (dir===1?r:-r)||tie(a,b);});
+const sth=(k,label,cls="")=>SDEF[k]?`<th class="${cls}" aria-sort="${sKey===k?(sDir===1?"ascending":"descending"):"none"}"><button type="button" data-k="${k}">${label}</button></th>`:`<th class="${cls}">${label}</th>`;
+const shead=()=>`<thead><tr>${sth("rank","#","l")}${sth("n","Equipo","l")}${sth("pj","PJ")}${sth("w","W")}${sth("l","L")}${sth("d","Diff")}${sth("wp","% Victorias")}${sth("pts","Pts")}${sth("st","Estado")}</tr></thead>`;
+function srow(t,cut){
+  const pj=t.w+t.l,pct=Math.round(t.w/pj*100);
+  return `<tr class="${t.q?"in":"out"}${cut&&t.rank===5?" cut":""}${t.n===TEAMS[ME].n?" mine":""}" style="--c:${CONF[t.c].v}">
+   <td class="pos l">${sView==="conf"?t.rank:t.gr}</td>
+   <td class="l"><span class="tm">${crest(t)}<a class="nm" href="#team-${slug(t)}"><span class="full">${esc(t.n)}</span><span class="short">#${t.ab}</span></a>${t.n===TEAMS[ME].n?'<span class="you">Tú</span>':""}${sView==="all"?`<span class="chip cf" style="--cc:${CONF[t.c].v}"><i>${CONF[t.c].name} #${t.rank}</i></span>`:""}</span></td>
+   <td>${pj}</td><td>${t.w}</td><td>${t.l}</td>
+   <td class="${t.d>0?"up":""}">${sign(t.d)}</td>
+   <td><span class="wp" aria-hidden="true"><i style="width:${pct}%"></i></span><span class="wpn">${pct}%</span></td>
+   <td class="pts">${t.pts}</td>
+   <td>${t.q?'<span class="chip q"><i>Playoffs</i></span>':'<span class="chip x"><i>Eliminado</i></span>'}</td></tr>`;
+}
+function renderStandings(){
+  const box=document.getElementById("stables");
+  const rk=sView==="conf"?"rank":"gr";
+  const list=l=>sortBy(l.map(t=>({...t,rank_:t[rk]})),sKey==="rank"?"rank_":sKey,sDir,(a,b)=>a[rk]-b[rk]);
+  const tbl=(title,sub,color,l,cut)=>`<div class="table" style="--c:${color}"><div class="th"><h3>${title}</h3><span class="label">${sub}</span></div><div class="rows"><table class="st">${shead()}<tbody>${list(l).map(t=>srow(t,cut)).join("")}</tbody></table></div></div>`;
+  const cut=sKey==="rank"&&sDir===1;
+  box.innerHTML=sView==="conf"
+    ?["rojo","azul"].map(c=>tbl(CONF[c].name,`${by(c).length} equipos · 4 a playoffs`,CONF[c].v,by(c),cut)).join("")
+    :tbl("General","18 equipos · ambas conferencias","var(--volt)",TEAMS,false);
+}
+document.getElementById("stables").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-k]");if(!b)return;
+  const k=b.dataset.k;
+  if(sKey===k)sDir=-sDir;else{sKey=k;sDir=SDEF[k];}
+  renderStandings();
+  const nb=document.querySelector(`#stables button[data-k="${k}"]`);if(nb)nb.focus();
+});
+document.querySelectorAll("#sview button").forEach(b=>b.addEventListener("click",()=>{
+  sView=b.dataset.v;sKey="rank";sDir=1;
+  document.querySelectorAll("#sview button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  renderStandings();
+}));
+document.getElementById("toMons").addEventListener("click",()=>document.getElementById("mons-sec").scrollIntoView({behavior:"smooth"}));
+
+const bestDiff=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
+document.getElementById("leaders").innerHTML=[
+  ["Líder RojoFuego",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
+  ["Líder VerdeHoja",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
+  ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--good)"]
+].map(([lab,t,val,c])=>`<div class="ld" style="--c:${c}">${crest(t)}<div><span class="label">${lab}</span><strong>${esc(t.n)}</strong></div><b class="num">${val}</b></div>`).join("");
+
+const topBy=k=>MONS_FULL.slice().sort((a,b)=>b[k]-a[k])[0];
+const tk_=topBy("k"),tkd=topBy("kd"),tg=topBy("g");
+document.getElementById("mtiles").innerHTML=[
+  ["Más KOs",tk_.n,tk_.k,"var(--volt)"],
+  ["Mejor K/D",tkd.n,tkd.kd.toFixed(2),"var(--good)"],
+  ["Más partidas",tg.n,tg.g,"var(--verde)"]
+].map(([lab,n,v,c])=>`<div class="mt" style="--c:${c}"><div><span class="label">${lab}</span><strong>${n}</strong></div><b class="num">${v}</b></div>`).join("");
+
+const MDEF={n:1,g:-1,k:-1,d:1,kd:-1};
+let mKey="k",mDir=-1;
+const maxK=Math.max(...MONS_FULL.map(m=>m.k)),bestKd=tkd.kd;
+function renderMons(){
+  const mth=(k,l,c="")=>`<th class="${c}" aria-sort="${mKey===k?(mDir===1?"ascending":"descending"):"none"}"><button type="button" data-mk="${k}">${l}</button></th>`;
+  const list=sortBy(MONS_FULL,mKey,mDir,(a,b)=>b.k-a.k||a.n.localeCompare(b.n));
+  document.getElementById("mtable").innerHTML=`<thead><tr><th class="l">#</th>${mth("n","Pokémon","l")}${mth("k","Kills","l")}${mth("d","Deaths")}${mth("g","Partidas")}${mth("kd","K/D")}</tr></thead><tbody>${list.map((m,i)=>`
+   <tr class="in" style="--c:var(--volt)"><td class="pos l">${i+1}</td><td class="l"><span class="nm">${box(m.n,"spr-s")}${m.n}</span></td>
+   <td class="l"><span class="kc"><span class="kb" aria-hidden="true"><i style="width:${m.k/maxK*100}%"></i></span><b>${m.k}</b></span></td>
+   <td>${m.d}</td><td>${m.g}</td><td class="${m.kd===bestKd?"best":""}">${m.kd.toFixed(2)}</td></tr>`).join("")}</tbody>`;
+}
+document.getElementById("mtable").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-mk]");if(!b)return;
+  const k=b.dataset.mk;
+  if(mKey===k)mDir=-mDir;else{mKey=k;mDir=MDEF[k];}
+  renderMons();
+  const nb=document.querySelector(`#mtable button[data-mk="${k}"]`);if(nb)nb.focus();
+});
+renderStandings();renderMons();
+
+/* matches — [semana, equipo A, equipo B, ganador de cada juego (a/b), ids de replay en YouTube] */
+const RAW_MATCHES=[[1,3,5,"baa",["lQCUgjdAbGg","UslY-kh-GX4","fMVuBktytGs"]],[1,6,1,"bb",["-CcbjdwKLmY"]],[1,2,8,"aa",["2kcfUdNI_8A"]],[1,4,7,"aa",["gAEFtbs_Y9k","xRVKPVS1Nsg"]],[1,14,16,"bab",["VXVCNANsO1M","58qvdd6cp00","dwgxTOslIZM"]],[1,10,12,"aba",["oDcjO3ZdcdY","JuhSJYAsKUw","HU1UrCYHIn0"]],[1,13,17,"aa",["8b-rjFTV9Ak","8K8NzoW2cu0"]],[1,15,9,"bb",["mY8kwkspPDY","Qwzf9HNgZPM"]],[2,2,1,"abb",["-v37HiJI4Fs","IZ_BzAOqUrs","7rsv02F_Isw"]],[2,4,5,"aa",[]],[2,0,8,"aa",["We4M1QUYZ58"]],[2,6,3,"bb",[]],[2,13,9,"abb",[]],[2,10,16,"aa",["8hoDYEcWIJQ"]],[2,11,17,"aa",["PEchlU9zf1I","OZjmn37RAQc"]],[2,15,14,"abb",[]],[3,4,6,"aa",[]],[3,2,3,"aa",[]],[3,8,1,"bb",["YnPRS_12Vlw","cNIaf2wc2jY"]],[3,0,7,"aa",[]],[3,13,14,"aba",["GxUIYrgoLMQ","ki5Q2ypgG2k","DUxe78ikL0s"]],[3,10,15,"aa",[]],[3,11,12,"aa",[]],[3,17,9,"abb",[]],[4,0,1,"bab",["i8vjW3hV1Q4","Miy-HMuzZ5E","5Uqx-FzrBXE"]],[4,8,3,"bab",["uOvWs8cnKeM","RtBDylkJo4U","mNTmgaSTI04"]],[4,7,5,"abb",["SWG9-QWySeM","HVbaJKQZG0s","q1Rag2Ak2b0"]],[4,2,4,"aba",["bkdPvPHAW9Q"]],[4,13,10,"bb",["b6YisVujFgE","0txuZe7hOLA"]],[4,11,9,"bb",["GqA37mEH0Wc","CStRREtvlVs"]],[4,12,16,"aa",["Z0JWfMafyhI","oc3IPAmYFBk"]],[4,17,14,"bb",["QCDqZRrAOdk","adtCQHhxBKs"]],[5,6,8,"aa",[]],[5,0,2,"aa",["SR4-mphpbf0"]],[5,3,7,"aa",[]],[5,5,1,"bab",["dmkxT0NBazk","Lv_-3DLFfPI","WiYcfpLiivo"]],[5,11,16,"aa",["DZQaOmy4jn4","wOQWahT-P4w"]],[5,12,15,"aa",["9XbvbGRmdoM","vcLnIAiUnFo"]],[5,17,10,"bb",["YiIJCar41Os","PSvQCjzhoX8"]],[5,9,14,"aa",["vz_vU53JvvI"]],[6,0,3,"aa",["2fb-fW4IVjs","iSSM-F8Vj_Y"]],[6,1,4,"aa",["75RcxjgOUQw","MFkdDHPI2vU"]],[6,5,6,"aa",[]],[6,7,2,"bb",[]],[6,11,14,"aba",["CU1oQNvVoWQ","OYxm2nzMkeg","9m71jLonoxA"]],[6,9,10,"aa",["Bv1LSIqlaJc","c8ZdvHtkyLA"]],[6,16,15,"bb",[]],[6,12,13,"bab",["QScho7unoNw","nEUhZi0nfNo","rfTYToSJgJE"]],[7,0,6,"aa",["SNdV6yrXZIg"]],[7,5,2,"aba",["o2dCuCDdGI4"]],[7,3,4,"bb",["dKHE3YH89qI","ZsgCX5ry3MA"]],[7,7,8,"aa",[]],[7,12,17,"aa",["V4_IpPH1900","6b41tZQ9898"]],[7,16,13,"bb",[]],[7,11,15,"aa",[]],[7,14,10,"bb",[]],[8,5,8,"aa",[]],[8,6,2,"bb",[]],[8,0,4,"aa",[]],[8,1,7,"aa",[]],[8,15,13,"bb",["C2ENo8B7EkE"]],[8,9,12,"abb",["3wq-7_X9gPQ","p3TnCoYmJyQ","GcGfixEC9tE"]],[8,16,17,"aa",["xYq3d47zd6I","3f_T6fcz8tQ"]],[8,11,10,"abb",["WMBGsBUNaT8","cFfQ_9p6zPo","Rak79-X9QaE"]],[9,7,6,"bb",[]],[9,0,5,"aa",["Z9cD0FF9SHA","ZuDaFpyT1Gw"]],[9,1,3,"bb",["mJePZqpNQkc"]],[9,8,4,"aa",["YfxrwlGbNjE","z9XKRWHuwYw"]],[9,15,17,"aa",[]],[9,11,13,"aa",["dQw4w9WgXcQ"]],[9,16,9,"bb",["uOZuxPLihqk","3nix5kr2nYA"]],[9,14,12,"bb",[]]];
+const MATCHES=RAW_MATCHES.map(([w,a,b,seq,ids])=>{const ga=[...seq].filter(x=>x==="a").length;return {w,a,b,seq,ids,ga,gb:seq.length-ga,c:TEAMS[a].c};});
+const WEEKS=Math.max(...MATCHES.map(m=>m.w));
+let mWeek=WEEKS,mConf="all",mTeam="";
+const ytu=id=>`https://www.youtube.com/watch?v=${id}`;
+function mside(m,s){
+  const t=TEAMS[m[s]],g=s==="a"?m.ga:m.gb,win=g>(s==="a"?m.gb:m.ga);
+  return `<div class="side ${win?"win":"lose"}">${crest(t)}<a class="nm" href="#team-${slug(t)}"><span class="full">${esc(t.n)}</span><span class="short">#${t.ab}</span></a><span class="gd" aria-hidden="true">${[...m.seq].map(x=>`<i class="${x===s?"w":""}"></i>`).join("")}</span><span class="sc num">${g}</span></div>`;
+}
+function mcard(m,top){
+  const reps=!m.ids.length?`<span class="none">Sin replay</span>`
+    :m.ids.length===1?`<a class="rp" href="${ytu(m.ids[0])}" target="_blank" rel="noopener">▶ Replay</a>`
+    :m.ids.map((id,i)=>`<a class="rp" href="${ytu(id)}" target="_blank" rel="noopener" aria-label="Replay del juego ${i+1}">G${i+1}</a>`).join("");
+  let res="";
+  if(top!==undefined){const mine=m.a===top?"a":"b";const won=(mine==="a"?m.ga:m.gb)===2;res=`<span class="res ${won?"w":"l"}">${won?"W":"L"}</span>`;}
+  const lab=top!==undefined?`Semana ${m.w}`:(m.seq.length===3?"Final · 3 juegos":"Final · barrida");
+  return `<article class="mc ${top===undefined&&(m.a===ME||m.b===ME)?"mine":""}" style="--c:${CONF[m.c].v}" aria-label="${esc(TEAMS[m.a].n)} ${m.ga}, ${esc(TEAMS[m.b].n)} ${m.gb}"><div class="sides">${mside(m,"a")}${mside(m,"b")}</div><div class="meta">${res}<span class="label">${lab}</span><div class="rps">${reps}</div></div></article>`;
+}
+document.getElementById("weeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
+const mteam=document.getElementById("mteam");
+mteam.innerHTML+=["rojo","azul"].map(c=>`<optgroup label="${CONF[c].name}">${TEAMS.map((t,i)=>[t,i]).filter(([t])=>t.c===c).sort((x,y)=>x[0].n.localeCompare(y[0].n)).map(([t,i])=>`<option value="${i}">${esc(t.n)}</option>`).join("")}</optgroup>`).join("");
+function renderMatches(){
+  const box=document.getElementById("mbody"),cnt=document.getElementById("mcount");
+  document.querySelectorAll("#weeks button").forEach(b=>b.setAttribute("aria-pressed",mTeam===""&&+b.dataset.w===mWeek));
+  document.getElementById("mconf").style.visibility=mTeam===""?"visible":"hidden";
+  if(mTeam!==""){
+    const ti=+mTeam,t=TEAMS[ti];
+    const ms=MATCHES.filter(m=>m.a===ti||m.b===ti).sort((x,y)=>x.w-y.w).map(m=>m.a===ti?m:{...m,a:m.b,b:m.a,ga:m.gb,gb:m.ga,seq:[...m.seq].map(x=>x==="a"?"b":"a").join("")});
+    let gw=0,gl=0;ms.forEach(m=>{gw+=m.ga;gl+=m.gb;});
+    const bye=Array.from({length:WEEKS},(_,i)=>i+1).find(w=>!ms.some(m=>m.w===w));
+    box.innerHTML=`<div class="tsum" style="--c:${CONF[t.c].v}">${crest(t)}<div><span class="label" style="color:${CONF[t.c].v}">${CONF[t.c].name} · #${t.rank}</span><h2>${esc(t.n)}</h2></div>
+      <div class="kv"><span class="label">Series</span><b class="num">${t.w}-${t.l}</b></div>
+      <div class="kv"><span class="label">Juegos</span><b class="num">${gw}-${gl}</b></div>
+      <div class="kv"><span class="label">Descanso</span><b class="num">Sem ${bye}</b></div>
+      <button type="button" class="btn ghost clear" id="mclear">Ver por semana</button></div>
+      <div class="mcols one"><div class="mlist">${ms.map(m=>mcard(m,ti)).join("")}</div></div>`;
+    cnt.textContent=`${ms.length} series`;
+    return;
+  }
+  const wk=MATCHES.filter(m=>m.w===mWeek);
+  const confs=mConf==="all"?["rojo","azul"]:[mConf];
+  const shown=wk.filter(m=>confs.includes(m.c));
+  const three=shown.filter(m=>m.seq.length===3).length;
+  const games=shown.reduce((s,m)=>s+m.seq.length,0);
+  const col=c=>{
+    const list=wk.filter(m=>m.c===c);
+    const playing=new Set(list.flatMap(m=>[m.a,m.b]));
+    const byes=TEAMS.map((t,i)=>[t,i]).filter(([t,i])=>t.c===c&&!playing.has(i));
+    return `<div class="mcol"><div class="conf-title" style="--c:${CONF[c].v}"><h2 style="color:${CONF[c].v}">${CONF[c].name}</h2><span class="label">${list.length} series</span><span class="rule"></span></div>
+      <div class="mlist">${list.map(m=>mcard(m)).join("")}${byes.map(([t])=>`<div class="bye">${crest(t)}<span><strong>${esc(t.n)}</strong> descansa esta semana</span></div>`).join("")}</div></div>`;
+  };
+  box.innerHTML=`<div class="wsum"><h2>Semana ${mWeek}</h2>
+     <div><b class="num">${shown.length}</b><span class="label">Series</span></div>
+     <div><b class="num">${shown.length-three}</b><span class="label">Barridas 2-0</span></div>
+     <div><b class="num">${three}</b><span class="label">Series a 3 juegos</span></div>
+     <div><b class="num">${games}</b><span class="label">Juegos</span></div></div>
+    <div class="mcols ${confs.length===1?"one":""}">${confs.map(col).join("")}</div>`;
+  cnt.textContent=`Semana ${mWeek} de ${WEEKS} · fase regular terminada`;
+}
+document.getElementById("weeks").addEventListener("click",e=>{const b=e.target.closest("button[data-w]");if(!b)return;mWeek=+b.dataset.w;mTeam="";mteam.value="";renderMatches();});
+document.querySelectorAll("#mconf button").forEach(b=>b.addEventListener("click",()=>{mConf=b.dataset.mc;document.querySelectorAll("#mconf button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderMatches();}));
+mteam.addEventListener("change",()=>{mTeam=mteam.value;renderMatches();});
+document.getElementById("mbody").addEventListener("click",e=>{if(e.target.id==="mclear"){mTeam="";mteam.value="";renderMatches();}});
+renderMatches();
+
+/* team profiles — de ppvdraftleague.com/teams: [coach, título, puntos de draft, movimientos FA, favorito, roster: [pokémon, costo, tipos, habilidades, obtenido, partidas, kills, deaths]] */
+const PROFILES=[["Manuel Guillen","Season 1 y 3 Champ","57/60",0,"Dragapult",[["Gardevoir",13,"psychic/fairy","Synchronize / Trace / Telepathy","Draft",11,8,5],["Maushold",10,"normal","Friend Guard / Cheek Pouch / Technician","Draft",15,0,9],["Bellibolt",2,"electric","Electromorphosis / Static / Damp","Draft",4,8,1],["Hydreigon",7,"dark/dragon","Levitate","Draft",8,12,3],["Mamoswine",8,"ice/ground","Oblivious / Snow Cloak / Thick Fat","Draft",5,4,2],["Ceruledge",5,"fire/ghost","Flash Fire / Weak Armor","Draft",9,16,2],["Paldean Tauros Aqua",6,"fighting/water","Intimidate / Anger Point / Cud Chew","Draft",7,6,3],["Araquanid",6,"water/bug","Water Bubble / Water Absorb","Draft",5,9,1]]],["Héctor López","Amo del reglamento","57/60",0,"Mantine",[["Volcarona",13,"bug/fire","Flame Body / Swarm","Draft",11,11,6],["Sneasler",13,"fighting/poison","Pressure / Poison Touch","Draft",11,5,10],["Rotom-Wash",9,"electric/water","Levitate","Draft",11,10,5],["Runerigus",3,"ground/ghost","Wandering Spirit","Draft",1,0,1],["Morpeko",2,"electric/dark","Hunger Switch","Draft",11,8,7],["Wyrdeer",6,"normal/psychic","Intimidate / Frisk / Sap Sipper","Draft",3,0,1],["Skarmory",5,"steel/flying","Keen Eye / Sturdy / Weak Armor","Draft",6,4,5],["Meowstic Female",6,"psychic","Keen Eye / Infiltrator / Competitive","Draft",7,3,7]]],["Luis Gerardo","-","60/60",0,"Totodile",[["Gallade",11,"psychic/fighting","Steadfast / Justified","Draft",9,3,8],["Garchomp",13,"dragon/ground","Sand Veil / Rough Skin","Draft",13,16,7],["Pidgeot",5,"normal/flying","Keen Eye / Tangled Feet / Big Pecks","Draft",0,0,0],["Hisuian Typhlosion",10,"fire/ghost","Blaze / Flash Fire","Draft",12,12,8],["Whimsicott",15,"grass/fairy","Prankster / Infiltrator / Chlorophyll","Draft",11,1,10],["Basculegion-Female",6,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",7,4,6]]],["David Rojas","-","60/60",0,"Scizor",[["Floette",15,"fairy","Flower Veil / Symbiosis","Draft",15,15,7],["Talonflame",10,"fire/flying","Flame Body / Gale Wings","Draft",14,3,12],["Palafin",10,"water","Zero to Hero","Draft",4,7,1],["Kommo-o",6,"dragon/fighting","Bulletproof / Soundproof / Overcoat","Draft",12,12,7],["Hisuian Zoroark",9,"normal/ghost","Illusion","Draft",12,8,11],["Alolan Raichu",4,"electric/psychic","Surge Surfer","Draft",3,1,1],["Salazzle",5,"poison/fire","Corrosion / Oblivious","Draft",1,0,1],["Ariados",1,"bug/poison","Swarm / Insomnia / Sniper","Draft",3,0,3]]],["Armando Padilla","King of Horses","55/60",0,"Rillaboom",[["Gengar",15,"ghost/poison","Cursed Body","Draft",8,14,4],["Tsareena",6,"grass","Leaf Guard / Queenly Majesty / Sweet Veil","Draft",6,1,4],["Chimecho",5,"psychic","Levitate","Draft",3,2,0],["Klefki",7,"steel/fairy","Prankster / Magician","Draft",10,1,5],["Mudsdale",4,"ground","Own Tempo / Stamina / Inner Focus","Draft",13,16,8],["Infernape",5,"fire/fighting","Blaze / Iron Fist","Draft",5,0,3],["Dragapult",10,"dragon/ghost","Clear Body / Infiltrator / Cursed Body","Draft",1,0,1],["Toucannon",3,"normal/flying","Keen Eye / Skill Link / Sheer Force","Draft",4,5,3]]],["Juan Pablo","-","57/60",0,"-",[["Gyarados",11,"water/flying","Intimidate / Moxie","Draft",12,16,6],["Greninja",9,"water/dark","Torrent / Protean","Draft",7,4,7],["Hisuian Goodra",7,"steel/dragon","Sap Sipper / Overcoat / Gooey","Draft",7,3,6],["Raichu",5,"electric","Static / Lightning rod","Draft",6,2,4],["Galarian Slowking",7,"poison/psychic","Curious Medicine / Own Tempo / Regenerator","Draft",5,1,4],["Vanilluxe",5,"ice","Ice Body / Snow Warning / Weak Armor","Draft",2,3,1],["Starmie",11,"water/psychic","Illuminate / Natural Cure / Analytic","Draft",6,6,4],["Gliscor",2,"ground/flying","Hyper Cutter / Sand Veil / Poison Heal","Draft",8,5,4]]],["Luis Morgan","-","55/60",0,"Ninetales",[["Kingambit",13,"dark/steel","Defiant / Supreme Overlord / Pressure","Draft",6,6,4],["Golurk",7,"ground/ghost","Iron Fist / Klutz / No Guard","Draft",8,6,6],["Paldean Tauros Blaze",6,"fighting/fire","Intimidate / Anger Point / Cud Chew","Draft",3,2,3],["Rampardos",2,"rock","Mold Breaker / Sheer Force","Draft",6,1,4],["Slowking",6,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",3,1,3],["Hydrapple",5,"grass/dragon","Supersweet Syrup / Regenerator / Sticky Hold","Draft",1,1,1],["Rotom-Heat",8,"electric/fire","Levitate","Draft",4,2,3],["Hatterene",8,"psychic/fairy","Healer / Anticipation / Magic Bounce","Draft",4,1,2]]],["Juan Chavez","Tilt Diff","55/60",0,"Cloyster",[["Charizard",15,"fire/flying","Blaze / Solar Power","Draft",9,3,8],["Aegislash",11,"steel/ghost","Stance Change","Draft",9,2,9],["Banette",9,"ghost","Insomnia / Frisk / Cursed Body","Draft",3,2,3],["Chandelure",9,"ghost/fire","Flash Fire / Flame Body / Infiltrator","Draft",7,1,6],["Venusaur",11,"grass/poison","Overgrow / Chlorophyll","Draft",7,2,6]]],["Gustavo Herrera","Canolo Hater","56/60",0,"Rhyperior",[["Kangaskhan",13,"normal","Early Bird / Scrappy / Inner Focus","Draft",9,6,8],["Reuniclus",5,"psychic","Overcoat / Magic Guard / Regenerator","Draft",2,0,2],["Mr. Rime",2,"ice/psychic","Tangled Feet / Screen Cleaner / Ice Body","Draft",4,0,4],["Archaludon",11,"steel/dragon","Stamina / Sturdy / Stalwart","Draft",5,4,4],["Meganium",10,"grass","Overgrow / Leaf Guard","Draft",3,3,3],["Sableye",7,"dark/ghost","Keen Eye / Stall / Prankster","Draft",9,1,6],["Vivillon",8,"bug/flying","Shield Dust / Compound Eyes / Friend Guard","Draft",6,3,5]]],["Luis Carlos","Nintendo Hater","60/60",0,"Blastoise",[["Tyranitar",15,"rock/dark","Sand Stream / Unnerve","Draft",15,12,8],["Primarina",10,"water/fairy","Torrent / Liquid Voice","Draft",19,22,9],["Glimmora",11,"rock/poison","Toxic Debris / Corrosion","Draft",10,6,8],["Scizor",9,"bug/steel","Swarm / Technician / Light Metal","Draft",9,6,2],["Oranguru",7,"normal/psychic","Inner Focus / Telepathy / Symbiosis","Draft",9,3,4],["Armarouge",6,"fire/psychic","Flash Fire / Weak Armor","Draft",6,5,0],["Rotom-Fan",2,"electric/flying","Levitate","Draft",7,7,4]]],["Eduardo Aviles","Season 2 Champ","58/60",0,"Charizard",[["Dragonite",13,"dragon/flying","Inner Focus / Multiscale","Draft",3,1,3],["Politoed",9,"water","Water Absorb / Damp / Drizzle","Draft",7,3,3],["Jolteon",3,"electric","Volt Absorb / Quick Feet","Draft",3,0,2],["Kleavor",5,"bug/rock","Swarm / Sheer Force / Steadfast","Draft",9,8,6],["Sylveon",8,"fairy","Cute Charm / Pixilate","Draft",13,17,5],["Scovillain",6,"grass/fire","Chlorophyll / Insomnia / Moody","Draft",15,21,8],["Conkeldurr",7,"fighting","Guts / Sheer Force / Iron Fist","Draft",2,3,2],["Galarian Slowbro",7,"poison/psychic","Quick Draw / Own Tempo / Regenerator","Draft",9,8,5]]],["Jesús Patrón","Campeón Apócrifo","59/60",0,"Typhlosion",[["Alolan Ninetales",10,"ice/fairy","Snow Cloak / Snow Warning","Draft",1,0,1],["Alakazam",7,"psychic","Synchronize / Inner Focus / Magic Guard","Draft",11,20,4],["Meowstic Male",7,"psychic","Keen Eye / Infiltrator / Prankster","Draft",10,7,6],["Snorlax",6,"normal","Immunity / Thick Fat / Gluttony","Draft",9,10,5],["Corviknight",8,"flying/steel","Pressure / Unnerve / Mirror Armor","Draft",7,6,4],["Hisuian Samurott",4,"water/dark","Torrent / Shell Armor","Draft",7,3,5],["Hawlucha",7,"fighting/flying","Limber / Unburden / Mold Breaker","Draft",5,5,3],["Arcanine",10,"fire","Intimidate / Flash Fire / Justified","Draft",7,8,5]]],["Rick","Point Prover","60/60",0,"Rhyhorn",[["Pelipper",13,"water/flying","Keen Eye / Drizzle / Rain Dish","Draft",17,14,7],["Manectric",9,"electric","Static / Lightning Rod / Minus","Draft",9,9,6],["Blastoise",9,"water","Torrent / Rain Dish","Draft",18,24,8],["Rhyperior",5,"ground/rock","Lightning Rod / Solid Rock / Reckless","Draft",14,7,11],["Mimikyu",8,"ghost/fairy","Disguise","Draft",5,4,4],["Emboar",5,"fire/fighting","Blaze / Reckless","Draft",5,4,4],["Umbreon",6,"dark","Synchronize / Inner Focus","Draft",4,1,2],["Chesnaught",5,"grass/fighting","Overgrow / Bulletproof","Draft",4,3,1]]],["Eduardo Acuesta","-","55/60",0,"Wobbuffet",[["Basculegion-Male",10,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",14,15,7],["Delphox",9,"fire/psychic","Blaze / Magician","Draft",9,13,4],["Clefable",11,"fairy","Cute Charm / Magic Guard / Unaware","Draft",12,1,11],["Krookodile",5,"ground/dark","Intimidate / Moxie / Anger Point","Draft",4,2,3],["Lopunny",9,"normal","Cute Charm / Klutz / Limber","Draft",5,6,3],["Toxicroak",5,"poison/fighting","Anticipation / Dry Skin / Poison Touch","Draft",5,7,4],["Heliolisk",2,"electric/normal","Dry Skin / Sand Veil / Solar Power","Draft",5,3,2],["Toxapex",4,"poison/water","Merciless / Limber / Regenerator","Draft",1,0,0]]],["Brandon Aviles","PPV CMM","57/60",0,"Dialga",[["Aerodactyl",11,"rock/flying","Rock Head / Pressure / Unnerve","Draft",14,5,10],["Milotic",9,"water","Marvel Scale / Competitive / Cute Charm","Draft",14,8,9],["Ditto",7,"normal","Limber / Imposter","Draft",15,17,9],["Empoleon",7,"water/steel","Torrent / Defiant","Draft",7,4,3],["Pikachu",3,"electric","Static / Lightning rod","Draft",6,0,5],["Liepard",7,"dark","Limber / Unburden / Prankster","Draft",11,5,11],["Rotom-Mow",5,"electric/grass","Levitate","Draft",4,2,4],["Meowscarada",8,"grass/dark","Overgrow / Protean","Draft",0,0,0]]],["Kevin Valencia","-","57/60",0,"Dragonite",[["Incineroar",15,"fire/dark","Blaze / Intimidate","Draft",6,2,6],["Excadrill",11,"ground/steel","Sand Rush / Sand Force / Mold Breaker","Draft",8,7,7],["Torkoal",9,"fire","White Smoke / Drought / Shell Armor","Draft",9,2,8],["Skeledirge",5,"fire/ghost","Blaze / Unaware","Draft",0,0,0],["Tinkaton",5,"fairy/steel","Mold Breaker / Own Tempo / Pickpocket","Draft",3,0,2],["Noivern",5,"flying/dragon","Frisk / Infiltrator / Telepathy","Draft",4,0,4],["Hippowdon",7,"ground","Sand Stream / Sand Force","Draft",6,1,5]]],["Jorge Wright","Leyenda sin cara","60/60",0,"-",[["Sinistcha",13,"grass/ghost","Hospitality / Heatproof","Draft",10,5,8],["Farigiraf",11,"normal/psychic","Cud Chew / Armor Tail / Sap Sipper","Draft",12,8,11],["Drampa",9,"normal/dragon","Berserk / Sap Sipper / Cloud Nine","Draft",5,2,5],["Heracross",9,"bug/fighting","Swarm / Guts / Moxie","Draft",4,1,4],["Slowbro",9,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",8,8,4],["Aggron",7,"steel/rock","Sturdy / Rock Head / Heavy Metal","Draft",11,8,8],["Aurorus",2,"rock/ice","Refrigerate / Snow Warning","Draft",5,2,4]]],["Alan Pico","Vulpina suprema","56/60",0,"Rowlet",[["Froslass",11,"ice/ghost","Snow Cloak / Cursed Body","Draft",9,2,8],["Hisuian Arcanine",8,"fire/rock","Intimidate / Flash Fire / Justified","Draft",11,5,11],["Rotom-Frost",4,"electric/ice","Levitate","Draft",7,2,7],["Orthworm",7,"steel","Earth Eater / Sand Veil","Draft",12,4,12],["Altaria",7,"dragon/flying","Natural Cure / Cloud Nine","Draft",7,0,7],["Azumarill",7,"water/fairy","Thick Fat / Huge Power / Sap Sipper","Draft",11,3,10],["Garganacl",7,"rock","Purifying Salt / Sturdy / Clear Body","Draft",7,5,6],["Espathra",5,"psychic","Opportunist / Frisk / Speed Boost","Draft",4,0,3]]]];
+// Champions ID por equipo (índice en TEAMS); los que no tienen se muestran como "Por registrar"
+const CHAMPIONS_ID={12:"677893762316"};
+const fmtCid=id=>id.replace(/(\d{4})(?=\d)/g,"$1 ");
+const TYPE={normal:["Normal","#A8A77A"],fire:["Fuego","#EE8130"],water:["Agua","#6390F0"],electric:["Eléctrico","#F7D02C"],grass:["Planta","#7AC74C"],ice:["Hielo","#96D9D6"],fighting:["Lucha","#D04A44"],poison:["Veneno","#B159AF"],ground:["Tierra","#E2BF65"],flying:["Volador","#A98FF3"],psychic:["Psíquico","#F95587"],bug:["Bicho","#A6B91A"],rock:["Roca","#B6A136"],ghost:["Fantasma","#8C6DB8"],dragon:["Dragón","#8A5CFF"],dark:["Siniestro","#9A7C68"],steel:["Acero","#B7B7CE"],fairy:["Hada","#E39BC0"]};
+const PROFILE_ORDER=["rojo","azul"].flatMap(c=>TEAMS.map((t,i)=>[t,i]).filter(([t])=>t.c===c).sort((a,b)=>a[0].rank-b[0].rank).map(([,i])=>i));
+function seriesFor(ti){
+  return MATCHES.filter(m=>m.a===ti||m.b===ti).sort((x,y)=>x.w-y.w)
+    .map(m=>m.a===ti?m:{...m,a:m.b,b:m.a,ga:m.gb,gb:m.ga,seq:[...m.seq].map(x=>x==="a"?"b":"a").join("")});
+}
+/* tabla de tipos: multiplicador de daño de cada tipo atacante contra cada Pokémon (solo por tipos, sin habilidades) */
+const TYPE_ORDER=["normal","fire","water","electric","grass","ice","fighting","poison","ground","flying","psychic","bug","rock","ghost","dragon","dark","steel","fairy"];
+const TYPE_ABBR={normal:"NOR",fire:"FUE",water:"AGU",electric:"ELÉ",grass:"PLA",ice:"HIE",fighting:"LUC",poison:"VEN",ground:"TIE",flying:"VOL",psychic:"PSÍ",bug:"BIC",rock:"ROC",ghost:"FAN",dragon:"DRA",dark:"SIN",steel:"ACE",fairy:"HAD"};
+const CHART={
+ normal:{rock:.5,ghost:0,steel:.5},
+ fire:{fire:.5,water:.5,grass:2,ice:2,bug:2,rock:.5,dragon:.5,steel:2},
+ water:{fire:2,water:.5,grass:.5,ground:2,rock:2,dragon:.5},
+ electric:{water:2,electric:.5,grass:.5,ground:0,flying:2,dragon:.5},
+ grass:{fire:.5,water:2,grass:.5,poison:.5,ground:2,flying:.5,bug:.5,rock:2,dragon:.5,steel:.5},
+ ice:{fire:.5,water:.5,grass:2,ice:.5,ground:2,flying:2,dragon:2,steel:.5},
+ fighting:{normal:2,ice:2,poison:.5,flying:.5,psychic:.5,bug:.5,rock:2,ghost:0,dark:2,steel:2,fairy:.5},
+ poison:{grass:2,poison:.5,ground:.5,rock:.5,ghost:.5,steel:0,fairy:2},
+ ground:{fire:2,electric:2,grass:.5,poison:2,flying:0,bug:.5,rock:2,steel:2},
+ flying:{electric:.5,grass:2,fighting:2,bug:2,rock:.5,steel:.5},
+ psychic:{fighting:2,poison:2,psychic:.5,dark:0,steel:.5},
+ bug:{fire:.5,grass:2,fighting:.5,poison:.5,flying:.5,psychic:2,ghost:.5,dark:2,steel:.5,fairy:.5},
+ rock:{fire:2,ice:2,fighting:.5,ground:.5,flying:2,bug:2,steel:.5},
+ ghost:{normal:0,psychic:2,ghost:2,dark:.5},
+ dragon:{dragon:2,steel:.5,fairy:0},
+ dark:{fighting:.5,psychic:2,ghost:2,dark:.5,fairy:.5},
+ steel:{fire:.5,water:.5,electric:.5,ice:2,rock:2,steel:.5,fairy:2},
+ fairy:{fire:.5,fighting:2,poison:.5,dragon:2,dark:2,steel:.5}
+};
+const mult=(atk,defs)=>defs.reduce((m,d)=>m*(CHART[atk][d]??1),1);
+const CELL={4:["x4","4×"],2:["x2","2×"],0.5:["r2","½"],0.25:["r4","¼"],0:["im","INM"]};
+function typeChart(roster){
+  const rows=roster.map(r=>({n:r[0],ts:r[2].split("/")}));
+  const weak=TYPE_ORDER.map(a=>rows.filter(p=>mult(a,p.ts)>1).length);
+  const res=TYPE_ORDER.map(a=>rows.filter(p=>mult(a,p.ts)<1).length);
+  const head=`<thead><tr><th class="pkn" scope="col">Pokémon</th>${TYPE_ORDER.map(t=>`<th scope="col" title="${TYPE[t][0]}"><span class="tyh" style="--tc:${TYPE[t][1]}"><i>${TYPE_ABBR[t]}</i></span></th>`).join("")}</tr></thead>`;
+  const body=rows.map(p=>`<tr><th class="pkn" scope="row">${box(p.n,"spr-s")}${esc(p.n)}</th>${TYPE_ORDER.map(a=>{const m=mult(a,p.ts),c=CELL[m];return c?`<td class="${c[0]}" title="${TYPE[a][0]}: x${m}">${c[1]}</td>`:"<td></td>";}).join("")}</tr>`).join("");
+  const foot=`<tfoot><tr><th class="pkn" scope="row">Débiles</th>${weak.map((w,i)=>`<td class="${w>=3||w-res[i]>=2?"hot":w?"":"zero"}">${w}</td>`).join("")}</tr>
+    <tr><th class="pkn" scope="row">Resisten</th>${res.map(r=>`<td class="${r?"cool":"zero"}">${r}</td>`).join("")}</tr></tfoot>`;
+  return `<div class="tchart-w"><table class="tc">${head}<tbody>${body}</tbody>${foot}</table></div>
+   <div class="tlegend"><span><i class="x4">4×</i>Muy débil</span><span><i class="x2">2×</i>Débil</span><span><i class="r2">½</i>Resiste</span><span><i class="r4">¼</i>Resiste mucho</span><span><i class="im">INM</i>Inmune</span><span><i class="hot">3</i>Punto débil del equipo</span><span>Calculado solo por tipos, sin contar habilidades.</span></div>`;
+}
+/* perfiles: al pasar el mouse por una tarjeta del roster, el sprite pasa a su versión animada (5.a gen, PokeAPI) */
+const ANIM_IDS=new Set([3,6,9,15,18,24,25,26,36,38,59,65,68,71,80,91,94,111,115,121,127,128,130,132,134,135,136,142,143,149,154,157,158,160,168,181,184,186,196,197,199,202,205,208,212,214,226,227,229,248,279,282,302,306,308,310,319,323,324,334,350,351,354,358,359,362,389,392,395,405,407,409,411,428,442,445,448,450,454,460,461,464,470,471,472,473,475,478,479,483,497,500,503,505,510,512,514,516,530,531,534,547,553,563,569,571,579,584,587,609,614,618,623,635,637,652,658,663,666,670,671,675,681,685,693,697,700,702,706,707,709,713,715,722,727,730,733,740,745,748,750,752,778,780,784,823,844,858,866,867,869,877,887,899,902,925,1019,10008,10009,10010,10011,10012,10100,10104,10126,10152,10165,10172,10236,10239,10242,10248]);
+const animUrl=n=>ANIM_IDS.has(SPR_IDS[n])?SPR_BASE+"animated/"+SPR_IDS[n]+".gif":"";
+const NO_MOTION=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function wireRosterAnim(root){
+  if(NO_MOTION)return;
+  root.querySelectorAll(".pk").forEach(card=>{
+    const img=card.querySelector("img.spr");if(!img)return;
+    const url=animUrl(card.dataset.mon);if(!url)return;
+    const still=img.src;
+    card.addEventListener("mouseenter",()=>{img.src=url;img.classList.add("anim");});
+    card.addEventListener("mouseleave",()=>{img.src=still;img.classList.remove("anim");});
+  });
+}
+function renderProfile(ti){
+  const t=TEAMS[ti],[coach,title,draftPts,fa,fav,roster]=PROFILES[ti],C=CONF[t.c].v;
+  const ms=seriesFor(ti);
+  let gw=0,gl=0;ms.forEach(m=>{gw+=m.ga;gl+=m.gb;});
+  const kills=roster.reduce((s,r)=>s+r[6],0),deaths=roster.reduce((s,r)=>s+r[7],0);
+  const mvp=roster.reduce((a,b)=>b[6]>a[6]?b:a);
+  const pos=PROFILE_ORDER.indexOf(ti),L=PROFILE_ORDER.length;
+  const prev=TEAMS[PROFILE_ORDER[(pos-1+L)%L]],next=TEAMS[PROFILE_ORDER[(pos+1)%L]];
+  const path=Array.from({length:WEEKS},(_,i)=>{
+    const w=i+1,m=ms.find(x=>x.w===w);
+    if(!m)return `<div class="wk b"><span class="label">Sem ${w}</span><span class="r">DESCANSO</span></div>`;
+    const won=m.ga>m.gb,o=TEAMS[m.b];
+    return `<div class="wk ${won?"w":"l"}" title="vs ${esc(o.n)}"><span class="label">Sem ${w}</span><span class="r">${won?"W":"L"}</span>${crest(o)}<span class="s num">${m.ga}-${m.gb}</span></div>`;
+  }).join("");
+  const pk=r=>{
+    const [n,cost,types,ab,obt,g,k,d]=r,ts=types.split("/"),c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
+    return `<article class="pk ${r===mvp?"star":""}" data-mon="${esc(n)}" style="--t1:${c1};--t2:${c2}">${r===mvp?`<span class="tag">MVP del equipo</span>`:""}
+      <div class="hd"><div><h3>${esc(n)}</h3><div class="cost num">${cost}<small>pts de draft</small></div></div>${spr(n)}</div>
+      <div class="types">${ts.map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div>
+      <p class="ab">${esc(ab)}</p>
+      <div class="gkd"><div><b class="num">${g}</b><span>Partidas</span></div><div><b class="num">${k}</b><span>Kills</span></div><div><b class="num">${d}</b><span>Deaths</span></div><div><b class="num">${d?(k/d).toFixed(2):k?"∞":"—"}</b><span>K/D</span></div></div>
+    </article>`;
+  };
+  const navLink=(o,cls,lab)=>`<a class="${cls}" href="#team-${slug(o)}" style="--c:${CONF[o.c].v}">${cls==="nx"?"":crest(o)}<div><span class="label">${lab}</span><strong>${esc(o.n)}</strong></div>${cls==="nx"?crest(o):""}</a>`;
+  document.getElementById("page-profile").innerHTML=`
+  <section class="p-hero" style="--c:${C}">
+    <span class="p-rank" aria-hidden="true">#${t.rank}</span>
+    <div class="wrap">
+      <a class="back" href="#teams">← Conferencias</a>
+      <div class="p-id">${crest(t)}
+        <div>
+          <div class="chips"><span class="chip ab"><i>#${t.ab}</i></span>${ti===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}<span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span>${t.q?`<span class="chip q"><i>Clasificado a playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div>
+          <h1>${esc(t.n)}</h1>
+          <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
+          <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
+          <div class="p-cid"><span class="label">Pokémon favorito</span><span class="cid">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="strip p-strip"><div class="wrap">
+    <div class="stat"><b class="num">${t.w}-${t.l}</b><span>Récord en series</span></div>
+    <div class="stat"><b class="num">${gw}-${gl}</b><span>Juegos ganados</span></div>
+    <div class="stat"><b class="num">${sign(t.d)}</b><span>Diferencia de Pokémon</span></div>
+    <div class="stat"><b class="num">${t.pts}</b><span>Puntos de liga</span></div>
+    <div class="stat"><b class="num">${kills}</b><span>KOs del roster</span></div>
+    <div class="stat"><b class="num">${esc(draftPts)}</b><span>Puntos de draft</span></div>
+  </div></div>
+  <div class="wrap s-body p-body" style="--c:${C}">
+    <section>
+      <div class="sec-head"><div><div class="label">Semana a semana</div><h2>La <em>trayectoria</em></h2></div></div>
+      <div class="path-w"><div class="path" style="--c:${C}">${path}</div></div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">${roster.length} Pokémon · ${kills} KOs · ${deaths} caídas</div><h2>El <em>roster</em></h2></div></div>
+      <div class="p-note"><span>Movimientos de free agency: <strong>${fa}</strong></span><span>Todos obtenidos en el <strong>draft</strong></span></div>
+      <div class="roster-g">${roster.slice().sort((a,b)=>b[1]-a[1]).map(pk).join("")}</div>
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">Debilidades y resistencias del roster</div><h2>Análisis de <em>tipos</em></h2></div></div>
+      ${typeChart(roster)}
+    </section>
+    <section>
+      <div class="sec-head"><div><div class="label">Series al mejor de 3</div><h2>Resultados de la <em>temporada</em></h2></div></div>
+      <div class="p-series">${ms.map(m=>mcard(m,ti)).join("")}</div>
+    </section>
+    <nav class="p-nav" aria-label="Otros equipos">${navLink(prev,"pv","← Equipo anterior")}${navLink(next,"nx","Equipo siguiente →")}</nav>
+  </div>`;
+  wireRosterAnim(document.getElementById("page-profile"));
+}
+
+/* hero video: se muestra solo cuando el archivo existe y empieza a reproducirse */
+(()=>{
+  const v=document.getElementById("heroVideo"),box=document.getElementById("heroMedia"),btn=document.getElementById("videoToggle");
+  if(!v)return;
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  v.addEventListener("playing",()=>box.classList.add("is-ready"));
+  const setBtn=()=>{const p=v.paused;btn.textContent=p?"▶ Reproducir video":"❚❚ Pausar video";btn.setAttribute("aria-pressed",p);};
+  btn.addEventListener("click",()=>{v.paused?v.play().catch(()=>{}):v.pause();setBtn();});
+  v.addEventListener("pause",setBtn);v.addEventListener("play",setBtn);
+  if(reduce){v.addEventListener("loadeddata",()=>box.classList.add("is-ready"),{once:true});v.load();}
+  else v.play().catch(()=>{});
+})();
+document.getElementById("page-profile").addEventListener("click",e=>{
+  const b=e.target.closest(".cid-copy");if(!b)return;
+  const done=()=>{b.textContent="Copiado";setTimeout(()=>b.textContent="Copiar",1600);};
+  const sel=()=>{const c=b.previousElementSibling;const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selecciónalo y copia";};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(b.dataset.cid).then(done,sel);else sel();
+});
+/* playoffs — formato escalera de ppvdraftleague.com/playoffs (índices de TEAMS).
+   Resultado: w = "a" o "b" (quién ganó la serie). Si se conoce el marcador, agrega seq con el ganador de cada juego ("aba"). */
+const PLAYOFFS={
+  A:{wc:{a:2,b:12,w:"b"},qf:{a:10,w:"a"},sf:{a:0,w:"a"}},
+  B:{wc:{a:11,b:3,w:"a"},qf:{a:1,w:"b"},sf:{a:9,w:"a"}},
+  final:{w:"b"}
+};
+const RNAME={wc:"Wild Card",qf:"Cuartos de final",sf:"Semifinal",final:"Gran Final"};
+const winnerOf=m=>{if(m.a==null||m.b==null)return null;if(m.w&&!m.seq)return m.w==="a"?m.a:m.b;if(!m.seq)return null;const ga=[...m.seq].filter(x=>x==="a").length,gb=m.seq.length-ga;return ga===2?m.a:gb===2?m.b:null;};
+function resolvePlayoffs(){
+  const P=JSON.parse(JSON.stringify(PLAYOFFS));
+  ["A","B"].forEach(k=>{const s=P[k];s.qf.b=winnerOf(s.wc);s.sf.b=winnerOf(s.qf);});
+  P.final.a=winnerOf(P.A.sf);P.final.b=winnerOf(P.B.sf);
+  return P;
+}
+function pslot(ti,from,score,state){
+  if(ti==null)return `<div class="ps tbd"><span class="q" aria-hidden="true">?</span><span class="nm"><span>${from}</span></span><b class="sc"></b></div>`;
+  const t=TEAMS[ti];
+  return `<div class="ps ${state||""}" style="--c:${CONF[t.c].v}">${crest(t)}<span class="nm"><a href="#team-${slug(t)}">${esc(t.n)}</a><small>${CONF[t.c].name} #${t.rank} · ${t.w}-${t.l}</small></span><b class="sc num">${score??""}</b></div>`;
+}
+function pmatch(m,title,fromA,fromB,cls,style,extra=""){
+  const w=winnerOf(m);let ga=m.seq?[...m.seq].filter(x=>x==="a").length:null,gb=m.seq?m.seq.length-ga:null;if(!m.seq&&w!=null){ga=w===m.a?"W":"";gb=w===m.b?"W":"";}
+  const st=w!=null?"Final":m.seq?"En juego":(m.a!=null&&m.b!=null)?"Por jugar":"Pendiente";
+  const sa=w==null?"":w===m.a?"win":"lose",sb=w==null?"":w===m.b?"win":"lose";
+  return `<article class="pm ${cls}" style="${style}"><header><span class="label">${title}</span><span class="st ${m.seq&&w==null?"live":""}">${st}</span></header>${extra}${pslot(m.a,fromA,ga,sa)}${pslot(m.b,fromB,gb,sb)}</article>`;
+}
+const TROPHY=`<svg viewBox="0 0 64 72" aria-hidden="true"><path d="M16 4h32v14c0 10-7 18-16 18S16 28 16 18z" fill="var(--volt)"/><path d="M16 9H6v5c0 7 5 12 11 12M48 9h10v5c0 7-5 12-11 12" fill="none" stroke="var(--volt)" stroke-width="4"/><rect x="28" y="36" width="8" height="14" fill="var(--volt)"/><path d="M18 50h28l4 10H14z" fill="var(--volt)"/><rect x="12" y="60" width="40" height="8" fill="var(--chalk)"/><path d="M26 12l4 8M38 12l-2 6" stroke="var(--ink)" stroke-width="2.5" opacity=".35"/></svg>`;
+function renderPlayoffs(){
+  const P=resolvePlayoffs();
+  const all=[["A","wc"],["A","qf"],["A","sf"],["B","wc"],["B","qf"],["B","sf"]].map(([k,r])=>P[k][r]).concat(P.final);
+  const done=all.filter(m=>winnerOf(m)!=null).length;
+  const next=["wc","qf","sf"].find(r=>winnerOf(P.A[r])==null||winnerOf(P.B[r])==null)||"final";
+  const champ=winnerOf(P.final);
+  document.getElementById("po-status").innerHTML=`
+    <div><b class="num">8</b><span class="label">Equipos</span></div>
+    <div><b class="num">${done}/7</b><span class="label">Series jugadas</span></div>
+    <div><b>${champ!=null?esc(TEAMS[champ].n):RNAME[next]}</b><span class="label">${champ!=null?"Campeón":"Ronda actual"}</span></div>`;
+  const A=P.A,B=P.B;
+  document.getElementById("bracket").innerHTML=`<div class="bk">
+    <span class="rl" style="grid-column:1">Wild Card</span><span class="rl" style="grid-column:2">Cuartos de final</span><span class="rl" style="grid-column:3">Semifinal</span><span class="rl fin" style="grid-column:4">Gran Final</span>
+    <span class="side-h" style="--o:0">Lado A</span>
+    ${pmatch(A.wc,"Wild Card 1 · Lado A","","","to-r","grid-column:1;grid-row:2;--o:1")}
+    ${pmatch(A.qf,"Cuartos · Lado A","","Ganador Wild Card 1","to-r","grid-column:2;grid-row:2;--o:2")}
+    ${pmatch(A.sf,"Semifinal · Lado A","","Ganador Cuartos A","to-fd","grid-column:3;grid-row:2;--o:3")}
+    <span class="side-h" style="--o:4">Lado B</span>
+    ${pmatch(B.wc,"Wild Card 2 · Lado B","","","to-r","grid-column:1;grid-row:3;--o:5")}
+    ${pmatch(B.qf,"Cuartos · Lado B","","Ganador Wild Card 2","to-r","grid-column:2;grid-row:3;--o:6")}
+    ${pmatch(B.sf,"Semifinal · Lado B","","Ganador Cuartos B","to-fu","grid-column:3;grid-row:3;--o:7")}
+    <div class="fin" style="--o:98">${pmatch(P.final,"Gran Final","Ganador Semifinal A","Ganador Semifinal B","final","",
+      `<div class="champ ${champ!=null?"":"tbd"}">${TROPHY}${champ!=null?crest(TEAMS[champ]):""}<div><span class="label">Campeón Temporada 5</span><strong>${champ!=null?esc(TEAMS[champ].n):"Por definir"}</strong></div></div>`)}</div>
+  </div>`;
+  const entry=t=>t.rank===1?["Semifinal","doble bye"]:t.rank===2?["Cuartos de final","bye en Wild Card"]:["Wild Card","juega desde la primera ronda"];
+  const seeds=[0,9,10,1,2,12,11,3];
+  document.getElementById("po-seeds").innerHTML=seeds.map(i=>{const t=TEAMS[i],[r,why]=entry(t);return `<a class="sd" href="#team-${slug(t)}" style="--c:${CONF[t.c].v}">${crest(t)}<div><span class="chip cf" style="--cc:${CONF[t.c].v}"><i>${CONF[t.c].name} #${t.rank}</i></span><strong>${esc(t.n)}</strong></div><div class="entry">${t.w}-${t.l} · Entra en <b>${r}</b> (${why})</div></a>`;}).join("");
+  document.querySelectorAll("#po-format .step").forEach(s=>s.classList.toggle("now",s.dataset.r===(champ!=null?"":next)));
+}
+renderPlayoffs();
+
+/* footer: campeón y volver arriba */
+(()=>{const c=winnerOf(resolvePlayoffs().final),el=document.getElementById("fChamp");if(el)el.textContent=c!=null?TEAMS[c].n:"Por definir";
+  const up=document.getElementById("fUp");if(up)up.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));})();
+/* ---------- sesión simulada (demo) ---------- */
+const toastMsg=m=>{const t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>t.hidden=true,2800);};
+(()=>{const t=TEAMS[ME],chip=document.getElementById("meChip");
+  chip.href="#team-"+slug(t);chip.style.setProperty("--c",CONF[t.c].v);
+  chip.innerHTML=`${crest(t)}<span><b>${esc(PROFILES[ME][0])}</b><small>${esc(t.n)}</small></span>`;
+  chip.setAttribute("aria-label",`Sesión iniciada: ${PROFILES[ME][0]}, ${t.n}. Ir a mi equipo`);
+  const fl=document.getElementById("fMine");if(fl)fl.href="#team-"+slug(t);})();
+
+/* ---------- Pokedex: pool del draft (ppvdraftleague.com/pokedex) — [pokémon, costo, tipos, id PokeAPI] ---------- */
+const POOL=[["Charizard",15,"fire/flying",6],["Floette",15,"fairy",670],["Gengar",15,"ghost/poison",94],["Incineroar",15,"fire/dark",727],["Tyranitar",15,"rock/dark",248],["Whimsicott",15,"grass/fairy",547],["Dragonite",13,"dragon/flying",149],["Garchomp",13,"dragon/ground",445],["Gardevoir",13,"psychic/fairy",282],["Kangaskhan",13,"normal",115],["Kingambit",13,"dark/steel",983],["Pelipper",13,"water/flying",279],["Sinistcha",13,"grass/ghost",1013],["Sneasler",13,"fighting/poison",903],["Volcarona",13,"bug/fire",637],["Aegislash",11,"steel/ghost",681],["Aerodactyl",11,"rock/flying",142],["Archaludon",11,"steel/dragon",1018],["Clefable",11,"fairy",36],["Excadrill",11,"ground/steel",530],["Farigiraf",11,"normal/psychic",981],["Froslass",11,"ice/ghost",478],["Gallade",11,"psychic/fighting",475],["Glimmora",11,"rock/poison",970],["Gyarados",11,"water/flying",130],["Starmie",11,"water/psychic",121],["Venusaur",11,"grass/poison",3],["Alolan Ninetales",10,"ice/fairy",10104],["Arcanine",10,"fire",59],["Basculegion-Male",10,"water/ghost",902],["Dragapult",10,"dragon/ghost",887],["Hisuian Typhlosion",10,"fire/ghost",10233],["Maushold",10,"normal",925],["Meganium",10,"grass",154],["Palafin",10,"water",964],["Primarina",10,"water/fairy",730],["Talonflame",10,"fire/flying",663],["Banette",9,"ghost",354],["Blastoise",9,"water",9],["Chandelure",9,"ghost/fire",609],["Delphox",9,"fire/psychic",655],["Drampa",9,"normal/dragon",780],["Feraligatr",9,"water",160],["Greninja",9,"water/dark",658],["Heracross",9,"bug/fighting",214],["Hisuian Zoroark",9,"normal/ghost",10239],["Lopunny",9,"normal",428],["Lucario",9,"fighting/steel",448],["Manectric",9,"electric",310],["Medicham",9,"fighting/psychic",308],["Milotic",9,"water",350],["Politoed",9,"water",186],["Rotom-Wash",9,"electric/water",10009],["Scizor",9,"bug/steel",212],["Sharpedo",9,"water/dark",319],["Slowbro",9,"water/psychic",80],["Torkoal",9,"fire",324],["Corviknight",8,"flying/steel",823],["Hatterene",8,"psychic/fairy",858],["Hisuian Arcanine",8,"fire/rock",10230],["Mamoswine",8,"ice/ground",473],["Meowscarada",8,"grass/dark",908],["Mimikyu",8,"ghost/fairy",778],["Rotom-Heat",8,"electric/fire",10008],["Sylveon",8,"fairy",700],["Vivillon",8,"bug/flying",666],["Abomasnow",7,"grass/ice",460],["Aggron",7,"steel/rock",306],["Alakazam",7,"psychic",65],["Altaria",7,"dragon/flying",334],["Ampharos",7,"electric",181],["Azumarill",7,"water/fairy",184],["Beedrill",7,"bug/poison",15],["Camerupt",7,"fire/ground",323],["Conkeldurr",7,"fighting",534],["Crabominable",7,"fighting/ice",740],["Ditto",7,"normal",132],["Empoleon",7,"water/steel",395],["Galarian Slowbro",7,"poison/psychic",10165],["Galarian Slowking",7,"poison/psychic",10172],["Garganacl",7,"rock",934],["Golurk",7,"ground/ghost",623],["Hawlucha",7,"fighting/flying",701],["Hippowdon",7,"ground",450],["Hisuian Goodra",7,"steel/dragon",10242],["Houndoom",7,"dark/fire",229],["Hydreigon",7,"dark/dragon",635],["Klefki",7,"steel/fairy",707],["Liepard",7,"dark",510],["Meowstic Male",7,"psychic",678],["Oranguru",7,"normal/psychic",765],["Orthworm",7,"steel",968],["Pinsir",7,"bug",127],["Sableye",7,"dark/ghost",302],["Serperior",7,"grass",497],["Weavile",7,"dark/ice",461],["Araquanid",6,"water/bug",752],["Armarouge",6,"fire/psychic",936],["Basculegion-Female",6,"water/ghost",10248],["Kommo-o",6,"dragon/fighting",784],["Meowstic Female",6,"psychic",10025],["Paldean Tauros Aqua",6,"fighting/water",10252],["Paldean Tauros Blaze",6,"fighting/fire",10251],["Scovillain",6,"grass/fire",952],["Slowking",6,"water/psychic",199],["Snorlax",6,"normal",143],["Tsareena",6,"grass",763],["Umbreon",6,"dark",197],["Wyrdeer",6,"normal/psychic",899],["Absol",5,"dark",359],["Alcremie",5,"fairy",869],["Beartic",5,"ice",614],["Ceruledge",5,"fire/ghost",937],["Chesnaught",5,"grass/fighting",652],["Chimecho",5,"psychic",358],["Clawitzer",5,"water",693],["Emboar",5,"fire/fighting",500],["Espathra",5,"psychic",956],["Glalie",5,"ice",362],["Goodra",5,"dragon",706],["Hisuian Decidueye",5,"grass/fighting",10244],["Hydrapple",5,"grass/dragon",1019],["Infernape",5,"fire/fighting",392],["Kleavor",5,"bug/rock",900],["Krookodile",5,"ground/dark",553],["Machamp",5,"fighting",68],["Ninetales",5,"fire",38],["Noivern",5,"flying/dragon",715],["Pidgeot",5,"normal/flying",18],["Raichu",5,"electric",26],["Reuniclus",5,"psychic",579],["Rhyperior",5,"ground/rock",464],["Rotom-Mow",5,"electric/grass",10012],["Salazzle",5,"poison/fire",758],["Skarmory",5,"steel/flying",227],["Skeledirge",5,"fire/ghost",911],["Steelix",5,"steel/ground",208],["Tinkaton",5,"fairy/steel",959],["Toxicroak",5,"poison/fighting",454],["Vanilluxe",5,"ice",584],["Victreebel",5,"grass/poison",71],["Zoroark",5,"dark",571],["Alolan Raichu",4,"electric/psychic",10100],["Audino",4,"normal",531],["Diggersby",4,"normal/ground",660],["Glaceon",4,"ice",471],["Hisuian Samurott",4,"water/dark",10236],["Leafeon",4,"grass",470],["Mudsdale",4,"ground",750],["Pangoro",4,"fighting/dark",675],["Passimian",4,"fighting",766],["Quaquaval",4,"water/fighting",914],["Rotom-Frost",4,"electric/ice",10010],["Toxapex",4,"poison/water",748],["Typhlosion",4,"fire",157],["Aromatisse",3,"fairy",683],["Hisuian Avalugg",3,"ice/rock",10243],["Jolteon",3,"electric",135],["Luxray",3,"electric",405],["Lycanroc (Midday)",3,"rock",745],["Lycanroc (Midnight)",3,"rock",10126],["Pikachu",3,"electric",25],["Polteageist",3,"ghost",855],["Runerigus",3,"ground/ghost",867],["Simipour",3,"water",516],["Simisage",3,"grass",512],["Simisear",3,"fire",514],["Toucannon",3,"normal/flying",733],["Trevenant",3,"ghost/grass",709],["Vaporeon",3,"water",134],["Appletun",2,"grass/dragon",842],["Arbok",2,"poison",24],["Aurorus",2,"rock/ice",699],["Avalugg",2,"ice",713],["Bastiodon",2,"rock/steel",411],["Bellibolt",2,"electric",939],["Cofagrigus",2,"ghost",563],["Decidueye",2,"grass/ghost",724],["Espeon",2,"psychic",196],["Flapple",2,"grass/dragon",841],["Flareon",2,"fire",136],["Florges",2,"fairy",671],["Furfrou",2,"normal",676],["Gliscor",2,"ground/flying",472],["Gourgeist",2,"ghost/grass",711],["Heliolisk",2,"electric/normal",695],["Lycanroc (Dusk)",2,"rock",10152],["Morpeko",2,"electric/dark",877],["Mr. Rime",2,"ice/psychic",866],["Rampardos",2,"rock",409],["Roserade",2,"grass/poison",407],["Rotom-Fan",2,"electric/flying",10011],["Samurott",2,"water",503],["Sandaconda",2,"ground",844],["Tauros",2,"normal",128],["Torterra",2,"grass/ground",389],["Tyrantrum",2,"rock/dragon",697],["Ariados",1,"bug/poison",168],["Castform",1,"normal",351],["Dedenne",1,"electric/fairy",702],["Emolga",1,"electric/flying",587],["Forretress",1,"bug/steel",205],["Galarian Stunfisk",1,"ground/steel",10180],["Garbodor",1,"poison",569],["Rotom",1,"electric/ghost",479],["Slurpuff",1,"fairy",685],["Spiritomb",1,"ghost/dark",442],["Stunfisk",1,"ground/electric",618],["Watchog",1,"normal",505]];
+POOL.forEach(p=>{SPR_IDS[p[0]]=p[3];});
+const OWNER={};PROFILES.forEach((p,i)=>p[5].forEach(r=>{OWNER[r[0]]=i;}));
+let dxS="all",dxT="";
+const dxQ=document.getElementById("dxQ"),dxType=document.getElementById("dxType");
+dxType.innerHTML='<option value="">Todos los tipos</option>'+TYPE_ORDER.map(t=>`<option value="${t}">${TYPE[t][0]}</option>`).join("");
+const owned=POOL.filter(p=>OWNER[p[0]]!=null).length;
+document.getElementById("dxStats").innerHTML=`
+  <div><b class="num">${POOL.length}</b><span class="label">Pokémon en el pool</span></div>
+  <div><b class="num">${owned}</b><span class="label">Con dueño</span></div>
+  <div><b class="num">${POOL.length-owned}</b><span class="label">Libres</span></div>
+  <div><b class="num">${new Set(POOL.map(p=>p[1])).size}</b><span class="label">Niveles (15 a 1 pts)</span></div>`;
+function dxCard(p){
+  const [n,pts,types]=p,ts=types.split("/"),own=OWNER[n];
+  const c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
+  const owner=own!=null?`<a href="#team-${slug(TEAMS[own])}" style="--c:${CONF[TEAMS[own].c].v}">${crest(TEAMS[own])}<span>${esc(TEAMS[own].n)}</span></a>`:`<span class="chip lib"><i>Libre</i></span>`;
+  return `<article class="dx ${own==null?"free":""} ${own===ME?"mine":""}" style="--t1:${c1};--t2:${c2}">${own===ME?'<span class="mine-tag">Tu equipo</span>':""}
+    ${spr(n,"dx-spr")}<h3>${esc(n)}</h3>
+    <div class="types">${ts.map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div>
+    <div class="own">${owner}</div></article>`;
+}
+function renderDex(){
+  const q=dxQ.value.trim().toLowerCase();
+  const list=POOL.filter(p=>{const own=OWNER[p[0]];
+    if(q&&!p[0].toLowerCase().includes(q))return false;
+    if(dxT&&!p[2].split("/").includes(dxT))return false;
+    if(dxS==="free"&&own!=null)return false;
+    if(dxS==="owned"&&own==null)return false;
+    if(dxS==="mine"&&own!==ME)return false;
+    return true;});
+  const tiers=[...new Set(list.map(p=>p[1]))].sort((a,b)=>b-a);
+  document.getElementById("dxBody").innerHTML=tiers.length?tiers.map(t=>{const g=list.filter(p=>p[1]===t),fr=g.filter(p=>OWNER[p[0]]==null).length;
+    return `<section class="tier"><div class="tier-h"><h2 class="num">${t}<small>pts</small></h2><span class="label">${g.length} Pokémon · ${fr} libres</span><span class="rule"></span></div><div class="dx-g">${g.map(dxCard).join("")}</div></section>`;}).join("")
+    :`<div class="empty">Ningún Pokémon coincide con esos filtros. Prueba con otro nombre o tipo.</div>`;
+  document.getElementById("dxCount").textContent=`${list.length} de ${POOL.length}`;
+}
+document.querySelectorAll("#dxSeg button").forEach(b=>b.addEventListener("click",()=>{dxS=b.dataset.s;document.querySelectorAll("#dxSeg button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderDex();}));
+dxQ.addEventListener("input",renderDex);dxType.addEventListener("change",()=>{dxT=dxType.value;renderDex();});
+renderDex();
+
+/* ---------- Draft: tablero snake (ppvdraftleague.com/draft). Cada ronda va en el orden de columnas de DRAFT_ORDER. ---------- */
+const DRAFT_ORDER=[7,3,12,10,9,4,15,17,0,6,11,13,8,2,16,14,5,1];
+const DRAFT_ROUNDS=[["Charizard","Floette","Pelipper","Dragonite","Tyranitar","Gengar","Incineroar","Froslass","Gardevoir","Kingambit","Starmie","Basculegion-Male","Whimsicott","Garchomp","Sinistcha","Aerodactyl","Gyarados","Volcarona"],["Aegislash","Talonflame","Manectric","Greninja","Primarina","Alolan Ninetales","Excadrill","Hisuian Arcanine","Maushold","Gallade","Dragapult","Delphox","Kangaskhan","Meganium","Farigiraf","Milotic","Politoed","Sneasler"],["Archaludon","Palafin","Blastoise","Sylveon","Glimmora","Arcanine","Torkoal","Rotom-Frost","Hydreigon","Golurk","Alakazam","Clefable","Venusaur","Vivillon","Drampa","Ditto","Hisuian Goodra","Rotom-Wash"],["Banette","Kommo-o","Rhyperior","Scovillain","Scizor","Tsareena","Skeledirge","Orthworm","Mamoswine","Paldean Tauros Blaze","Meowscarada","Krookodile","Hisuian Typhlosion","Empoleon","Heracross","Rotom-Heat","Raichu","Corviknight"],["Chandelure","Hisuian Zoroark","Feraligatr","Pikachu","Oranguru","Klefki","Tinkaton","Altaria","Ceruledge","Weavile","Meowstic Male","Lopunny","Lucario","Sableye","Slowbro","Hatterene","Galarian Slowking","Medicham"],["Absol","Lycanroc (Midday)","Mimikyu","Ninetales","Camerupt","Mudsdale","Noivern","Azumarill","Paldean Tauros Aqua","Sharpedo","Skarmory","Toxicroak","Appletun","Hawlucha","Aggron","Liepard","Crabominable","Simisage"],[null,"Ariados","Vaporeon","Umbreon","Rotom","Slowking","Emboar","Conkeldurr","Alolan Raichu","Rotom-Mow","Typhlosion","Infernape",null,"Salazzle","Arbok","Snorlax","Basculegion-Female","Runerigus"],[null,"Armarouge","Hisuian Samurott","Galarian Slowbro",null,"Tauros","Steelix","Garganacl","Beedrill","Rampardos","Araquanid","Heliolisk",null,"Aromatisse",null,"Jolteon","Kleavor","Morpeko"]];
+const PTS=Object.fromEntries(POOL.map(p=>[p[0],p[1]]));
+const pickNo=(ri,ci)=>ri%2===0?ci+1:DRAFT_ORDER.length-ci;
+function renderDraft(){
+  const N=DRAFT_ORDER.length,made=DRAFT_ROUNDS.flat().filter(Boolean).length;
+  document.getElementById("drStats").innerHTML=`
+    <div><b class="num">${N}</b><span class="label">Coaches</span></div>
+    <div><b class="num">${DRAFT_ROUNDS.length}</b><span class="label">Rondas</span></div>
+    <div><b class="num">${made}</b><span class="label">Picks hechos</span></div>
+    <div><b class="num">60</b><span class="label">Puntos por equipo</span></div>`;
+  // mi draft
+  const t=TEAMS[ME],col=DRAFT_ORDER.indexOf(ME),roster=PROFILES[ME][5].map(r=>r[0]);
+  const mine=DRAFT_ROUNDS.map((row,ri)=>({r:ri+1,k:pickNo(ri,col),g:ri*N+pickNo(ri,col),n:row[col]}));
+  const spent=mine.reduce((s,m)=>s+(m.n?PTS[m.n]||0:0),0),kept=mine.filter(m=>m.n&&roster.includes(m.n)).length;
+  document.getElementById("drMineSum").innerHTML=`<span>Draftaste <b>${mine.filter(m=>m.n).length} Pokémon</b> por <b>${spent} pts</b></span><span><b>${kept}</b> siguen en tu roster</span><span>Roster actual: <b>${PROFILES[ME][2]} pts</b></span>`;
+  document.getElementById("drMine").innerHTML=mine.map(m=>m.n
+    ?`<article class="mp ${roster.includes(m.n)?"":"gone"}" style="--c:${CONF[t.c].v}">${spr(m.n,"")}<span class="label">Ronda ${m.r} · Pick ${m.r}.${m.k} · #${m.g} global</span><strong>${esc(m.n)}</strong><span class="meta"><b>${PTS[m.n]} pts</b> · ${roster.includes(m.n)?"En tu roster":"Ya no está en tu roster"}</span></article>`
+    :`<article class="mp empty"><span class="label">Ronda ${m.r} · Pick ${m.r}.${m.k}</span><strong>Sin pick</strong></article>`).join("");
+  // tablero
+  document.getElementById("drBoard").innerHTML=`<table class="db v"><colgroup><col class="c-tm">${DRAFT_ROUNDS.map(()=>"<col>").join("")}</colgroup>
+    <thead><tr><th class="tmh" scope="col">Equipo</th>${DRAFT_ROUNDS.map((_,ri)=>`<th scope="col">Ronda ${ri+1}<span aria-label="${ri%2?"de abajo hacia arriba":"de arriba hacia abajo"}">${ri%2?"↑":"↓"}</span></th>`).join("")}</tr></thead>
+    <tbody>${DRAFT_ORDER.map((ti,ci)=>{const T=TEAMS[ti];return `<tr class="${ti===ME?"mine":""}" style="--c:${CONF[T.c].v}"><th class="tm" scope="row"><a href="#team-${slug(T)}"><span class="dpos num">${ci+1}</span>${crest(T)}<span class="tn"><b class="ab">#${T.ab}</b><small>${esc(T.n)}</small></span>${ti===ME?'<span class="you">Tú</span>':""}</a></th>${DRAFT_ROUNDS.map((row,ri)=>{const n=row[ci];return `<td><div class="${n?"":"empty"}">${n?`${box(n,"db-spr")}<b>${esc(n)}</b><small>${PTS[n]??"?"} pts · ${ri+1}.${pickNo(ri,ci)}</small>`:`<b>Sin pick</b><small>${ri+1}.${pickNo(ri,ci)}</small>`}</div></td>`;}).join("")}</tr>`;}).join("")}</tbody></table>`;
+  // free agency
+  const free=POOL.filter(p=>OWNER[p[0]]==null).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const left=60-PROFILES[ME][5].reduce((s,r)=>s+r[1],0);
+  document.getElementById("drFaNote").innerHTML=`<span>Te quedan <b>${left} pts</b> de presupuesto.</span><span>${left>0?"Puedes fichar Pokémon que cuesten hasta "+left+" pts.":"Para fichar a alguien tendrías que liberar primero a un Pokémon de tu roster."}</span>`;
+  document.getElementById("drFa").innerHTML=`<thead><tr><th>Pokémon</th><th>Tipos</th><th>Costo</th><th></th></tr></thead><tbody>${free.map(p=>`<tr><td><span class="fa-n">${box(p[0],"")}${esc(p[0])}</span></td><td><div class="types">${p[2].split("/").map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div></td><td class="pts num">${p[1]}</td><td><button type="button" class="fa-btn" data-fa="${esc(p[0])}">Solicitar</button></td></tr>`).join("")}</tbody>`;
+  document.getElementById("drFaCount").textContent=`${free.length} Pokémon libres`;
+}
+document.getElementById("drFa").addEventListener("click",e=>{const b=e.target.closest("[data-fa]");if(!b)return;toastMsg(`Demo: aquí ${PROFILES[ME][0]} enviaría la solicitud de free agency por ${b.dataset.fa}.`);});
+document.getElementById("meOut").addEventListener("click",()=>toastMsg("Demo: la sesión de Richampions VGC está simulada, no hay cierre de sesión."));
+renderDraft();
+
+/* tablero del draft: todas las filas toman la altura de la celda más alta */
+function equalizeBoard(){
+  const t=document.querySelector("#drBoard table.db.v");if(!t||!t.offsetParent)return;
+  t.style.removeProperty("--cellh");
+  const cells=[...t.querySelectorAll("td>div, th.tm a")];
+  const h=Math.ceil(Math.max(...cells.map(c=>c.getBoundingClientRect().height)));
+  if(h>0)t.style.setProperty("--cellh",h+"px");
+}
+if(document.fonts)document.fonts.ready.then(equalizeBoard);
+let eqT;addEventListener("resize",()=>{clearTimeout(eqT);eqT=setTimeout(equalizeBoard,120);});
+/* routing */
+function route(){
+  const h=location.hash.slice(1);
+  const PAGES=["home","teams","standings","matches","playoffs","draft","pokedex"];
+  const ti=h.startsWith("team-")?TEAMS.findIndex(t=>"team-"+slug(t)===h):-1;
+  const p=ti>=0?"profile":PAGES.includes(h)?h:"home";
+  if(ti>=0)renderProfile(ti);
+  [...PAGES,"profile"].forEach(x=>document.getElementById("page-"+x).hidden=p!==x);
+  if(p==="draft")requestAnimationFrame(equalizeBoard);
+  if(p==="matches"){const W=document.getElementById("weeks");W.scrollLeft=W.scrollWidth;}
+  document.querySelectorAll(".nav nav a[data-page]").forEach(a=>a.classList.toggle("on",a.dataset.page===(p==="profile"?"teams":p)));
+  scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();
+
+/* placeholder links */
+const toast=document.getElementById("toast");let tt;
+document.addEventListener("click",e=>{const a=e.target.closest("[data-soon]");if(!a)return;e.preventDefault();toast.textContent="Esta sección no está incluida en el mockup (no está incluida en el mockup).";toast.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toast.hidden=true,2400);});
+</script>

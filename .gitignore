@@ -1,0 +1,11 @@
+# Video original (115 MB): GitHub no acepta archivos de más de 100 MB.
+# El sitio usa media/hero-web.mp4.
+media/hero.mp4
+
+# Copias originales de los logos
+logos/Originals/
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
