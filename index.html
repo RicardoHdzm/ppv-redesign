@@ -1485,7 +1485,7 @@ function renderMons(){
   const mth=(k,l,c="")=>`<th class="${c}" aria-sort="${mKey===k?(mDir===1?"ascending":"descending"):"none"}"><button type="button" data-mk="${k}">${l}</button></th>`;
   const list=sortBy(MONS_FULL,mKey,mDir,(a,b)=>b.k-a.k||a.n.localeCompare(b.n));
   document.getElementById("mtable").innerHTML=`<thead><tr><th class="l">#</th>${mth("n","Pokémon","l")}${mth("k","Kills","l")}${mth("d","Deaths")}${mth("g","Partidas")}${mth("kd","K/D")}</tr></thead><tbody>${list.map((m,i)=>`
-   <tr class="in" style="--c:var(--volt)"><td class="pos l">${i+1}</td><td class="l"><span class="nm">${box(m.n,"spr-s")}${nickOf(m.n)?`${esc(nickOf(m.n))}<small class="sp">${esc(m.n)}</small>`:m.n}</span></td>
+   <tr class="in" style="--c:var(--volt)"><td class="pos l">${i+1}</td><td class="l"><span class="nm">${box(m.n,"spr-s")}${m.n}</span></td>
    <td class="l"><span class="kc"><span class="kb" aria-hidden="true"><i style="width:${m.k/maxK*100}%"></i></span><b>${m.k}</b></span></td>
    <td>${m.d}</td><td>${m.g}</td><td class="${m.kd===bestKd?"best":""}">${m.kd.toFixed(2)}</td></tr>`).join("")}</tbody>`;
 }
@@ -1629,11 +1629,7 @@ function wireRosterAnim(root){
 /* apodo de un Pokémon según su dueño actual (seguro aunque OWNER/getNick aún no existan al cargar) */
 function nickOf(n){try{const o=OWNER[n];return o!=null?getNick(o,n):"";}catch(e){return "";}}
 function refreshLeaderNicks(){
-  const max=MONS[0][1];
-  document.querySelectorAll("#bars .bar").forEach((b,i)=>{const m=MONS[i];if(!m)return;const nk=nickOf(m[0]),p=b.querySelector(".p");if(!p)return;
-    p.innerHTML=box(m[0],"spr-s")+(nk?`${esc(nk)} <small class="sp">${esc(m[0])}</small>`:esc(m[0]));p.title=nk?`${nk} (${m[0]})`:m[0];});
   const h=document.querySelector(".mvp h3");if(h){const nk=nickOf("Blastoise");h.innerHTML=nk?`${esc(nk)}<small class="sp-mvp">Blastoise</small>`:"Blastoise";}
-  if(typeof renderMons==="function")renderMons();
 }
 /* apodos de Pokémon (demo: se guardan en este navegador; en el sitio real irían a la base de datos) */
 const NICK_KEY="ppv-apodos-v1";
@@ -2275,7 +2271,7 @@ async function drawLeaders(fmt){
   const rh=story?120:86,mx=list[0].k;
   list.slice(1).forEach((m,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(80,y,W-160,rh-8);const cy=y+(rh-8)/2;
     txt(x,String(k+2),`900 ${story?40:34}px ${FD}`,P.MU,"left",104,cy+13);fit(x,bx[k],190,cy,rh-20,true);
-    const o=OWNER[m.n],nk=nickOf(m.n);txt(x,(nk||m.n).toUpperCase(),`800 ${story?38:32}px ${FD}`,P.CH,"left",250,cy+(o!=null?2:12));if(o!=null)txt(x,"#"+TEAMS[o].ab+(nk?" · "+m.n.toUpperCase():""),`700 ${story?24:20}px ${FL}`,P.MU,"left",250,cy+(story?32:28));
+    const o=OWNER[m.n];txt(x,m.n.toUpperCase(),`800 ${story?38:32}px ${FD}`,P.CH,"left",250,cy+(o!=null?2:12));if(o!=null)txt(x,"#"+TEAMS[o].ab,`700 ${story?24:20}px ${FL}`,P.MU,"left",250,cy+(story?32:28));
     const bx0=story?620:600,bw=(story?280:290)*m.k/mx;const gr=x.createLinearGradient(bx0,0,bx0+bw,0);gr.addColorStop(0,P.RO);gr.addColorStop(1,P.VE);x.fillStyle=gr;x.fillRect(bx0,cy-8,bw,16);
     txt(x,String(m.k),`900 ${story?44:36}px ${FD}`,P.CH,"right",W-104,cy+15);y+=rh;});
   return f.cv;
