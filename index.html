@@ -2969,12 +2969,13 @@ async function drawOverlay(mi){
   // roster: casillas cuadradas del mismo ancho, centradas en su columna y en la altura del juego
   const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),n=ro.length,gap=8;
     const slots=Math.max(8,n),q=Math.min(colW-2*M,Math.floor((G.h-(slots-1)*gap)/slots)),tot=slots*q+(slots-1)*gap,y0=G.y+(G.h-tot)/2; // mismas filas en ambos lados
-    ro.forEach((r,k)=>{const top=y0+k*(q+gap);x.fillStyle=P.INK3;x.fillRect(cx-q/2,top,q,q);x.fillStyle=C;x.fillRect(cx-q/2,top+q-5,q,5);
-      fit(x,imgs[k],cx,top+(q-5)/2,q-14);});};
+    ro.forEach((r,k)=>{const top=y0+k*(q+gap);x.fillStyle=P.INK3;x.fillRect(cx-q/2,top,q,q);x.fillStyle=C;x.fillRect(cx-q/2,top+q-BW,q,BW);
+      fit(x,imgs[k],cx,top+(q-BW)/2,q-14);});};
   await col(m.a,colLC,CA);await col(m.b,colRC,CB);
   // barra superior
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);shade(0,0,W,G.y,true);
-  poly([[700,0],[712,0],[666,G.y],[654,G.y]],CA);poly([[W-700,0],[W-712,0],[W-666,G.y],[W-654,G.y]],CB);
+  const sw=BW/Math.cos(Math.atan(46/G.y)); // ancho horizontal para que la franja inclinada mida BW de grosor
+  poly([[712-sw,0],[712,0],[666,G.y],[666-sw,G.y]],CA);poly([[W-712,0],[W-712+sw,0],[W-666+sw,G.y],[W-666,G.y]],CB);
   const f1=`900 42px ${FD}`,f2=`900 30px ${FD}`,f3=`600 17px ${FL}`,a1=cap(f1),a2=cap(f2),a3=cap(f3),lg1=9,lg2=9,blk=a1+lg1+a2+lg2+a3,b1=topC-blk/2+a1,b2=b1+lg1+a2,b3=b2+lg2+a3;
   const side=(t,lo,C,left)=>{const ti=TEAMS.indexOf(t),ls=96;fit(x,lo,left?M+ls/2:W-M-ls/2,topC,ls);const tx=left?M+ls+20:W-M-ls-20,al=left?"left":"right";
     x.font=f1;txt(x,ell(x,t.n.toUpperCase(),520),f1,P.CH,al,tx,b1);
@@ -2986,7 +2987,7 @@ async function drawOverlay(mi){
   const cx=W/2,bs=64,so=196,fv=`900 44px ${FD}`,fs=`700 17px ${FL}`,as=cap(fs),sg=12,grp=bs+sg+as,by=topC-grp/2;
   poly([[712,0],[W-712,0],[W-666,G.y],[666,G.y]],P.INK);
   x.fillStyle=P.INK3;x.fillRect(cx-so,by,bs,bs);x.fillRect(cx+so-bs,by,bs,bs);
-  x.fillStyle=CA;x.fillRect(cx-so,by+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+so-bs,by+bs-6,bs,6);
+  x.fillStyle=CA;x.fillRect(cx-so,by+bs-BW,bs,BW);x.fillStyle=CB;x.fillRect(cx+so-bs,by+bs-BW,bs,BW);
   txt(x,"VS",fv,P.VO,"center",cx,by+bs/2+cap(fv)/2);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,fs,P.MU,"center",cx,by+bs+sg+as);
   // barra inferior: todo centrado en la misma linea
   x.fillStyle=P.INK2;x.fillRect(0,G.y+G.h,W,H-G.y-G.h);shade(0,G.y+G.h,W,H-G.y-G.h,false);
