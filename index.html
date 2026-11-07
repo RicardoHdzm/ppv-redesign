@@ -943,6 +943,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .bar .p .sp{font-family:var(--f-label);font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
 .mvp h3 .sp-mvp{display:block;font-family:var(--f-label);font-size:1rem;letter-spacing:.14em;font-weight:700;opacity:.7;margin-top:6px}
 #mtable .nm .sp{display:block;font-family:var(--f-label);font-weight:600;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.mvp-team{display:flex;align-items:center;gap:10px;margin-top:14px;position:relative}
+.mvp-team .logo,.mvp-team .crest{--sz:40px}
+.mvp-team a{color:var(--ink);text-decoration:none;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.2rem;line-height:1}
+.mvp-team a:hover{text-decoration:underline}
+.mvp-team small{display:block;font-family:var(--f-label);font-weight:700;letter-spacing:.12em;font-size:.72rem;opacity:.75}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1024,7 +1029,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       </div>
       <div class="lead">
         <div class="mvp">
-          <div><div class="label">Líder en KOs · Temporada 5</div><h3>Blastoise</h3></div>
+          <div><div class="label">Líder en KOs · Temporada 5</div><h3>Blastoise</h3><div class="mvp-team" id="mvpTeam"></div></div>
           <img class="mvp-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/9.gif" alt="">
           <div class="kd">
             <div><b class="num">24</b><span>Kills</span></div>
@@ -1630,6 +1635,7 @@ function wireRosterAnim(root){
 function nickOf(n){try{const o=OWNER[n];return o!=null?getNick(o,n):"";}catch(e){return "";}}
 function refreshLeaderNicks(){
   const h=document.querySelector(".mvp h3");if(h){const nk=nickOf("Blastoise");h.innerHTML=nk?`${esc(nk)}<small class="sp-mvp">Blastoise</small>`:"Blastoise";}
+  const mt=document.getElementById("mvpTeam");if(mt){let o=null;try{o=OWNER[MONS[0][0]];}catch(e){}mt.innerHTML=o!=null?`${crest(TEAMS[o])}<div><small>Equipo actual</small><a href="#team-${slug(TEAMS[o])}">${esc(TEAMS[o].n)}</a></div>`:"<div><small>Equipo actual</small><span>Agente libre</span></div>";}
 }
 /* apodos de Pokémon (demo: se guardan en este navegador; en el sitio real irían a la base de datos) */
 const NICK_KEY="ppv-apodos-v1";
@@ -2264,9 +2270,10 @@ async function drawLeaders(fmt){
   txt(x,"POKÉMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
   const bh=story?320:230;x.fillStyle=P.INK2;x.fillRect(80,y,W-160,bh);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(80,y,W-160,bh);
   fit(x,big,80+bh/2+10,y+bh/2,bh-20,true);const tx=80+bh+30,ow=OWNER[top.n];
-  txt(x,"#1 · MVP DE LA TEMPORADA",`700 ${story?28:22}px ${FL}`,P.VO,"left",tx,y+bh*.28);
-  txt(x,(nickOf(top.n)||top.n).toUpperCase(),`900 ${story?84:62}px ${FD}`,P.CH,"left",tx,y+bh*.56);
-  txt(x,`${nickOf(top.n)?top.n+" · ":""}${top.k} KOs · ${(top.k/top.d).toFixed(2)} K/D${ow!=null?" · #"+TEAMS[ow].ab:""}`,`600 ${story?32:26}px ${FB}`,P.MU,"left",tx,y+bh*.8);
+  txt(x,"#1 · MVP DE LA TEMPORADA",`700 ${story?28:22}px ${FL}`,P.VO,"left",tx,y+bh*.22);
+  txt(x,(nickOf(top.n)||top.n).toUpperCase(),`900 ${story?84:62}px ${FD}`,P.CH,"left",tx,y+bh*.48);
+  txt(x,`${nickOf(top.n)?top.n+" · ":""}${top.k} KOs · ${(top.k/top.d).toFixed(2)} K/D`,`600 ${story?32:26}px ${FB}`,P.MU,"left",tx,y+bh*.66);
+  x.font=`800 ${story?36:28}px ${FD}`;txt(x,ow!=null?ell(x,"EN #"+TEAMS[ow].ab+" · "+TEAMS[ow].n.toUpperCase(),W-80-tx-20):"AGENTE LIBRE",`800 ${story?36:28}px ${FD}`,ow!=null?confHex(TEAMS[ow].c):P.MU,"left",tx,y+bh*.86);
   y+=bh+(story?30:20);
   const rh=story?120:86,mx=list[0].k;
   list.slice(1).forEach((m,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(80,y,W-160,rh-8);const cy=y+(rh-8)/2;
