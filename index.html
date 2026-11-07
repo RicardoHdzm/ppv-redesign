@@ -2833,7 +2833,7 @@ function powerBlurb(r,w){const t=r.t,[sr,sn]=r.streak||["",0];
   if(r.form===3)return "Invicto en las ultimas 3 semanas.";
   if(r.form===0&&r.last.length===3)return "Sin ganar en las ultimas 3 semanas.";
   if(r.gd>=6)return `Diferencia de juegos de ${sign(r.gd)}.`;
-  if(r.sos>=.6)return "De los calendarios mas duros de la liga.";
+  if(r.sos>=.6)return "Ha enfrentado a los rivales mas fuertes.";
   return `${r.wins}-${r.losses} en series y ${sign(r.gd)} en juegos.`;}
 function powerTable(w){const rows=powerAt(w),prev=w>1?powerAt(w-1):null;
   return rows.map(r=>{const o={...r};o.move=prev?prev.find(x=>x.i===r.i).pos-r.pos:0;o.blurb=powerBlurb(o,w);return o;});}
