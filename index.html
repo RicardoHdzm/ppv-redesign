@@ -1330,7 +1330,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <div class="toast" id="toast" hidden></div>
 
 <script>
-// Datos reales de la fase regular (ppvdraftleague.com/standings). Un nombre se reemplazo por un marcador.
+// Datos reales de la fase regular (ppvdraftleague.com/standings).
 const TEAMS=[
  {n:"Inter Di Lorenzo",c:"rojo",w:7,l:1,d:13,h:[350,320]},
  {n:"CanoLovers",c:"rojo",w:7,l:1,d:9,h:[28,10]},
@@ -1339,7 +1339,7 @@ const TEAMS=[
  {n:"Vampotros",c:"rojo",w:4,l:4,d:1,h:[290,250]},
  {n:"Blue Cock",c:"rojo",w:4,l:4,d:0,h:[210,190]},
  {n:"Mamitas La Paz",c:"rojo",w:2,l:6,d:-8,h:[320,280]},
- {n:"Nombre por definir",c:"rojo",w:1,l:7,d:-11,h:[20,0],ph:true},
+ {n:"Los Diggers",c:"rojo",w:1,l:7,d:-11,h:[20,0]},
  {n:"Canolo Haters",c:"rojo",w:1,l:7,d:-11,h:[0,340]},
  {n:"Los Griyos",c:"azul",w:7,l:1,d:11,h:[30,50]},
  {n:"Mega Avinites",c:"azul",w:7,l:1,d:10,h:[190,170]},
@@ -1366,14 +1366,14 @@ const CONF={rojo:{name:"FireRed",v:"var(--rojo)"},azul:{name:"LeafGreen",v:"var(
 
 const ME=12; // sesion simulada: Richampions VGC
 // abreviaciones: primeras 3 consonantes; si el nombre empieza con vocal, esa vocal es la inicial (de palabras cortas como Los/La/Di solo la inicial; si se repite, se usa la siguiente consonante)
-const ABBR=["INT","CNL","CHW","CLN","VMP","BLC","MMT","NMB","CNH","LGR","MGV","LPT","RCH","GLD","BRN","PKV","WNS","BRW"];
+const ABBR=["INT","CNL","CHW","CLN","VMP","BLC","MMT","LDG","CNH","LGR","MGV","LPT","RCH","GLD","BRN","PKV","WNS","BRW"];
 TEAMS.forEach((t,i)=>{t.pts=t.w*3;t.ab=ABBR[i];});
 ["rojo","azul"].forEach(c=>TEAMS.filter(t=>t.c===c).forEach((t,i)=>{t.rank=i+1;t.q=i<4;}));
 
 const esc=s=>s.replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const initials=n=>n.ph?"?":n.n.replace(/^(Los|Las|La|El)\s+/i,"").split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 const slug=t=>t.n.toLowerCase().replace(/\s+/g,"-");
-const LOGO_FILE={"richampions-vgc":"richampions-vgc.png"}; // logos que no son .webp
+const LOGO_FILE={"richampions-vgc":"richampions-vgc.png","los-diggers":"diggers.webp"}; // logos que no son .webp
 const crest=t=>t.ph?hexCrest(t):`<span class="logo lg-${slug(t)}" aria-hidden="true"><img src="logos/${LOGO_FILE[slug(t)]||slug(t)+".webp"}" alt="" loading="lazy" decoding="async"></span>`;
 const hexCrest=t=>`<span class="crest" style="--h1:hsl(${t.h[0]} 85% 62%);--h2:hsl(${t.h[1]} 80% 42%)" aria-hidden="true">${initials(t)}</span>`;
 const by=c=>TEAMS.filter(t=>t.c===c);
