@@ -1020,7 +1020,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <div>
         <div class="season"><span class="a"><i>Temporada 5</i></span><span class="b"><i>Playoffs</i></span></div>
         <h1><span class="ln k">Arma tu equipo.</span><span class="ln j">Vence a todos.</span></h1>
-        <p class="lede">18 coaches, dos conferencias y un solo campeon. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al titulo.</p>
+        <p class="lede">18 entrenadores, dos conferencias y un solo campeon. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al titulo.</p>
         <div class="cta">
           <a class="btn" href="#playoffs">Ver playoffs</a>
           <a class="btn ghost" href="#teams">Conoce los equipos</a>
@@ -1076,8 +1076,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="wrap">
       <div class="sec-head"><div><div class="label">Formato de la temporada</div><h2>Del draft al <em>titulo</em></h2></div></div>
       <div class="format">
-        <div class="step"><div class="label">Fase 1</div><h3>Draft</h3><p>Cada coach arma su roster pick por pick.</p></div>
-        <div class="step"><div class="label">Fase 2</div><h3>Trades</h3><p>Intercambios entre coaches para ajustar el equipo.</p></div>
+        <div class="step"><div class="label">Fase 1</div><h3>Draft</h3><p>Cada trainer arma su roster pick por pick.</p></div>
+        <div class="step"><div class="label">Fase 2</div><h3>Trades</h3><p>Intercambios entre entrenadores para ajustar el equipo.</p></div>
         <div class="step"><div class="label">Fase 3</div><h3>Waivers</h3><p>Pokemon libres disponibles para reforzarse a media temporada.</p></div>
         <div class="step now"><div class="label">En curso</div><h3>Playoffs</h3><p>Los 8 mejores pelean por el campeonato.</p></div>
       </div>
@@ -1267,7 +1267,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <section>
       <div class="sec-head"><div><div class="label">Un titulo por temporada</div><h2>Los <em>campeones</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeon</button></div>
       <div class="champs" id="hofChamps"></div>
-      <p class="hof-note">Las temporadas 1 a 3 salen de los titulos de cada coach en su perfil. Se muestra el equipo actual del coach: el nombre del equipo pudo ser otro en esa temporada.</p>
+      <p class="hof-note">Las temporadas 1 a 3 salen de los titulos de cada trainer en su perfil. Se muestra el equipo actual del trainer: el nombre del equipo pudo ser otro en esa temporada.</p>
     </section>
     <section>
       <div class="sec-head"><div><div class="label">Fase regular y playoffs</div><h2>La temporada 4 en <em>numeros</em></h2></div></div>
@@ -1283,7 +1283,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   <div class="wrap f-top">
     <div class="f-brand">
       <div class="f-id"><img class="flogo" src="logos/logo-ppv-white.png" alt=""><strong>PPV DRAFT LEAGUE<small>Temporada 5 · Evolution</small></strong></div>
-      <p>Una comunidad de coaches que arma su equipo pick por pick, negocia trades y se juega cada semana en series al mejor de 3.</p>
+      <p>Una comunidad de entrenadores que arma su equipo pick por pick, negocia trades y se juega cada semana en series al mejor de 3.</p>
       <div class="f-social">
         <a href="https://www.youtube.com/@PPVDRAFTLEAGUE-f5z" target="_blank" rel="noopener" aria-label="YouTube de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9L15.5 12z"/></svg><span>YouTube</span></a>
         <a href="https://www.instagram.com/ppvstagram/" target="_blank" rel="noopener" aria-label="Instagram de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5z"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg><span>Instagram</span></a>
@@ -1443,7 +1443,7 @@ document.getElementById("grid").addEventListener("click",e=>{const cc=e.target.c
     <div style="display:flex;gap:18px;align-items:center">${crest(t)}<div><div class="label" style="color:${CONF[t.c].v}">${CONF[t.c].name} · #${t.rank}</div><h2>${esc(t.n)}</h2></div></div>
     <div class="dstats"><div><b class="num">${t.w}</b><span>W</span></div><div><b class="num">${t.l}</b><span>L</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
     <div><div class="label" style="margin-bottom:10px">Roster drafteado</div><div class="roster">${Array.from({length:12},(_,i)=>`<div>Pick ${i+1}</div>`).join("")}</div></div>
-    <p style="color:var(--mute);margin:0;font-size:.9rem">En el sitio real, aqui van el coach, los sprites del roster y los resultados semana a semana.</p>
+    <p style="color:var(--mute);margin:0;font-size:.9rem">En el sitio real, aqui van el trainer, los sprites del roster y los resultados semana a semana.</p>
   </div>`;
   drawer.hidden=false;document.getElementById("closeD").focus();
 });
@@ -1719,7 +1719,7 @@ function renderProfile(ti){
         <div>
           <div class="chips">${ti===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}<span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span>${t.q?`<span class="chip q"><i>Clasificado a playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div>
           <h1>${esc(t.n)}<small class="p-ab">#${t.ab}</small></h1>
-          <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
+          <div class="p-coach"><span class="label">Trainer</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
           <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
           <div class="p-cid"><span class="label">Pokemon favorito</span><span class="cid fav-up">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
           <div class="p-share"><button type="button" class="btn" data-share="${ti}">⤴ Compartir perfil</button></div>
@@ -1891,7 +1891,7 @@ const pickNo=(ri,ci)=>ri%2===0?ci+1:DRAFT_ORDER.length-ci;
 function renderDraft(){
   const N=DRAFT_ORDER.length,made=DRAFT_ROUNDS.flat().filter(Boolean).length;
   document.getElementById("drStats").innerHTML=`
-    <div><b class="num">${N}</b><span class="label">Coaches</span></div>
+    <div><b class="num">${N}</b><span class="label">Entrenadores</span></div>
     <div><b class="num">${DRAFT_ROUNDS.length}</b><span class="label">Rondas</span></div>
     <div><b class="num">${made}</b><span class="label">Picks hechos</span></div>
     <div><b class="num">60</b><span class="label">Puntos por equipo</span></div>`;
@@ -1981,7 +1981,7 @@ function renderMine(){
   document.getElementById("page-mi-equipo").innerHTML=`
   <section class="p-hero mine-hero" style="--c:${C}">
     <div class="wrap">
-      <div class="label">Panel del coach · sesion de demostracion</div>
+      <div class="label">Panel del trainer · sesion de demostracion</div>
       <div class="mine-id">${crest(t)}<div><h1 style="font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.6rem,7vw,5rem);line-height:.9">Hola, ${esc(coach)}</h1>
         <div class="chips"><span class="chip ab"><i>#${t.ab}</i></span><span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span><span class="chip x"><i>${t.w}-${t.l} · ${t.pts} pts</i></span></div></div>
         <a class="btn ghost" href="#team-${slug(t)}" style="margin-left:auto">Ver perfil de ${esc(t.n)}</a></div>
@@ -2126,7 +2126,7 @@ async function makeShareImage(ti,fmt){
   labels.forEach(l=>{cx+=chip(x,cx,y,ch,l[0],l[1],l[2],l[3])+16;});
   y+=ch+(story?70:52);
   // coach
-  x.textAlign="center";x.textBaseline="alphabetic";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("COACH",W/2,y);
+  x.textAlign="center";x.textBaseline="alphabetic";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("TRAINER",W/2,y);
   y+=story?66:54;x.fillStyle=CH;x.font=`800 ${story?52:44}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((coach+(title&&title!=="-"?`  ·  “${title}”`:"")).toUpperCase(),W/2,y);
   y+=story?66:44;
   // cifras
@@ -2261,7 +2261,7 @@ async function drawChampion(fmt){
   const ls=story?480:320;x.save();x.shadowColor=P.VO+"88";x.shadowBlur=60;fit(x,lo,W/2,y+ls/2,ls);x.restore();y+=ls+(story?120:90);
   let fs=story?120:92;x.font=`900 ${fs}px ${FD}`;let lines=wrapLines(x,t.n.toUpperCase(),940);
   lines.forEach(l=>{txt(x,l,`900 ${fs}px ${FD}`,P.VO,"center",W/2,y);y+=fs*.9;});
-  txt(x,"COACH "+coach.toUpperCase(),`800 ${story?44:36}px ${FD}`,P.CH,"center",W/2,y+(story?20:10));y+=story?90:64;
+  txt(x,"TRAINER "+coach.toUpperCase(),`800 ${story?44:36}px ${FD}`,P.CH,"center",W/2,y+(story?20:10));y+=story?90:64;
   const path=[];["A","B"].forEach(k=>["wc","qf","sf"].forEach(r=>{const m=P0[k][r];if(m.a===ci||m.b===ci)path.push([RNAME[r],m]);}));path.push(["Gran Final",P0.final]);
   const rh=story?84:64;path.forEach(([r,m])=>{const o=TEAMS[m.a===ci?m.b:m.a];x.fillStyle=P.INK2;x.fillRect(140,y,W-280,rh-12);
     txt(x,r.toUpperCase(),`700 ${story?28:22}px ${FL}`,P.MU,"left",170,y+rh*.55);txt(x,"vs #"+o.ab,`800 ${story?40:32}px ${FD}`,P.CH,"right",W-170,y+rh*.58);y+=rh;});
@@ -2349,7 +2349,7 @@ async function drawMyDraft(fmt){
   const f=await shareFrame(fmt,C,"MI DRAFT");const {x,W,story,P}=f;let y=f.y0;
   const [lo,...sp]=await Promise.all([teamImg(t),...picks.map(p=>p.n?sprImg(p.n):Promise.resolve(null))]);
   const spent=picks.reduce((s,p)=>s+(p.n?PTS[p.n]||0:0),0);
-  const th=teamHeaderCentered(x,lo,t.n.toUpperCase(),`#${t.ab} · COACH ${PROFILES[ME][0].toUpperCase()} · ${spent} PTS`,C,y,story,W,P);y+=th+(story?36:22);
+  const th=teamHeaderCentered(x,lo,t.n.toUpperCase(),`#${t.ab} · TRAINER ${PROFILES[ME][0].toUpperCase()} · ${spent} PTS`,C,y,story,W,P);y+=th+(story?36:22);
   const cw=(W-160-20)/2,ch=story?250:180;
   picks.forEach((p,k)=>{const cx=80+(k%2)*(cw+20),cy=y+Math.floor(k/2)*(ch+14);const gone=p.n&&!roster.includes(p.n);
     x.fillStyle=P.INK2;x.fillRect(cx,cy,cw,ch);x.fillStyle=gone?P.LINE:C;x.fillRect(cx,cy,cw,5);
