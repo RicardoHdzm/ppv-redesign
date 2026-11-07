@@ -1230,6 +1230,18 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .md-acts .btn[disabled]{opacity:.45;cursor:wait}
 .md-note{color:var(--mute);font-size:.85rem;margin:0}
 .md-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+/* ---------- overlays de OBS ---------- */
+.obs-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:16px}
+.obs-c{background:var(--ink-2);border:1px solid var(--line);min-width:0}
+.obs-prev{aspect-ratio:16/9;background:repeating-conic-gradient(#2a2a30 0 25%,#1c1c20 0 50%) 0 0/20px 20px;display:grid;place-items:center;border-bottom:1px solid var(--line)}
+.obs-prev canvas{width:100%;height:100%;display:block}
+.obs-b{padding:12px 14px 14px;display:grid;gap:6px;min-width:0}
+.obs-t{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:900;font-size:1.35rem;line-height:1}
+.obs-t .logo,.obs-t .crest{--sz:30px}
+.obs-t span{color:var(--mute);font-family:var(--f-label);font-size:.85rem;letter-spacing:.1em}
+.obs-b p{margin:0;color:var(--mute);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.obs-how{margin:0 0 18px;padding:12px 16px;border-left:4px solid var(--volt);background:var(--ink-2);color:var(--mute);font-size:.9rem;max-width:90ch}
+.obs-how strong{color:var(--chalk)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1490,6 +1502,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </div>
   <div class="wrap s-body">
     <div class="md-g" id="mdGrid"></div>
+    <section class="obs-sec">
+      <div class="sec-head"><div><div class="label" id="obsLabel"></div><h2>Overlays para <em>OBS</em></h2></div><button type="button" class="btn sh-sm" id="obsAll" disabled>⤓ Todos los overlays</button></div>
+      <p class="obs-how"><strong>Como usarlo:</strong> en OBS crea una escena de 1920×1080, agrega la captura de Discord o del juego y ajustala al recuadro central (1600×900, posicion x 160, y 120). Encima pon el <strong>overlay</strong> como fuente de Imagen: el centro es transparente. La <strong>pantalla de inicio</strong> va en la escena de espera antes de la serie.</p>
+      <div class="obs-g" id="obsGrid"></div>
+    </section>
     <p class="md-note">Demo: Rick tiene el rol de community manager. En el sitio real esta pagina solo aparece para las cuentas con ese rol. Los trades y fichajes no tienen fecha en los datos actuales, por eso se muestran todos los de la temporada.</p>
   </div>
 </main>
@@ -2929,6 +2946,50 @@ async function drawMarket(fmt){
   return f.cv;
 }
 
+/* 16. overlays de OBS (1920x1080) */
+const OBS_GAME={x:160,y:120,w:1600,h:900}; // recuadro transparente para la captura del juego (16:9)
+async function obsBase(){const W=1920,H=1080,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");if(document.fonts)await document.fonts.ready;return {cv,x,W,H,P:sharePal()};}
+async function drawOverlay(mi){
+  const m=MATCHES[mi],A=TEAMS[m.a],B=TEAMS[m.b],{cv,x,W,H,P}=await obsBase(),CA=confHex(A.c),CB=confHex(B.c),G=OBS_GAME;
+  const [la,lb,lg]=await Promise.all([teamImg(A),teamImg(B),shareLogo()]);
+  x.fillStyle=P.INK;x.fillRect(0,0,W,H);
+  let g=x.createLinearGradient(0,0,G.x,0);g.addColorStop(0,CA+"66");g.addColorStop(1,CA+"12");x.fillStyle=g;x.fillRect(0,G.y,G.x,G.h);
+  g=x.createLinearGradient(W,0,W-G.x,0);g.addColorStop(0,CB+"66");g.addColorStop(1,CB+"12");x.fillStyle=g;x.fillRect(W-G.x,G.y,G.x,G.h);
+  x.save();x.translate(G.x/2,G.y+G.h/2);x.rotate(-Math.PI/2);txt(x,"#"+A.ab,`900 120px ${FD}`,CA,"center",0,42);x.restore();
+  x.save();x.translate(W-G.x/2,G.y+G.h/2);x.rotate(Math.PI/2);txt(x,"#"+B.ab,`900 120px ${FD}`,CB,"center",0,42);x.restore();
+  x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);x.fillStyle=CA;x.fillRect(0,G.y-6,W/2,6);x.fillStyle=CB;x.fillRect(W/2,G.y-6,W/2,6);
+  const side=(t,lo,C,left)=>{const ls=92,ti=TEAMS.indexOf(t);fit(x,lo,left?24+ls/2:W-24-ls/2,G.y/2-2,ls);const tx=left?24+ls+18:W-24-ls-18,al=left?"left":"right",nf=`900 46px ${FD}`;
+    x.font=nf;txt(x,ell(x,t.n.toUpperCase(),560),nf,P.CH,al,tx,58);
+    txt(x,`TRAINER ${PROFILES[ti][0].toUpperCase()} · ${CONF[t.c].name.toUpperCase()} #${t.rank} · ${t.w}-${t.l}`,`700 22px ${FL}`,C,al,tx,90);};
+  side(A,la,CA,true);side(B,lb,CB,false);
+  const cx=W/2,bs=64;x.fillStyle=P.INK3;x.fillRect(cx-150,22,bs,bs);x.fillRect(cx+150-bs,22,bs,bs);x.lineWidth=3;
+  x.strokeStyle=CA;x.strokeRect(cx-150+1.5,23.5,bs-3,bs-3);x.strokeStyle=CB;x.strokeRect(cx+150-bs+1.5,23.5,bs-3,bs-3);
+  txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,70);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 18px ${FL}`,P.MU,"center",cx,104);
+  const fy=G.y+G.h,fh=H-fy;x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
+  if(lg){const h=40,w=lg.width*h/lg.height;x.drawImage(lg,24,fy+(fh-h)/2,w,h);}
+  txt(x,"PPV DRAFT LEAGUE · TEMPORADA 5 · EVOLUTION",`900 28px ${FD}`,P.CH,"left",96,fy+40);
+  txt(x,SHARE_URL,`600 24px ${FB}`,P.MU,"right",W-24,fy+39);
+  x.clearRect(G.x,G.y,G.w,G.h);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(G.x-2,G.y-2,G.w+4,G.h+4);
+  return cv;
+}
+async function drawIntro(mi){
+  const m=MATCHES[mi],A=TEAMS[m.a],B=TEAMS[m.b],{cv,x,W,H,P}=await obsBase(),CA=confHex(A.c),CB=confHex(B.c);
+  const [la,lb,lg]=await Promise.all([teamImg(A),teamImg(B),shareLogo()]);
+  x.fillStyle=P.INK;x.fillRect(0,0,W,H);
+  x.save();x.beginPath();x.moveTo(0,0);x.lineTo(W*.56,0);x.lineTo(W*.44,H);x.lineTo(0,H);x.closePath();x.clip();let g=x.createLinearGradient(0,0,W*.5,0);g.addColorStop(0,CA+"55");g.addColorStop(1,CA+"14");x.fillStyle=g;x.fillRect(0,0,W,H);x.restore();
+  x.save();x.beginPath();x.moveTo(W*.56,0);x.lineTo(W,0);x.lineTo(W,H);x.lineTo(W*.44,H);x.closePath();x.clip();g=x.createLinearGradient(W,0,W*.5,0);g.addColorStop(0,CB+"55");g.addColorStop(1,CB+"14");x.fillStyle=g;x.fillRect(0,0,W,H);x.restore();
+  if(lg){const h=70,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,48,w,h);}
+  txt(x,`PPV DRAFT LEAGUE · SEMANA ${m.w} · AL MEJOR DE 3`,`700 30px ${FL}`,P.VO,"center",W/2,160);
+  const card=(t,lo,C,cx)=>{const ti=TEAMS.indexOf(t);fit(x,lo,cx,470,360);const nf=`900 76px ${FD}`;x.font=nf;txt(x,ell(x,t.n.toUpperCase(),760),nf,P.CH,"center",cx,760);
+    txt(x,`TRAINER ${PROFILES[ti][0].toUpperCase()}`,`800 34px ${FD}`,C,"center",cx,812);
+    txt(x,`${CONF[t.c].name.toUpperCase()} #${t.rank} · ${t.w}-${t.l} · ${sign(t.d)} KOS`,`700 26px ${FL}`,P.MU,"center",cx,856);};
+  card(A,la,CA,W*.25);card(B,lb,CB,W*.75);
+  txt(x,"VS",`900 230px ${FD}`,P.VO,"center",W/2,560);
+  txt(x,"LA SERIE EMPIEZA EN BREVE",`900 46px ${FD}`,P.CH,"center",W/2,970);txt(x,SHARE_URL,`600 26px ${FB}`,P.MU,"center",W/2,1012);
+  x.fillStyle=CA;x.fillRect(0,H-14,W/2,14);x.fillStyle=CB;x.fillRect(W/2,H-14,W/2,14);
+  return cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -3204,7 +3265,24 @@ async function renderMedia(){const box=document.getElementById("mdGrid");
     const blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});if(job!==mdJob)return;
     mdFiles[i]=blob?{blob,name:`ppv-${/d/.test(o.file)?o.file:`s${mdWeek}-${o.file}`}-${mdFmt==="story"?"historia":"post"}.png`}:null;
     const b=document.querySelector(`[data-mdl="${i}"]`);if(b)b.disabled=!blob;}
-  all.disabled=!mdFiles.some(Boolean);}
+  all.disabled=!mdFiles.some(Boolean);
+  renderObs(job);}
+/* overlays de OBS de las series de la semana */
+const obsName=(mi,k)=>{const m=MATCHES[mi];return `ppv-obs-s${m.w}-${TEAMS[m.a].ab}-vs-${TEAMS[m.b].ab}-${k==="ov"?"overlay":"inicio"}.png`.toLowerCase();};
+const cvBlob=cv=>new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});
+async function renderObs(job){const wk=MATCHES.filter(m=>m.w===mdWeek),box=document.getElementById("obsGrid"),all=document.getElementById("obsAll");all.disabled=true;
+  document.getElementById("obsLabel").textContent=`Semana ${mdWeek} · ${wk.length} series · 1920×1080`;
+  box.innerHTML=wk.map(m=>{const A=TEAMS[m.a],B=TEAMS[m.b];return `<article class="obs-c"><div class="obs-prev" id="obsP${m.i}"><span class="label">Generando…</span></div><div class="obs-b"><div class="obs-t">${crest(A)}<b>#${A.ab}</b><span>VS</span><b>#${B.ab}</b>${crest(B)}</div><p>${esc(A.n)} vs ${esc(B.n)}</p><div class="md-acts"><button type="button" class="btn sh-sm" data-obs="${m.i}" data-k="ov" disabled>⤓ Overlay</button><button type="button" class="btn ghost sh-sm" data-obs="${m.i}" data-k="in">⤓ Pantalla de inicio</button></div></div></article>`;}).join("");
+  for(const m of wk){const cv=await drawOverlay(m.i);if(job!==mdJob)return;const p=document.getElementById("obsP"+m.i);p.innerHTML="";p.appendChild(cv);
+    const b=document.querySelector(`[data-obs="${m.i}"][data-k="ov"]`);if(b)b.disabled=false;}
+  all.disabled=false;}
+document.getElementById("obsGrid").addEventListener("click",async e=>{const b=e.target.closest("[data-obs]");if(!b)return;const mi=+b.dataset.obs,k=b.dataset.k;b.disabled=true;
+  const blob=await cvBlob(await (k==="ov"?drawOverlay(mi):drawIntro(mi)));const r=blob?await saveBlob(blob,obsName(mi,k)):"err";b.disabled=false;
+  toastMsg(r==="ok"?"Archivo guardado.":r==="declined"?"Descarga cancelada.":r==="rate"?"Hay una descarga pendiente; intenta en un momento.":"No se pudo guardar el archivo.");});
+document.getElementById("obsAll").addEventListener("click",async()=>{const btn=document.getElementById("obsAll"),wk=MATCHES.filter(m=>m.w===mdWeek),jobs=wk.flatMap(m=>[[m.i,"ov"],[m.i,"in"]]);btn.disabled=true;let ok=0;
+  for(let n=0;n<jobs.length;n++){const [mi,k]=jobs[n];btn.textContent=`⤓ Descargando ${n+1} de ${jobs.length}…`;const blob=await cvBlob(await (k==="ov"?drawOverlay(mi):drawIntro(mi)));if(!blob)continue;
+    let r=await saveBlob(blob,obsName(mi,k));if(r==="rate"){await new Promise(z=>setTimeout(z,1500));r=await saveBlob(blob,obsName(mi,k));}if(r==="declined")break;if(r==="ok")ok++;await new Promise(z=>setTimeout(z,350));}
+  btn.textContent="⤓ Todos los overlays";btn.disabled=false;toastMsg(`${ok} de ${jobs.length} archivos guardados.`);});
 document.getElementById("mdWeeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
 document.getElementById("mdWeeks").addEventListener("click",e=>{const b=e.target.closest("button[data-w]");if(!b)return;mdWeek=+b.dataset.w;renderMedia();});
 document.querySelectorAll("#mdFmt button").forEach(b=>b.addEventListener("click",()=>{mdFmt=b.dataset.fm;renderMedia();}));
