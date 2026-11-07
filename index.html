@@ -2251,7 +2251,7 @@ async function drawTable(fmt){
 /* 4. leaderboard */
 async function drawLeaders(fmt){
   const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LÍDERES EN KOS");const {x,W,story,P}=f;let y=f.y0;
-  const N=story?8:5,list=MONS_FULL.slice().sort((a,b)=>b.k-a.k).slice(0,N+1),top=list[0];
+  const N=7,list=MONS_FULL.slice().sort((a,b)=>b.k-a.k).slice(0,N+1),top=list[0];
   const [big,...bx]=await Promise.all([sprImg(top.n),...list.slice(1).map(m=>boxImg(m.n))]);
   txt(x,"POKÉMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
   const bh=story?320:230;x.fillStyle=P.INK2;x.fillRect(80,y,W-160,bh);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(80,y,W-160,bh);
@@ -2260,7 +2260,7 @@ async function drawLeaders(fmt){
   txt(x,top.n.toUpperCase(),`900 ${story?84:62}px ${FD}`,P.CH,"left",tx,y+bh*.56);
   txt(x,`${top.k} KOs · ${(top.k/top.d).toFixed(2)} K/D${ow!=null?" · #"+TEAMS[ow].ab:""}`,`600 ${story?32:26}px ${FB}`,P.MU,"left",tx,y+bh*.8);
   y+=bh+(story?30:20);
-  const rh=story?104:86,mx=list[0].k;
+  const rh=story?120:86,mx=list[0].k;
   list.slice(1).forEach((m,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(80,y,W-160,rh-8);const cy=y+(rh-8)/2;
     txt(x,String(k+2),`900 ${story?40:34}px ${FD}`,P.MU,"left",104,cy+13);fit(x,bx[k],190,cy,rh-20,true);
     const o=OWNER[m.n];txt(x,m.n.toUpperCase(),`800 ${story?38:32}px ${FD}`,P.CH,"left",250,cy+(o!=null?2:12));if(o!=null)txt(x,"#"+TEAMS[o].ab,`700 ${story?24:20}px ${FL}`,P.MU,"left",250,cy+(story?32:28));
