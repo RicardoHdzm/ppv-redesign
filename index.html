@@ -976,6 +976,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .wk.b .op{color:var(--mute)}
 .wk{min-width:0}
 @media (max-width:600px){.wk .op .full{display:none}.wk .op .short{display:inline;letter-spacing:.04em}.wk.b .op{font-size:.68rem}}
+.p-id h1 .p-ab{font-size:.34em;color:var(--c);letter-spacing:.06em;margin-left:.4em;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1716,8 +1717,8 @@ function renderProfile(ti){
       <a class="back" href="#teams">← Teams</a>
       <div class="p-id">${crest(t)}
         <div>
-          <div class="chips"><span class="chip ab"><i>#${t.ab}</i></span>${ti===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}<span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span>${t.q?`<span class="chip q"><i>Clasificado a playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div>
-          <h1>${esc(t.n)}</h1>
+          <div class="chips">${ti===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}<span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span>${t.q?`<span class="chip q"><i>Clasificado a playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div>
+          <h1>${esc(t.n)}<small class="p-ab">#${t.ab}</small></h1>
           <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
           <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
           <div class="p-cid"><span class="label">Pokemon favorito</span><span class="cid fav-up">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
