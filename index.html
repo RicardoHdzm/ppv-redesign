@@ -975,7 +975,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <a href="#matches" data-page="matches">Matches</a>
       <a href="#playoffs" data-page="playoffs">Playoffs</a>
       <span class="nav-sep" aria-hidden="true"></span>
-      <a href="#teams" data-page="teams">Conferencias</a>
+      <a href="#teams" data-page="teams">Teams</a>
       <a href="#draft" data-page="draft">Draft</a>
       <a href="#pokedex" data-page="pokedex">Pokedex</a>
       <a href="#salon" data-page="salon">H.O.F.</a>
@@ -1067,7 +1067,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <main id="page-teams" hidden>
   <section class="t-hero">
     <div class="wrap">
-      <div><div class="label">Temporada 5 · Evolution</div><h1>Conferencias</h1></div>
+      <div><div class="label">Temporada 5 · Evolution</div><h1>Teams</h1></div>
       <div class="confsum" id="confsum"></div>
     </div>
   </section>
@@ -1274,7 +1274,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <li><a href="#standings">Standings</a></li>
         <li><a href="#matches">Matches</a></li>
         <li><a href="#playoffs">Playoffs</a></li>
-        <li><a href="#teams">Conferencias</a></li>
+        <li><a href="#teams">Teams</a></li>
       </ul>
     </nav>
     <div class="f-col">
@@ -1692,7 +1692,7 @@ function renderProfile(ti){
   <section class="p-hero" style="--c:${C}">
     <span class="p-rank" aria-hidden="true">#${t.rank}</span>
     <div class="wrap">
-      <a class="back" href="#teams">← Conferencias</a>
+      <a class="back" href="#teams">← Teams</a>
       <div class="p-id">${crest(t)}
         <div>
           <div class="chips"><span class="chip ab"><i>#${t.ab}</i></span>${ti===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}<span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span>${t.q?`<span class="chip q"><i>Clasificado a playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div>
