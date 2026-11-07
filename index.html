@@ -2246,9 +2246,9 @@ async function drawBracket(fmt){
     const cy=y+(rh-12)/2;txt(x,lab.toUpperCase(),`700 ${story?22:18}px ${FL}`,P.MU,"center",W/2,y+(story?30:24));
     const side=(ti,cx,align)=>{if(ti==null){txt(x,"POR DEFINIR",`700 ${story?28:22}px ${FL}`,P.MU,align,cx,cy+10);return;}const t=TEAMS[ti],won=w===ti;x.save();if(w!=null&&!won)x.globalAlpha=.45;
       const ls=rh-(story?46:34),lx=align==="left"?cx+ls/2:cx-ls/2;fit(x,imgs[ti],lx,cy+(story?8:6),ls);
-      txt(x,"#"+t.ab,`900 ${story?46:36}px ${FD}`,won?P.CH:P.MU,align,align==="left"?cx+ls+16:cx-ls-16,cy+(story?22:16));x.restore();};
+      const ax=align==="left"?cx+ls+16:cx-ls-16;txt(x,"#"+t.ab,`900 ${story?46:36}px ${FD}`,won?P.CH:P.MU,align,ax,cy+(story?22:16));if(won){x.font=`900 ${story?46:36}px ${FD}`;const tw=x.measureText("#"+t.ab).width;x.fillStyle=P.VO;x.fillRect(align==="left"?ax:ax-tw,cy+(story?32:24),tw,5);}x.restore();};
     side(m.a,110,"left");side(m.b,W-110,"right");
-    txt(x,w==null?"VS":(w===m.a?"W  ·  ":"")+"VS"+(w===m.b?"  ·  W":""),`900 ${story?36:28}px ${FD}`,w==null?P.MU:P.VO,"center",W/2,cy+(story?24:18));y+=rh;};
+    txt(x,"VS",`900 ${story?36:28}px ${FD}`,P.MU,"center",W/2,cy+(story?24:18));y+=rh;};
   [["A","LADO A"],["B","LADO B"]].forEach(([k,lab])=>{txt(x,lab,`900 ${story?36:28}px ${FD}`,P.CH,"left",84,y+hh*.7);y+=hh;match("Wild Card",P0[k].wc);match("Cuartos de final",P0[k].qf);match("Semifinal",P0[k].sf);});
   y+=story?10:4;match("Gran Final",P0.final,true);
   return f.cv;
