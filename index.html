@@ -2000,7 +2000,7 @@ function renderMoves(){
 renderMoves();
 
 /* ---------- compartir perfil: imagen para Instagram (historia 1080x1920 o post 1080x1350) ---------- */
-const SHARE_URL="ricardohdzm.github.io/ppv-redesign";
+const SHARE_URL="ppvdraftleague.com"; // dirección que aparece en la imagen y en el texto al compartir
 const loadImg=(src,cors)=>new Promise(res=>{if(!src)return res(null);const i=new Image();if(cors)i.crossOrigin="anonymous";i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
 const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function wrapLines(x,text,maxW){const words=text.split(" "),lines=[];let cur="";words.forEach(w=>{const t=cur?cur+" "+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);return lines;}
@@ -2031,15 +2031,13 @@ async function makeShareImage(ti,fmt){
   x.font=`900 ${story?620:460}px "Big Shoulders Display", Impact, sans-serif`;x.textAlign="right";x.textBaseline="alphabetic";x.strokeStyle=C+"55";x.lineWidth=5;x.strokeText("#"+t.rank,W+30,bandH*.86);
   x.restore();
   // cabecera
-  const top=story?90:60,lh=story?96:80,gap=story?26:22;
-  const f1=`900 ${story?48:42}px "Big Shoulders Display", Impact, sans-serif`,f2=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;
-  x.font=f1;const w1=x.measureText("PPV DRAFT LEAGUE").width;x.font=f2;const w2=x.measureText("TEMPORADA 5 · EVOLUTION").width;
-  const lw=lg?lg.width*lh/lg.height:0,total=lw+(lg?gap:0)+Math.max(w1,w2),sx=(W-total)/2,tx0=sx+lw+(lg?gap:0);
-  if(lg)x.drawImage(lg,sx,top,lw,lh);
-  x.textAlign="left";x.textBaseline="alphabetic";x.fillStyle=CH;x.font=f1;x.fillText("PPV DRAFT LEAGUE",tx0,top+(story?48:40));
-  x.fillStyle=VO;x.font=f2;x.fillText("TEMPORADA 5 · EVOLUTION",tx0+2,top+(story?88:74));
+  const top=story?110:64;
+  const f1=`900 ${story?52:44}px "Big Shoulders Display", Impact, sans-serif`,f2=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;
+  x.textAlign="center";x.textBaseline="alphabetic";x.fillStyle=CH;x.font=f1;x.fillText("PPV DRAFT LEAGUE",W/2,top+(story?50:42));
+  x.fillStyle=VO;x.font=f2;x.fillText("TEMPORADA 5 · EVOLUTION",W/2,top+(story?92:78));
   // logo del equipo
-  const ls=story?440:300,ly=story?260:190;
+  x.font=`900 ${story?132:104}px "Big Shoulders Display", Impact, sans-serif`;const preLines=wrapLines(x,t.n.toUpperCase(),920).length;
+  const ls=story?440:(preLines>1?200:270),ly=story?250:150;
   if(logo){const r=Math.min(ls/logo.naturalWidth,ls/logo.naturalHeight),w=logo.naturalWidth*r,h=logo.naturalHeight*r;x.save();x.shadowColor="#000c";x.shadowBlur=40;x.shadowOffsetY=16;x.drawImage(logo,(W-w)/2,ly+(ls-h)/2,w,h);x.restore();}
   // nombre
   let y=ly+ls+(story?130:100);
@@ -2072,6 +2070,7 @@ async function makeShareImage(ti,fmt){
   x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText(mvp[0].toUpperCase(),tx,y+mh*.62);
   x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
   // pie
+  if(lg){const h=story?120:66,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?56:40)-h,w,h);}
   x.textAlign="center";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow", sans-serif`;x.fillText(SHARE_URL,W/2,H-(story?70:50));
   const rojo=cssVar("--rojo")||"#FF4B2B",verde=cssVar("--verde")||"#7ED13A";x.fillStyle=rojo;x.fillRect(0,H-14,W/2,14);x.fillStyle=verde;x.fillRect(W/2,H-14,W/2,14);
   return cv;
@@ -2113,11 +2112,11 @@ async function doDownload(){
   const dl=await getDl();
   if(dl){ // dentro del visor de artifacts: guardar con confirmación del visor
     try{await dl.save({filename:shareName(),data:b});msg.textContent="Imagen guardada.";}
-    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en "+SHARE_URL+" para descargarla.";}
+    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en tu navegador para descargarla.";}
     return;
   }
   const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=shareName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-  msg.textContent=`Si la descarga no empezó, abre el sitio en ${SHARE_URL} o mantén presionada la imagen para guardarla.`;
+  msg.textContent="Si la descarga no empezó, mantén presionada la imagen para guardarla.";
 }
 document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;openShare(+b.dataset.share);});
 
