@@ -1045,7 +1045,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <a class="link" href="#standings">Standings completos</a>
       </div>
       <div class="confs" id="tables"></div>
-      <div class="legend"><span><i></i>Linea de playoffs</span><span>Victoria = 3 pts</span><span>Diff = diferencia de Pokemon restantes</span></div>
+      <div class="legend"><span><i></i>Linea de playoffs</span><span>Victoria = 3 pts</span><span>Diff = balance de KOs (derrotados menos perdidos)</span></div>
     </div>
   </section>
 
@@ -1730,7 +1730,7 @@ function renderProfile(ti){
   <div class="strip p-strip" style="--c:${C}"><div class="wrap">
     <div class="stat"><b class="num">${t.w}-${t.l}</b><span>Record en series</span></div>
     <div class="stat"><b class="num">${gw}-${gl}</b><span>Juegos ganados</span></div>
-    <div class="stat"><b class="num">${sign(t.d)}</b><span>Diferencia de Pokemon</span></div>
+    <div class="stat"><b class="num">${sign(t.d)}</b><span>Balance de KOs</span></div>
     <div class="stat"><b class="num">${t.pts}</b><span>Puntos de liga</span></div>
     <div class="stat"><b class="num">${kills}</b><span>KOs del roster</span></div>
     <div class="stat"><b class="num">${esc(draftPts)}</b><span>Puntos de draft</span></div>
@@ -2043,7 +2043,7 @@ function renderHof(){
   document.getElementById("hofRecords").innerHTML=[
     rec(crest(TEAMS[champ4]),"Campeon",esc(TEAMS[champ4].n),"🏆","#team-"+slug(TEAMS[champ4])),
     rec(crest(best),"Mejor record",esc(best.n),`${best.w}-${best.l}`,"#team-"+slug(best)),
-    rec(crest(bestD),"Mejor diferencia",esc(bestD.n),sign(bestD.d),"#team-"+slug(bestD)),
+    rec(crest(bestD),"Mejor balance de KOs",esc(bestD.n),sign(bestD.d),"#team-"+slug(bestD)),
     rec(box(mk[0][0],""),"Mas KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]])),
     rec(box(kd[0][0],""),"Mejor K/D (8+ KOs)",`${esc(kd[0][0])} · #${TEAMS[kd[1]].ab}`,(kd[0][6]/(kd[0][7]||1)).toFixed(2),"#team-"+slug(TEAMS[kd[1]])),
     rec(box(top[0],""),"Pokemon mas usado",esc(top[0]),`${top[1]} juegos`,""),
