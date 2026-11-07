@@ -953,6 +953,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 #page-home .strip .stat:last-child{border-right:0}
 #page-home .strip .stat span{color:var(--mute)}
 @media (max-width:700px){#page-home .strip .stat:nth-child(-n+2){border-bottom-color:var(--line)}}
+/* cuadrícula de cifras del perfil: oscura con la línea de la conferencia */
+.strip.p-strip{background:var(--ink-2);color:var(--chalk);position:relative;border-bottom:1px solid var(--line)}
+.strip.p-strip::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c,var(--volt))}
+.strip.p-strip .stat{border-color:var(--line);padding-top:24px}
+.strip.p-strip .stat span{color:var(--mute)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1704,7 +1709,7 @@ function renderProfile(ti){
       </div>
     </div>
   </section>
-  <div class="strip p-strip"><div class="wrap">
+  <div class="strip p-strip" style="--c:${C}"><div class="wrap">
     <div class="stat"><b class="num">${t.w}-${t.l}</b><span>Record en series</span></div>
     <div class="stat"><b class="num">${gw}-${gl}</b><span>Juegos ganados</span></div>
     <div class="stat"><b class="num">${sign(t.d)}</b><span>Diferencia de Pokemon</span></div>
