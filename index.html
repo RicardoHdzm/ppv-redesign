@@ -183,7 +183,7 @@ section.block{padding-block:72px}
 .table .th h3{color:var(--ink)}
 .table .th .label{position:relative}
 .rows{overflow-x:auto}
-.row{display:grid;grid-template-columns:30px minmax(0,1fr) 54px 46px 92px 42px;align-items:center;gap:10px;padding:10px 18px;border-top:1px solid var(--line);font-weight:600;min-width:440px}
+.row{display:grid;grid-template-columns:30px minmax(0,1fr) 54px 46px 42px;align-items:center;gap:10px;padding:10px 18px;border-top:1px solid var(--line);font-weight:600;min-width:440px}
 .row.hd{font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--mute);padding-block:8px}
 .row .pos{font-family:var(--f-display);font-weight:900;font-size:1.3rem;color:var(--mute)}
 .row.in .pos{color:var(--c)}
@@ -191,10 +191,6 @@ section.block{padding-block:72px}
 .row .tm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row.out{color:color-mix(in srgb,var(--chalk) 62%,var(--ink))}
 .row.cut{border-top:2px dashed var(--c)}
-.diffbar{height:6px;background:var(--ink-3);position:relative}
-.diffbar i{position:absolute;top:0;bottom:0;left:50%}
-.diffbar i.p{background:var(--good)}
-.diffbar i.n{background:var(--bad);transform:translateX(-100%)}
 .row .pts{font-family:var(--f-display);font-weight:800;font-size:1.25rem;text-align:right}
 .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;color:var(--mute);font-size:.85rem}
 .legend span{display:inline-flex;align-items:center;gap:8px}
@@ -1370,13 +1366,12 @@ document.getElementById("tables").innerHTML=["rojo","azul"].map(c=>`
  <div class="table" style="--c:${CONF[c].v}">
   <div class="th"><h3>${CONF[c].name}</h3><span class="label">Conferencia</span></div>
   <div class="rows">
-   <div class="row hd"><span>#</span><span>Equipo</span><span>W-L</span><span>Diff</span><span></span><span style="text-align:right">Pts</span></div>
+   <div class="row hd"><span>#</span><span>Equipo</span><span>W-L</span><span>Diff</span><span style="text-align:right">Pts</span></div>
    ${by(c).map(t=>`<div class="row ${t.q?"in":"out"} ${t.rank===5?"cut":""}">
      <span class="pos num">${t.rank}</span>
      <span class="tm">${crest(t)}<span>${esc(t.n)}</span></span>
      <span class="num">${t.w}-${t.l}</span>
      <span class="num">${t.d>0?"+":""}${t.d}</span>
-     <span class="diffbar" aria-hidden="true"><i class="${t.d>=0?"p":"n"}" style="width:${Math.abs(t.d)/15*50}%"></i></span>
      <span class="pts num">${t.pts}</span></div>`).join("")}
   </div></div>`).join("");
 
