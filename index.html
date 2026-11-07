@@ -2168,7 +2168,7 @@ async function renderSharePreview(){
   if(shareState.opts!==opts||shareState.fmt!==want)return;
   shareState.blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});
   box.innerHTML="";cv.className="sh-cv";box.appendChild(cv);
-  if(!shareState.blob)document.getElementById("shMsg").textContent="No se pudo preparar el archivo en este navegador. Puedes tomar una captura de la vista previa.";
+  if(!shareState.blob)document.getElementById("shMsg").textContent=location.protocol==="file:"?"Abriste el archivo desde tu computadora: así el navegador no deja exportar la imagen. Ábrelo desde el sitio publicado (GitHub Pages) para compartir o descargar.":"No se pudo preparar el archivo en este navegador. Puedes tomar una captura de la vista previa.";
 }
 const shareName=()=>`ppv-${shareState.opts.file}-${shareState.fmt==="story"?"historia":"post"}.png`;
 async function doShare(){
@@ -2328,15 +2328,22 @@ async function drawBracket(fmt){
   y+=story?10:4;match("Gran Final",P0.final,true);
   return f.cv;
 }
+/* encabezado de equipo centrado (logo + nombre + línea secundaria) */
+function teamHeaderCentered(x,lo,name,line2,C,y,story,W,P){
+  const th=story?150:100,gap=24,f1=`900 ${story?64:50}px ${FD}`,f2=`700 ${story?28:22}px ${FL}`,maxT=W-160-th-gap;
+  x.font=f1;const n1=ell(x,name,maxT),w1=x.measureText(n1).width;x.font=f2;const n2=ell(x,line2,maxT),w2=x.measureText(n2).width;
+  const total=th+gap+Math.max(w1,w2),sx=(W-total)/2,tx=sx+th+gap;
+  fit(x,lo,sx+th/2,y+th/2,th);txt(x,n1,f1,P.CH,"left",tx,y+th*.52);txt(x,n2,f2,C,"left",tx+2,y+th*.84);
+  return th;
+}
 /* 6. mi draft */
 async function drawMyDraft(fmt){
   const t=TEAMS[ME],C=confHex(t.c),col=DRAFT_ORDER.indexOf(ME),N=DRAFT_ORDER.length,roster=ROSTER(ME).map(r=>r[0]);
   const picks=DRAFT_ROUNDS.map((row,ri)=>({r:ri+1,k:pickNo(ri,col),n:row[col]}));
   const f=await shareFrame(fmt,C,"MI DRAFT");const {x,W,story,P}=f;let y=f.y0;
   const [lo,...sp]=await Promise.all([teamImg(t),...picks.map(p=>p.n?sprImg(p.n):Promise.resolve(null))]);
-  const th=story?150:100;fit(x,lo,80+th/2,y+th/2,th);txt(x,t.n.toUpperCase(),`900 ${story?64:50}px ${FD}`,P.CH,"left",80+th+24,y+th*.52);
   const spent=picks.reduce((s,p)=>s+(p.n?PTS[p.n]||0:0),0);
-  txt(x,`#${t.ab} · COACH ${PROFILES[ME][0].toUpperCase()} · ${spent} PTS`,`700 ${story?28:22}px ${FL}`,C,"left",80+th+26,y+th*.84);y+=th+(story?36:22);
+  const th=teamHeaderCentered(x,lo,t.n.toUpperCase(),`#${t.ab} · COACH ${PROFILES[ME][0].toUpperCase()} · ${spent} PTS`,C,y,story,W,P);y+=th+(story?36:22);
   const cw=(W-160-20)/2,ch=story?250:180;
   picks.forEach((p,k)=>{const cx=80+(k%2)*(cw+20),cy=y+Math.floor(k/2)*(ch+14);const gone=p.n&&!roster.includes(p.n);
     x.fillStyle=P.INK2;x.fillRect(cx,cy,cw,ch);x.fillStyle=gone?P.LINE:C;x.fillRect(cx,cy,cw,5);
@@ -2353,10 +2360,8 @@ async function drawRoster(ti,fmt){
   const t=TEAMS[ti],C=confHex(t.c),[coach,,draftPts]=PROFILES[ti],roster=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]);
   const f=await shareFrame(fmt,C,"ROSTER");const {x,W,story,P}=f;let y=f.y0;
   const [lo,...sp]=await Promise.all([teamImg(t),...roster.map(r=>sprImg(r[0]))]);
-  const th=story?150:100;fit(x,lo,80+th/2,y+th/2,th);
-  x.font=`900 ${story?64:50}px ${FD}`;txt(x,ell(x,t.n.toUpperCase(),W-160-th-24),`900 ${story?64:50}px ${FD}`,P.CH,"left",80+th+24,y+th*.52);
   const kills=roster.reduce((s,r)=>s+r[6],0);
-  txt(x,`#${t.ab} · ${CONF[t.c].name.toUpperCase()} #${t.rank} · ${draftPts} PTS · ${kills} KOs`,`700 ${story?28:22}px ${FL}`,C,"left",80+th+26,y+th*.84);
+  const th=teamHeaderCentered(x,lo,t.n.toUpperCase(),`#${t.ab} · ${CONF[t.c].name.toUpperCase()} #${t.rank} · ${draftPts} PTS · ${kills} KOs`,C,y,story,W,P);
   y+=th+(story?36:22);
   const mvp=roster.reduce((a,b)=>b[6]>a[6]?b:a);
   const cw=(W-160-20)/2,ch=story?250:180;
