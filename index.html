@@ -2977,8 +2977,9 @@ async function drawOverlay(mi){
   side(A,la,CA,true);side(B,lb,CB,false);
   // marcador al centro sobre una placa inclinada
   const cx=W/2,bs=64;poly([[712,0],[W-712,0],[W-666,G.y],[666,G.y]],P.INK);
-  x.fillStyle=P.INK3;x.fillRect(cx-150,20,bs,bs);x.fillRect(cx+150-bs,20,bs,bs);
-  x.fillStyle=CA;x.fillRect(cx-150,20+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+150-bs,20+bs-6,bs,6);
+  const so=196; // separacion de los cuadros del marcador respecto al VS
+  x.fillStyle=P.INK3;x.fillRect(cx-so,20,bs,bs);x.fillRect(cx+so-bs,20,bs,bs);
+  x.fillStyle=CA;x.fillRect(cx-so,20+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+so-bs,20+bs-6,bs,6);
   txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,68);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 17px ${FL}`,P.MU,"center",cx,100);
   // barra inferior
   x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
@@ -2986,7 +2987,7 @@ async function drawOverlay(mi){
   // logo + nombre de la liga, juntos y centrados en la barra
   {const nf=`900 28px ${FD}`,lh=38,lw=lg?lg.width*lh/lg.height:0,gap=lg?12:0;x.font=nf;const nw=x.measureText("PPV DRAFT LEAGUE").width,sx=(W-(lw+gap+nw))/2;
     if(lg)x.drawImage(lg,sx,fy+(fh-lh)/2,lw,lh);txt(x,"PPV DRAFT LEAGUE",nf,P.CH,"left",sx+lw+gap,fy+fh/2+10);}
-txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
+txt(x,SHARE_URL,`600 24px ${FB}`,P.VO,"right",W-24,fy+39);
   // ventana del juego: transparente con borde
   x.clearRect(G.x,G.y,G.w,G.h);x.lineWidth=4;
   x.strokeStyle=CA;x.beginPath();x.moveTo(G.x+G.w/2,G.y-2);x.lineTo(G.x-2,G.y-2);x.lineTo(G.x-2,G.y+G.h+2);x.lineTo(G.x+G.w/2,G.y+G.h+2);x.stroke();
