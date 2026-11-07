@@ -2845,6 +2845,8 @@ function powerHTML(w){
 function setSView(v){sView=v;sKey="rank";sDir=1;document.querySelectorAll("#sview button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===v));renderStandings();}
 document.getElementById("stables").addEventListener("click",e=>{const b=e.target.closest("[data-pw]");if(!b)return;pWeek=+b.dataset.pw;renderStandings();const nb=document.querySelector(`#stables [data-pw="${pWeek}"]`);if(nb)nb.focus();});
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goview]");if(a)setSView(a.dataset.goview);});
+/* al cambiar de vista, si la tabla ya quedo arriba de la pantalla, regresar al inicio de la tabla */
+document.querySelectorAll("#sview button").forEach(b=>b.addEventListener("click",()=>{const tb=document.querySelector("#page-standings .toolbar").getBoundingClientRect().bottom,t=document.getElementById("stables").getBoundingClientRect().top;if(t<tb+16)scrollTo({top:scrollY+t-tb-16,behavior:NO_MOTION?"auto":"smooth"});}));
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(!a)return;const id=a.dataset.goto;setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});},120);});
 
 /* ---------- Pokemon de la semana: el que estuvo en mas juegos ganados (desempata el total de KOs) ---------- */
