@@ -363,6 +363,7 @@ select#sort{background:var(--ink-2);color:var(--chalk);border:1px solid var(--li
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--chalk);color:var(--ink);font-weight:600;padding:10px 16px;z-index:90;max-width:calc(100% - 32px)}
 
 /* ---------- STANDINGS ---------- */
+.tm-hero::after{content:"18"}
 .s-hero::after{content:"PTS"}
 .leaders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .ld{display:flex;align-items:center;gap:14px;padding:14px 18px;background:color-mix(in srgb,var(--ink) 70%,transparent);border-left:6px solid var(--c);min-width:0}
@@ -1340,7 +1341,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 
 <!-- ================= TEAMS ================= -->
 <main id="page-teams" hidden>
-  <section class="t-hero">
+  <section class="t-hero tm-hero">
     <div class="wrap">
       <div><div class="label">Temporada 5 · Evolution</div><h1>Teams</h1></div>
       <div class="confsum" id="confsum"></div>
