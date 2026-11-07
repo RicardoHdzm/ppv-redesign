@@ -2953,27 +2953,44 @@ const homeImg=n=>SPR_IDS[n]?loadImg((typeof HOME_DATA!=="undefined"&&HOME_DATA[S
 const OBS_GAME={x:160,y:120,w:1600,h:900}; // recuadro transparente para la captura del juego (16:9)
 async function obsBase(){const W=1920,H=1080,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");if(document.fonts)await document.fonts.ready;return {cv,x,W,H,P:sharePal()};}
 async function drawOverlay(mi){
-  const m=MATCHES[mi],A=TEAMS[m.a],B=TEAMS[m.b],{cv,x,W,H,P}=await obsBase(),CA=confHex(A.c),CB=confHex(B.c),G=OBS_GAME;
+  const m=MATCHES[mi],A=TEAMS[m.a],B=TEAMS[m.b],{cv,x,W,H,P}=await obsBase(),CA=confHex(A.c),CB=confHex(B.c),G=OBS_GAME,fy=G.y+G.h,fh=H-fy;
   const [la,lb,lg]=await Promise.all([teamImg(A),teamImg(B),shareLogo()]);
+  const poly=(pts,fill)=>{x.beginPath();pts.forEach(([px,py],k)=>k?x.lineTo(px,py):x.moveTo(px,py));x.closePath();x.fillStyle=fill;x.fill();};
+  const lines=(x0,y0,w,h,col)=>{x.save();x.beginPath();x.rect(x0,y0,w,h);x.clip();x.globalAlpha=.08;x.strokeStyle=col;x.lineWidth=2;for(let i=-h;i<w+h;i+=26){x.beginPath();x.moveTo(x0+i,y0+h);x.lineTo(x0+i+h*.45,y0);x.stroke();}x.restore();};
   x.fillStyle=P.INK;x.fillRect(0,0,W,H);
-  let g=x.createLinearGradient(0,0,G.x,0);g.addColorStop(0,CA+"66");g.addColorStop(1,CA+"12");x.fillStyle=g;x.fillRect(0,G.y,G.x,G.h);
-  g=x.createLinearGradient(W,0,W-G.x,0);g.addColorStop(0,CB+"66");g.addColorStop(1,CB+"12");x.fillStyle=g;x.fillRect(W-G.x,G.y,G.x,G.h);
-  // roster de cada equipo apilado en su columna (ordenado por costo de draft)
-  const col=async(ti,cx)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-8,132);
-    ro.forEach((r,k)=>{const cy=G.y+sh*k+sh/2;x.fillStyle="#00000040";x.fillRect(cx-G.x/2+12,cy-sh/2+5,G.x-24,sh-10);fit(x,imgs[k],cx,cy,sz);});};
-  await col(m.a,G.x/2);await col(m.b,W-G.x/2);
-  x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);x.fillStyle=CA;x.fillRect(0,G.y-6,W/2,6);x.fillStyle=CB;x.fillRect(W/2,G.y-6,W/2,6);
-  const side=(t,lo,C,left)=>{const ls=92,ti=TEAMS.indexOf(t);fit(x,lo,left?24+ls/2:W-24-ls/2,G.y/2-2,ls);const tx=left?24+ls+18:W-24-ls-18,al=left?"left":"right",nf=`900 46px ${FD}`;
-    x.font=nf;txt(x,ell(x,t.n.toUpperCase(),560),nf,P.CH,al,tx,58);
-    txt(x,`TRAINER ${PROFILES[ti][0].toUpperCase()} · ${CONF[t.c].name.toUpperCase()} #${t.rank} · ${t.w}-${t.l}`,`700 22px ${FL}`,C,al,tx,90);};
+  // columnas laterales: degradado + lineas diagonales del color de cada conferencia
+  let g=x.createLinearGradient(0,0,G.x,0);g.addColorStop(0,CA+"66");g.addColorStop(1,CA+"14");x.fillStyle=g;x.fillRect(0,G.y,G.x,G.h);lines(0,G.y,G.x,G.h,CA);
+  g=x.createLinearGradient(W,0,W-G.x,0);g.addColorStop(0,CB+"66");g.addColorStop(1,CB+"14");x.fillStyle=g;x.fillRect(W-G.x,G.y,G.x,G.h);lines(W-G.x,G.y,G.x,G.h,CB);
+  // roster: sprite HOME + costo de draft, ordenado por costo
+  const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-30,112);
+    ro.forEach((r,k)=>{const top=G.y+sh*k,cy=top+(sh-22)/2+2;poly([[cx-G.x/2+18,top+5],[cx+G.x/2-12,top+5],[cx+G.x/2-18,top+sh-5],[cx-G.x/2+12,top+sh-5]],"#00000052");
+      fit(x,imgs[k],cx,cy,sz);txt(x,`${r[1]} PTS`,`700 17px ${FL}`,C,"center",cx,top+sh-12);});};
+  await col(m.a,G.x/2,CA);await col(m.b,W-G.x/2,CB);
+  // barra superior con entradas diagonales detras de cada equipo
+  x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
+  g=x.createLinearGradient(0,0,760,0);g.addColorStop(0,CA+"70");g.addColorStop(1,CA+"08");poly([[0,0],[760,0],[700,G.y],[0,G.y]],g);
+  g=x.createLinearGradient(W,0,W-760,0);g.addColorStop(0,CB+"70");g.addColorStop(1,CB+"08");poly([[W,0],[W-760,0],[W-700,G.y],[W,G.y]],g);
+  poly([[0,0],[150,0],[124,G.y],[0,G.y]],CA+"55");poly([[W,0],[W-150,0],[W-124,G.y],[W,G.y]],CB+"55");
+  poly([[0,G.y-6],[W/2,G.y-6],[W/2,G.y],[0,G.y]],CA);poly([[W/2,G.y-6],[W,G.y-6],[W,G.y],[W/2,G.y]],CB);
+  const side=(t,lo,C,left)=>{const ti=TEAMS.indexOf(t),ls=96;fit(x,lo,left?16+ls/2:W-16-ls/2,G.y/2-3,ls);const tx=left?16+ls+22:W-16-ls-22,al=left?"left":"right",nf=`900 42px ${FD}`;
+    x.font=nf;txt(x,ell(x,t.n.toUpperCase(),540),nf,P.CH,al,tx,46);
+    const tf=`900 30px ${FD}`,tn=PROFILES[ti][0].toUpperCase();x.font=tf;const tw=x.measureText(tn).width;
+    txt(x,tn,tf,C,al,tx,82);txt(x,"TRAINER",`700 15px ${FL}`,P.MU,al,left?tx+tw+10:tx-tw-10,80);
+    txt(x,`${CONF[t.c].name.toUpperCase()} #${t.rank} · ${t.w}-${t.l} · ${sign(t.d)} KOS`,`600 17px ${FL}`,P.MU,al,tx,106);};
   side(A,la,CA,true);side(B,lb,CB,false);
-  const cx=W/2,bs=64;x.fillStyle=P.INK3;x.fillRect(cx-150,22,bs,bs);x.fillRect(cx+150-bs,22,bs,bs);x.lineWidth=3;
-  x.strokeStyle=CA;x.strokeRect(cx-150+1.5,23.5,bs-3,bs-3);x.strokeStyle=CB;x.strokeRect(cx+150-bs+1.5,23.5,bs-3,bs-3);
-  txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,70);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 18px ${FL}`,P.MU,"center",cx,104);
-  const fy=G.y+G.h,fh=H-fy;x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
-  if(lg){const h=40,w=lg.width*h/lg.height;x.drawImage(lg,24,fy+(fh-h)/2,w,h);}
-  txt(x,"PPV DRAFT LEAGUE · TEMPORADA 5 · EVOLUTION",`900 28px ${FD}`,P.CH,"left",96,fy+40);
-  txt(x,SHARE_URL,`600 24px ${FB}`,P.MU,"right",W-24,fy+39);
+  // marcador al centro sobre una placa inclinada
+  const cx=W/2,bs=64;poly([[cx-206,10],[cx+206,10],[cx+184,G.y-14],[cx-184,G.y-14]],P.INK);
+  x.fillStyle=P.INK3;x.fillRect(cx-150,20,bs,bs);x.fillRect(cx+150-bs,20,bs,bs);x.lineWidth=3;
+  x.strokeStyle=CA;x.strokeRect(cx-150+1.5,21.5,bs-3,bs-3);x.strokeStyle=CB;x.strokeRect(cx+150-bs+1.5,21.5,bs-3,bs-3);
+  txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,68);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 17px ${FL}`,P.MU,"center",cx,100);
+  // barra inferior
+  x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);poly([[0,fy],[W/2,fy],[W/2,fy+4],[0,fy+4]],CA);poly([[W/2,fy],[W,fy],[W,fy+4],[W/2,fy+4]],CB);
+  poly([[0,fy],[420,fy],[392,H],[0,H]],P.INK3);
+  if(lg){const h=38,w=lg.width*h/lg.height;x.drawImage(lg,24,fy+(fh-h)/2+2,w,h);}
+  txt(x,"PPV DRAFT LEAGUE",`900 28px ${FD}`,P.CH,"left",92,fy+41);
+  txt(x,"TEMPORADA 5 · EVOLUTION",`700 20px ${FL}`,P.VO,"left",440,fy+39);
+  poly([[W-430,fy],[W,fy],[W,H],[W-402,H]],P.INK3);txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
+  // ventana del juego: transparente con borde
   x.clearRect(G.x,G.y,G.w,G.h);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(G.x-2,G.y-2,G.w+4,G.h+4);
   return cv;
 }
