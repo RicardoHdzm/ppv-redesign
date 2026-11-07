@@ -1240,6 +1240,9 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .obs-t .logo,.obs-t .crest{--sz:30px}
 .obs-t span{color:var(--mute);font-family:var(--f-label);font-size:.85rem;letter-spacing:.1em}
 .obs-b p{margin:0;color:var(--mute);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd-obs{display:grid;gap:10px;padding:14px;background:var(--ink-3)}
+.sd-obs .obs-prev{border-bottom:0}
+.obs-tip{margin:0;color:var(--mute);font-size:.8rem;line-height:1.45}
 .obs-how{margin:0 0 18px;padding:12px 16px;border-left:4px solid var(--volt);background:var(--ink-2);color:var(--mute);font-size:.9rem;max-width:90ch}
 .obs-how strong{color:var(--chalk)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -1502,11 +1505,6 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </div>
   <div class="wrap s-body">
     <div class="md-g" id="mdGrid"></div>
-    <section class="obs-sec">
-      <div class="sec-head"><div><div class="label" id="obsLabel"></div><h2>Overlays para <em>OBS</em></h2></div><button type="button" class="btn sh-sm" id="obsAll" disabled>⤓ Todos los overlays</button></div>
-      <p class="obs-how"><strong>Como usarlo:</strong> en OBS crea una escena de 1920×1080, agrega la captura de Discord o del juego y ajustala al recuadro central (1600×900, posicion x 160, y 120). Encima pon el <strong>overlay</strong> como fuente de Imagen: el centro es transparente. La <strong>pantalla de inicio</strong> va en la escena de espera antes de la serie.</p>
-      <div class="obs-g" id="obsGrid"></div>
-    </section>
     <p class="md-note">Demo: Rick tiene el rol de community manager. En el sitio real esta pagina solo aparece para las cuentas con ese rol. Los trades y fichajes no tienen fecha en los datos actuales, por eso se muestran todos los de la temporada.</p>
   </div>
 </main>
@@ -2350,9 +2348,14 @@ function openSeries(i){
     <div class="label">Semana ${m.w} · Serie al mejor de 3</div>
     <div class="sd-score"><a href="#team-${slug(A)}">${crest(A)}<span>${esc(A.n)}</span></a><b class="num">${m.ga}<i>-</i>${m.gb}</b><a href="#team-${slug(B)}">${crest(B)}<span>${esc(B.n)}</span></a></div>
     <div class="sh-btns"><button type="button" class="btn sh-sm" data-sharek="series" data-arg="${i}">⤴ Compartir resultado</button></div>
+    <section class="sd-obs"><header><span class="label">Transmision · OBS</span></header>
+      <div class="obs-prev" id="sdObsPrev" data-mi="${i}"><span class="label">Generando overlay…</span></div>
+      <div class="md-acts"><button type="button" class="btn sh-sm" data-obs="${i}" data-k="ov">⤓ Overlay</button><button type="button" class="btn ghost sh-sm" data-obs="${i}" data-k="in">⤓ Pantalla de inicio</button></div>
+      <p class="obs-tip">PNG de 1920×1080. En OBS pon la captura del juego en x 160, y 120 con tamaño 1600×900 y el overlay encima: el centro es transparente. La pantalla de inicio va en la escena de espera.</p>
+    </section>
     ${one}${games}${any?"":'<p class="sd-none">Esta serie no tiene registrados los Pokemon de cada juego.</p>'}
   </div>`;
-  drawer.hidden=false;document.getElementById("closeD").focus();
+  drawer.hidden=false;document.getElementById("closeD").focus();renderSdObs(i);
 }
 document.addEventListener("click",e=>{const c=e.target.closest(".mc[data-mi]");if(!c||e.target.closest("a"))return;openSeries(+c.dataset.mi);});
 document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const c=e.target;if(!c.matches||!c.matches(".mc[data-mi]"))return;e.preventDefault();openSeries(+c.dataset.mi);});
@@ -3298,24 +3301,14 @@ async function renderMedia(){const box=document.getElementById("mdGrid");
     const blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});if(job!==mdJob)return;
     mdFiles[i]=blob?{blob,name:`ppv-${/d/.test(o.file)?o.file:`s${mdWeek}-${o.file}`}-${mdFmt==="story"?"historia":"post"}.png`}:null;
     const b=document.querySelector(`[data-mdl="${i}"]`);if(b)b.disabled=!blob;}
-  all.disabled=!mdFiles.some(Boolean);
-  renderObs(job);}
-/* overlays de OBS de las series de la semana */
+  all.disabled=!mdFiles.some(Boolean);}
+/* overlays de OBS: en el detalle de cada serie (Matches), para cualquier jugador */
 const obsName=(mi,k)=>{const m=MATCHES[mi];return `ppv-obs-s${m.w}-${TEAMS[m.a].ab}-vs-${TEAMS[m.b].ab}-${k==="ov"?"overlay":"inicio"}.png`.toLowerCase();};
 const cvBlob=cv=>new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});
-async function renderObs(job){const wk=MATCHES.filter(m=>m.w===mdWeek),box=document.getElementById("obsGrid"),all=document.getElementById("obsAll");all.disabled=true;
-  document.getElementById("obsLabel").textContent=`Semana ${mdWeek} · ${wk.length} series · 1920×1080`;
-  box.innerHTML=wk.map(m=>{const A=TEAMS[m.a],B=TEAMS[m.b];return `<article class="obs-c"><div class="obs-prev" id="obsP${m.i}"><span class="label">Generando…</span></div><div class="obs-b"><div class="obs-t">${crest(A)}<b>#${A.ab}</b><span>VS</span><b>#${B.ab}</b>${crest(B)}</div><p>${esc(A.n)} vs ${esc(B.n)}</p><div class="md-acts"><button type="button" class="btn sh-sm" data-obs="${m.i}" data-k="ov" disabled>⤓ Overlay</button><button type="button" class="btn ghost sh-sm" data-obs="${m.i}" data-k="in">⤓ Pantalla de inicio</button></div></div></article>`;}).join("");
-  for(const m of wk){const cv=await drawOverlay(m.i);if(job!==mdJob)return;const p=document.getElementById("obsP"+m.i);p.innerHTML="";p.appendChild(cv);
-    const b=document.querySelector(`[data-obs="${m.i}"][data-k="ov"]`);if(b)b.disabled=false;}
-  all.disabled=false;}
-document.getElementById("obsGrid").addEventListener("click",async e=>{const b=e.target.closest("[data-obs]");if(!b)return;const mi=+b.dataset.obs,k=b.dataset.k;b.disabled=true;
+async function renderSdObs(mi){const p=document.getElementById("sdObsPrev");if(!p)return;const cv=await drawOverlay(mi);const q=document.getElementById("sdObsPrev");if(!q||q.dataset.mi!==String(mi))return;q.innerHTML="";q.appendChild(cv);}
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-obs]");if(!b)return;const mi=+b.dataset.obs,k=b.dataset.k;b.disabled=true;
   const blob=await cvBlob(await (k==="ov"?drawOverlay(mi):drawIntro(mi)));const r=blob?await saveBlob(blob,obsName(mi,k)):"err";b.disabled=false;
   toastMsg(r==="ok"?"Archivo guardado.":r==="declined"?"Descarga cancelada.":r==="rate"?"Hay una descarga pendiente; intenta en un momento.":"No se pudo guardar el archivo.");});
-document.getElementById("obsAll").addEventListener("click",async()=>{const btn=document.getElementById("obsAll"),wk=MATCHES.filter(m=>m.w===mdWeek),jobs=wk.flatMap(m=>[[m.i,"ov"],[m.i,"in"]]);btn.disabled=true;let ok=0;
-  for(let n=0;n<jobs.length;n++){const [mi,k]=jobs[n];btn.textContent=`⤓ Descargando ${n+1} de ${jobs.length}…`;const blob=await cvBlob(await (k==="ov"?drawOverlay(mi):drawIntro(mi)));if(!blob)continue;
-    let r=await saveBlob(blob,obsName(mi,k));if(r==="rate"){await new Promise(z=>setTimeout(z,1500));r=await saveBlob(blob,obsName(mi,k));}if(r==="declined")break;if(r==="ok")ok++;await new Promise(z=>setTimeout(z,350));}
-  btn.textContent="⤓ Todos los overlays";btn.disabled=false;toastMsg(`${ok} de ${jobs.length} archivos guardados.`);});
 document.getElementById("mdWeeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
 document.getElementById("mdWeeks").addEventListener("click",e=>{const b=e.target.closest("button[data-w]");if(!b)return;mdWeek=+b.dataset.w;renderMedia();});
 document.querySelectorAll("#mdFmt button").forEach(b=>b.addEventListener("click",()=>{mdFmt=b.dataset.fm;renderMedia();}));
