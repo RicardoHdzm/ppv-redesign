@@ -1542,7 +1542,7 @@ function renderMatches(){
      <div><b class="num">${shown.length}</b><span class="label">Series</span></div>
      <div><b class="num">${shown.length-three}</b><span class="label">Barridas 2-0</span></div>
      <div><b class="num">${three}</b><span class="label">Series a 3 juegos</span></div>
-     <div><b class="num">${games}</b><span class="label">Juegos</span></div></div>
+     <div><b class="num">${games}</b><span class="label">Juegos</span></div><button type="button" class="btn ghost sh-sm" data-sharek="week" data-arg="${mWeek}" style="margin-left:auto">⤴ Compartir semana</button></div>
     <div class="mcols ${confs.length===1?"one":""}">${confs.map(col).join("")}</div>`;
   cnt.textContent=`Semana ${mWeek} de ${WEEKS} · fase regular terminada`;
 }
@@ -1668,7 +1668,7 @@ function renderProfile(ti){
       <div class="path-w"><div class="path" style="--c:${C}">${path}</div></div>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">${roster.length} Pokémon · ${kills} KOs · ${deaths} caídas</div><h2>El <em>roster</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">${roster.length} Pokémon · ${kills} KOs · ${deaths} caídas</div><h2>El <em>roster</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="roster" data-arg="${ti}">⤴ Compartir roster</button></div>
       <div class="p-note"><span>Movimientos de free agency: <strong>${fa}</strong></span><span>Todos obtenidos en el <strong>draft</strong></span></div>
       <div class="roster-g">${roster.slice().sort((a,b)=>b[1]-a[1]).map(pk).join("")}</div>
     </section>
@@ -2273,6 +2273,51 @@ async function drawMyDraft(fmt){
   return f.cv;
 }
 
+/* 7. roster actual */
+async function drawRoster(ti,fmt){
+  const t=TEAMS[ti],C=confHex(t.c),[coach,,draftPts]=PROFILES[ti],roster=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]);
+  const f=await shareFrame(fmt,C,"ROSTER");const {x,W,story,P}=f;let y=f.y0;
+  const [lo,...sp]=await Promise.all([teamImg(t),...roster.map(r=>sprImg(r[0]))]);
+  const th=story?150:100;fit(x,lo,80+th/2,y+th/2,th);
+  x.font=`900 ${story?64:50}px ${FD}`;txt(x,ell(x,t.n.toUpperCase(),W-160-th-24),`900 ${story?64:50}px ${FD}`,P.CH,"left",80+th+24,y+th*.52);
+  const kills=roster.reduce((s,r)=>s+r[6],0);
+  txt(x,`#${t.ab} · ${CONF[t.c].name.toUpperCase()} #${t.rank} · ${draftPts} PTS · ${kills} KOs`,`700 ${story?28:22}px ${FL}`,C,"left",80+th+26,y+th*.84);
+  y+=th+(story?36:22);
+  const mvp=roster.reduce((a,b)=>b[6]>a[6]?b:a);
+  const cw=(W-160-20)/2,ch=story?250:180;
+  roster.slice(0,8).forEach((r,k)=>{const [n,cost,types,,,g,kk,d]=r,cx=80+(k%2)*(cw+20),cy=y+Math.floor(k/2)*(ch+14),ts=types.split("/");
+    x.fillStyle=P.INK2;x.fillRect(cx,cy,cw,ch);
+    const g2=x.createLinearGradient(cx,cy,cx+cw,cy);g2.addColorStop(0,TYPE[ts[0]][1]+"40");g2.addColorStop(1,TYPE[ts[1]||ts[0]][1]+"18");x.fillStyle=g2;x.fillRect(cx,cy,cw,ch*.42);
+    if(r===mvp){x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(cx+2,cy+2,cw-4,ch-4);chip(x,cx+cw-(story?140:118),cy+10,story?34:28,"MVP",P.VO,"#16161a",null);}
+    const s=story?170:120;fit(x,sp[k],cx+cw-s/2-6,cy+ch*.58,s,true);
+    x.font=`900 ${story?40:30}px ${FD}`;txt(x,ell(x,n.toUpperCase(),cw-s-24),`900 ${story?40:30}px ${FD}`,P.CH,"left",cx+18,cy+(story?56:44));
+    let tx=cx+18;const chh=story?32:26;ts.forEach(ty=>{tx+=chip(x,tx,cy+(story?76:58),chh,TYPE[ty][0].toUpperCase(),TYPE[ty][1],"#16161a",null)+8;});
+    txt(x,`${cost} PTS`,`900 ${story?44:34}px ${FD}`,P.VO,"left",cx+18,cy+ch*(story?.74:.76));
+    txt(x,`${kk} KOs · ${d} caídas · ${g} partidas`,`600 ${story?24:19}px ${FB}`,P.MU,"left",cx+18,cy+ch*.9);});
+  return f.cv;
+}
+/* 8. juegos de la semana */
+async function drawWeek(w,fmt){
+  const wk=MATCHES.filter(m=>m.w===w);
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E",`SEMANA ${w}`);const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  const sweeps=wk.filter(m=>m.seq.length===2).length;
+  txt(x,`${wk.length} SERIES · ${sweeps} BARRIDAS · ${wk.length-sweeps} A 3 JUEGOS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  const hh=story?56:44,rh=story?124:92,L=80,R=W-80;
+  ["rojo","azul"].forEach(c=>{const C=confHex(c),list=wk.filter(m=>m.c===c);
+    x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?38:30}px ${FD}`,"#16161a","left",L+20,y+hh*.72);y+=hh;
+    list.forEach((m,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);const cy=y+rh/2,wA=m.ga>m.gb,ls=rh-(story?30:22);
+      const side=(ti,won,left)=>{const t=TEAMS[ti];x.save();if(!won)x.globalAlpha=.45;const lx=left?L+20+ls/2:R-20-ls/2;fit(x,imgs[ti],lx,cy,ls);
+        const ax=left?L+20+ls+16:R-20-ls-16;txt(x,"#"+t.ab,`900 ${story?50:38}px ${FD}`,won?P.CH:P.MU,left?"left":"right",ax,cy+(story?10:8));
+        x.font=`600 ${story?22:18}px ${FL}`;txt(x,ell(x,t.n.toUpperCase(),story?260:220),`600 ${story?22:18}px ${FL}`,P.MU,left?"left":"right",ax,cy+(story?38:30));x.restore();};
+      side(m.a,wA,true);side(m.b,!wA,false);
+      txt(x,`${m.ga} - ${m.gb}`,`900 ${story?64:50}px ${FD}`,P.CH,"center",W/2,cy+(story?22:17));y+=rh;});
+    const playing=new Set(list.flatMap(m=>[m.a,m.b])),byes=TEAMS.map((t,i)=>[t,i]).filter(([t,i])=>t.c===c&&!playing.has(i));
+    txt(x,byes.length?"Descansa: "+byes.map(([t])=>"#"+t.ab+" "+t.n).join(", "):"",`600 ${story?24:20}px ${FB}`,P.MU,"left",L+4,y+(story?32:26));
+    y+=story?52:38;});
+  return f.cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -2281,6 +2326,8 @@ const SHARE_KINDS={
   table:()=>({kind:"Tabla",title:"Tabla de posiciones",file:"tabla",accent:"var(--volt)",text:"Tabla de posiciones de la PPV Draft League",draw:drawTable}),
   leaders:()=>({kind:"Leaderboard",title:"Los más letales",file:"leaderboard",accent:"var(--volt)",text:"Los Pokémon más letales de la PPV Draft League",draw:drawLeaders}),
   bracket:()=>({kind:"Bracket",title:"Playoffs",file:"bracket",accent:"var(--volt)",text:"Bracket de playoffs de la PPV Draft League",draw:drawBracket}),
+  roster:a=>{const t=TEAMS[a];return {kind:"Roster",title:`Roster de ${t.n}`,file:`roster-${slug(t)}`,accent:CONF[t.c].v,text:`El roster de ${t.n}`,draw:f=>drawRoster(a,f)};},
+  week:a=>({kind:"Semana",title:`Semana ${a}`,file:`semana-${a}`,accent:"var(--volt)",text:`Resultados de la semana ${a} en la PPV Draft League`,draw:f=>drawWeek(a,f)}),
   draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Así quedó el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
