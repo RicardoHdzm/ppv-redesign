@@ -2031,10 +2031,13 @@ async function makeShareImage(ti,fmt){
   x.font=`900 ${story?620:460}px "Big Shoulders Display", Impact, sans-serif`;x.textAlign="right";x.textBaseline="alphabetic";x.strokeStyle=C+"55";x.lineWidth=5;x.strokeText("#"+t.rank,W+30,bandH*.86);
   x.restore();
   // cabecera
-  const top=story?90:60;
-  if(lg){const h=story?96:80,w=lg.width*h/lg.height;x.drawImage(lg,70,top,w,h);}
-  x.textAlign="left";x.textBaseline="alphabetic";x.fillStyle=CH;x.font=`900 ${story?48:42}px "Big Shoulders Display", Impact, sans-serif`;x.fillText("PPV DRAFT LEAGUE",story?260:230,top+(story?48:40));
-  x.fillStyle=VO;x.font=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("TEMPORADA 5 · EVOLUTION",story?262:232,top+(story?88:74));
+  const top=story?90:60,lh=story?96:80,gap=story?26:22;
+  const f1=`900 ${story?48:42}px "Big Shoulders Display", Impact, sans-serif`,f2=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;
+  x.font=f1;const w1=x.measureText("PPV DRAFT LEAGUE").width;x.font=f2;const w2=x.measureText("TEMPORADA 5 · EVOLUTION").width;
+  const lw=lg?lg.width*lh/lg.height:0,total=lw+(lg?gap:0)+Math.max(w1,w2),sx=(W-total)/2,tx0=sx+lw+(lg?gap:0);
+  if(lg)x.drawImage(lg,sx,top,lw,lh);
+  x.textAlign="left";x.textBaseline="alphabetic";x.fillStyle=CH;x.font=f1;x.fillText("PPV DRAFT LEAGUE",tx0,top+(story?48:40));
+  x.fillStyle=VO;x.font=f2;x.fillText("TEMPORADA 5 · EVOLUTION",tx0+2,top+(story?88:74));
   // logo del equipo
   const ls=story?440:300,ly=story?260:190;
   if(logo){const r=Math.min(ls/logo.naturalWidth,ls/logo.naturalHeight),w=logo.naturalWidth*r,h=logo.naturalHeight*r;x.save();x.shadowColor="#000c";x.shadowBlur=40;x.shadowOffsetY=16;x.drawImage(logo,(W-w)/2,ly+(ls-h)/2,w,h);x.restore();}
