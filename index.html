@@ -393,7 +393,7 @@ table.st.m{min-width:560px}
 .st .nm{font-weight:700;color:var(--chalk)}
 .st tr.out .nm{color:inherit}
 .st .tm .chip{margin-left:4px}
-.st td.up{color:var(--good)}
+.st td.up{color:var(--volt)}
 .st td.pts{font-family:var(--f-display);font-weight:900;font-size:1.5rem;color:var(--chalk)}
 .wp{display:inline-block;width:72px;height:6px;background:var(--ink-3);vertical-align:middle;margin-right:10px;transform:skewX(-18deg);position:relative}
 .wp i{position:absolute;inset:0 auto 0 0;background:var(--c)}
@@ -1827,7 +1827,7 @@ const bestDiff=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
 document.getElementById("leaders").innerHTML=[
   ["Lider FireRed",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
   ["Lider LeafGreen",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
-  ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--good)"]
+  ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--volt)"]
 ].map(([lab,t,val,c])=>`<div class="ld" style="--c:${c}">${crest(t)}<div><span class="label">${lab}</span><strong>${esc(t.n)}</strong></div><b class="num">${val}</b></div>`).join("");
 
 const topBy=k=>MONS_FULL.slice().sort((a,b)=>b[k]-a[k])[0];
