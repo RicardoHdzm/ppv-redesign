@@ -1363,6 +1363,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <option value="az">A – Z</option>
         <option value="diff">Por diff</option>
       </select>
+      <button type="button" class="btn ghost sh-sm" data-sharek="confs">⤴ Compartir conferencias</button>
       <span class="label count" id="count"></span>
     </div>
   </div>
@@ -2838,6 +2839,27 @@ async function drawPickTable(fmt){
   return f.cv;
 }
 
+/* 14. equipos por conferencia */
+async function drawConfs(fmt,view){
+  const confs=view==="all"?["rojo","azul"]:[view],one=confs.length===1;
+  const f=await shareFrame(fmt,one?confHex(confs[0]):(cssVar("--volt")||"#FFB62E"),one?CONF[confs[0]].name.toUpperCase():"CONFERENCIAS");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,one?`CONFERENCIA · ${by(confs[0]).length} EQUIPOS`:`${TEAMS.length} EQUIPOS · DOS CONFERENCIAS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?36:22;
+  const L=80,R=W-80,gap=story?14:10,hh=story?60:44,sep=story?30:20,rows=3;
+  const avail=f.y1-y-(confs.length-1)*sep,ch=Math.floor((avail/confs.length-hh-gap*rows)/rows),cw=(R-L-2*gap)/3;
+  confs.forEach(c=>{const C=confHex(c);
+    x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?40:32}px ${FD}`,"#16161a","left",L+20,y+hh*.72);
+    txt(x,`${by(c).length} EQUIPOS`,`700 ${story?24:20}px ${FL}`,"#16161a","right",R-20,y+hh*.68);y+=hh+gap;
+    by(c).slice().sort((a,b)=>a.rank-b.rank).forEach((t,k)=>{const cx=L+(k%3)*(cw+gap),cy=y+Math.floor(k/3)*(ch+gap),ls=Math.min(ch*.5,cw*.45);
+      x.fillStyle=P.INK3;x.fillRect(cx,cy,cw,ch);x.fillStyle=C;x.fillRect(cx,cy,cw,5);
+      fit(x,imgs[TEAMS.indexOf(t)],cx+cw/2,cy+12+ls/2,ls);
+      txt(x,"#"+t.rank,`900 ${story?30:22}px ${FD}`,t.q?C:P.MU,"left",cx+12,cy+(story?40:30));
+      txt(x,"#"+t.ab,`900 ${Math.round(ch*.2)}px ${FD}`,P.CH,"center",cx+cw/2,cy+12+ls+ch*.2);
+      const nf=`600 ${Math.round(ch*.115)}px ${FL}`;x.font=nf;txt(x,ell(x,t.n.toUpperCase(),cw-20),nf,P.MU,"center",cx+cw/2,cy+12+ls+ch*.2+ch*.15);});
+    y+=rows*(ch+gap)-gap+sep;});
+  return f.cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -2853,6 +2875,7 @@ const SHARE_KINDS={
   h2h:()=>{const [a,b]=h2;return {kind:"Cara a cara",title:`${TEAMS[a].ab} vs ${TEAMS[b].ab}`,file:`h2h-${TEAMS[a].ab}-${TEAMS[b].ab}`.toLowerCase(),accent:CONF[TEAMS[a].c].v,text:`${TEAMS[a].n} vs ${TEAMS[b].n} en la PPV Draft League`,draw:f=>drawH2H(a,b,f)};},
   picks:a=>{const w=a||prWeek,wk=MATCHES.filter(m=>m.w===w),st=prState(w),h=wk.filter(m=>st.p[m.i]===winSide(m)).length;return {kind:"Pronosticos",title:`Mis pronosticos · Semana ${w}`,file:`pronosticos-s${w}`,accent:"var(--volt)",text:st.rev?`Atine ${h} de ${wk.length} en la semana ${w} de la PPV Draft League`:`Mis pronosticos de la semana ${w} en la PPV Draft League`,draw:f=>drawPicks(w,f)};},
   pickTable:()=>{const {rows}=pickRows(),me=rows.find(r=>r.ti===ME);return {kind:"Pronosticos",title:"Tabla de aciertos",file:"pronosticos-tabla",accent:"var(--volt)",text:me?`Voy #${me.pos} en los pronosticos de la PPV Draft League`:"Tabla de aciertos de los pronosticos de la PPV Draft League",draw:drawPickTable};},
+  confs:()=>{const v=filter,one=v!=="all";return {kind:"Conferencias",title:one?`Conferencia ${CONF[v].name}`:"Las conferencias",file:one?`conferencia-${CONF[v].name.toLowerCase().replace(/\s+/g,"-")}`:"conferencias",accent:one?CONF[v].v:"var(--volt)",text:one?`Los equipos de la conferencia ${CONF[v].name} en la PPV Draft League`:"Los equipos de cada conferencia de la PPV Draft League",draw:fm=>drawConfs(fm,v)};},
   draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Asi quedo el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
