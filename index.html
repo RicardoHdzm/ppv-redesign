@@ -659,7 +659,7 @@ table.tc{border-collapse:collapse;width:100%;min-width:940px;font-variant-numeri
 .me-chip span{display:grid;line-height:1.05}
 .me-chip b{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1rem}
 .me-chip small{font-family:var(--f-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.62rem;color:var(--c)}
-@media (max-width:860px){.me-chip span{display:none}.me-chip{padding:4px}}
+@media (max-width:860px){.me-chip>span:not(.logo):not(.crest){display:none}.me-chip{padding:4px}}
 .you{display:inline-block;margin-left:8px;font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.62rem;padding:2px 7px;background:var(--chalk);color:var(--ink);vertical-align:middle;transform:skewX(-12deg)}
 .st tr.mine td{background:color-mix(in srgb,var(--c) 10%,transparent)}
 .st tr.mine td:first-child{box-shadow:inset 4px 0 0 var(--c)}
