@@ -657,7 +657,7 @@ table.tc{border-collapse:collapse;width:100%;min-width:940px;font-variant-numeri
 .sd strong{display:block;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.3rem;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sd .entry{font-size:.85rem;color:var(--mute)}
 .sd .entry b{color:var(--chalk);font-weight:600}
-/* ---------- SESIÓN (demo: Richampions VGC) ---------- */
+/* ---------- SESION (demo: Richampions VGC) ---------- */
 .nav-sep{width:1px;height:20px;background:var(--line);align-self:center;margin:0 6px;flex:none}
 .me-chip{display:flex;align-items:center;gap:10px;padding:5px 12px 5px 6px;border:1px solid var(--line);text-decoration:none;color:var(--chalk);background:var(--ink-2);flex:none;transition:border-color .15s}
 .me-chip:hover{border-color:var(--c)}
@@ -676,7 +676,7 @@ table.tc{border-collapse:collapse;width:100%;min-width:940px;font-variant-numeri
 .chip.me{background:var(--chalk);color:var(--ink)}
 .mc.mine{border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
 
-/* ---------- POKÉDEX ---------- */
+/* ---------- POKEDEX ---------- */
 .dx-hero::after{content:"PTS"}
 .dx-stats{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline}
 .dx-stats div{display:flex;align-items:baseline;gap:8px}
@@ -794,7 +794,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .st tbody tr:hover .tm .logo,.st tbody tr:hover .tm .crest,.db.v td:hover .db-spr,.db.v th.tm a:hover .logo,.db.v th.tm a:hover .crest,
 .fa tbody tr:hover img,.bar:hover img,.tc tbody tr:hover img,#mtable tbody tr:hover img,.row:hover .tm .logo,.wk:hover .logo,.wk:hover .crest{transform:scale(1.1)}
 .pk .spr.anim{object-fit:scale-down}
-/* ---------- MÓVIL ---------- */
+/* ---------- MOVIL ---------- */
 .nav-toggle{display:none;width:42px;height:42px;flex:none;place-content:center;gap:5px;background:none;border:1px solid var(--line);cursor:pointer;padding:0}
 .nav-toggle span{display:block;width:18px;height:2px;background:var(--chalk);transition:transform .2s,opacity .2s}
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -821,7 +821,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   .db.v th.tm .tn small,.db.v th.tm .dpos,.db.v th.tm .you{display:none}
   .db.v th.tm a{gap:6px;padding:8px}
 }
-/* pantallas táctiles: sin efectos hover (en móvil se quedan pegados tras un toque y mueven logos y tarjetas) */
+/* pantallas tactiles: sin efectos hover (en movil se quedan pegados tras un toque y mueven logos y tarjetas) */
 @media (hover:none){
   .card:hover,.mc:hover,.pk:hover,.dx:hover,.sd:hover{transform:none}
   .logo,.crest,img.spr,.dx-spr,.db-spr,.boxi,.spr-s,.mp img{transition:none;transform:none!important}
@@ -885,7 +885,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .sc-note{color:var(--mute);font-size:.82rem;margin:0}
 .sc-h2h{display:grid;gap:10px}
 
-/* ---------- SALÓN DE LA FAMA ---------- */
+/* ---------- SALON DE LA FAMA ---------- */
 .hof-hero::after{content:"HOF"}
 .champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .champ-c{position:relative;overflow:hidden;background:var(--ink-2);border:1px solid var(--line);padding:18px;display:grid;justify-items:center;gap:8px;text-align:center;text-decoration:none;color:inherit;transition:border-color .2s}
@@ -971,11 +971,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <a href="#teams" data-page="teams">Conferencias</a>
       <a href="#draft" data-page="draft">Draft</a>
       <a href="#pokedex" data-page="pokedex">Pokedex</a>
-      <a href="#salon" data-page="salon">HOF</a>
+      <a href="#salon" data-page="salon">H.O.F.</a>
     </nav>
     <a class="me-chip" id="meChip" href="#"></a>
     <button type="button" class="me-out" id="meOut">Salir</button>
-    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -992,7 +992,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <div>
         <div class="season"><span class="a"><i>Temporada 5</i></span><span class="b"><i>Playoffs</i></span></div>
         <h1><span class="ln k">Vive cada pick.</span><span class="ln j">Gana cada</span><span class="ln j">semana.</span></h1>
-        <p class="lede">18 coaches, dos conferencias y un solo campeón. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al título.</p>
+        <p class="lede">18 coaches, dos conferencias y un solo campeon. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al titulo.</p>
         <div class="cta">
           <a class="btn" href="#playoffs">Ver playoffs</a>
           <a class="btn ghost" href="#teams">Conoce los equipos</a>
@@ -1017,19 +1017,19 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <a class="link" href="#standings">Standings completos</a>
       </div>
       <div class="confs" id="tables"></div>
-      <div class="legend"><span><i></i>Línea de playoffs</span><span>Victoria = 3 pts</span><span>Diff = diferencia de Pokémon restantes</span></div>
+      <div class="legend"><span><i></i>Linea de playoffs</span><span>Victoria = 3 pts</span><span>Diff = diferencia de Pokemon restantes</span></div>
     </div>
   </section>
 
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <div><div class="label">Pokémon Leaderboard</div><h2>Líderes en <em>KOs</em></h2></div>
+        <div><div class="label">Pokemon Leaderboard</div><h2>Lideres en <em>KOs</em></h2></div>
         <div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button><a class="link" href="#pokedex">Ver Pokedex</a></div>
       </div>
       <div class="lead">
         <div class="mvp">
-          <div><div class="label">Líder en KOs · Temporada 5</div><h3>Blastoise</h3><div class="mvp-team" id="mvpTeam"></div></div>
+          <div><div class="label">Lider en KOs · Temporada 5</div><h3>Blastoise</h3><div class="mvp-team" id="mvpTeam"></div></div>
           <img class="mvp-art" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/9.gif" alt="">
           <div class="kd">
             <div><b class="num">24</b><span>Kills</span></div>
@@ -1046,11 +1046,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 
   <section class="block" style="padding-top:0">
     <div class="wrap">
-      <div class="sec-head"><div><div class="label">Formato de la temporada</div><h2>Del draft al <em>título</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Formato de la temporada</div><h2>Del draft al <em>titulo</em></h2></div></div>
       <div class="format">
         <div class="step"><div class="label">Fase 1</div><h3>Draft</h3><p>Cada coach arma su roster pick por pick.</p></div>
         <div class="step"><div class="label">Fase 2</div><h3>Trades</h3><p>Intercambios entre coaches para ajustar el equipo.</p></div>
-        <div class="step"><div class="label">Fase 3</div><h3>Waivers</h3><p>Pokémon libres disponibles para reforzarse a media temporada.</p></div>
+        <div class="step"><div class="label">Fase 3</div><h3>Waivers</h3><p>Pokemon libres disponibles para reforzarse a media temporada.</p></div>
         <div class="step now"><div class="label">En curso</div><h3>Playoffs</h3><p>Los 8 mejores pelean por el campeonato.</p></div>
       </div>
     </div>
@@ -1077,7 +1077,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <input id="q" type="search" placeholder="Buscar equipo" autocomplete="off">
       </label>
       <select id="sort" aria-label="Ordenar equipos">
-        <option value="rank">Por posición</option>
+        <option value="rank">Por posicion</option>
         <option value="az">A – Z</option>
         <option value="diff">Por diff</option>
       </select>
@@ -1101,7 +1101,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <button type="button" data-v="conf" aria-pressed="true">Por conferencia</button>
         <button type="button" data-v="all" aria-pressed="false">General</button>
       </div>
-      <button type="button" class="link jump" id="toMons">Pokémon Leaderboard ↓</button>
+      <button type="button" class="link jump" id="toMons">Pokemon Leaderboard ↓</button>
       <button type="button" class="btn ghost sh-sm" data-sharek="table">⤴ Compartir tabla</button>
       <span class="label count">Top 4 de cada conferencia van a playoffs · Victoria = 3 pts</span>
     </div>
@@ -1109,7 +1109,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   <div class="wrap s-body">
     <div id="stables"></div>
     <section id="mons-sec">
-      <div class="sec-head"><div><div class="label">Rendimiento individual</div><h2>Pokémon <em>Leaderboard</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button></div>
+      <div class="sec-head"><div><div class="label">Rendimiento individual</div><h2>Pokemon <em>Leaderboard</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button></div>
       <div class="mtiles" id="mtiles"></div>
       <div class="table"><div class="rows"><table class="st m" id="mtable"></table></div></div>
     </section>
@@ -1148,16 +1148,16 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section>
-      <div class="sec-head"><div><div class="label">Formato escalera · Series al mejor de 3 · Cruce de conferencias</div><h2>El <em>bracket</em></h2></div><div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="bracket">⤴ Compartir bracket</button><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeón</button></div></div>
+      <div class="sec-head"><div><div class="label">Formato escalera · Series al mejor de 3 · Cruce de conferencias</div><h2>El <em>bracket</em></h2></div><div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="bracket">⤴ Compartir bracket</button><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeon</button></div></div>
       <div class="bk-w" id="bracket"></div>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">Cómo se llega al título</div><h2>El camino a la <em>final</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Como se llega al titulo</div><h2>El camino a la <em>final</em></h2></div></div>
       <div class="format" id="po-format">
         <div class="step" data-r="wc"><div class="label">Ronda 1</div><h3>Wild Card</h3><p>El #3 de cada conferencia contra el #4 de la otra.</p></div>
         <div class="step" data-r="qf"><div class="label">Ronda 2</div><h3>Cuartos</h3><p>El ganador enfrenta al #2 de la conferencia contraria.</p></div>
-        <div class="step" data-r="sf"><div class="label">Ronda 3</div><h3>Semifinal</h3><p>Los #1 de conferencia esperan aquí con doble bye.</p></div>
-        <div class="step" data-r="final"><div class="label">Ronda 4</div><h3>Gran Final</h3><p>Los ganadores de cada lado juegan por el título.</p></div>
+        <div class="step" data-r="sf"><div class="label">Ronda 3</div><h3>Semifinal</h3><p>Los #1 de conferencia esperan aqui con doble bye.</p></div>
+        <div class="step" data-r="final"><div class="label">Ronda 4</div><h3>Gran Final</h3><p>Los ganadores de cada lado juegan por el titulo.</p></div>
       </div>
     </section>
     <section>
@@ -1167,7 +1167,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </div>
 </main>
 
-<!-- ================= POKÉDEX ================= -->
+<!-- ================= POKEDEX ================= -->
 <main id="page-pokedex" hidden>
   <section class="t-hero dx-hero">
     <div class="wrap">
@@ -1185,7 +1185,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       </div>
       <label class="search" for="dxQ">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input id="dxQ" type="search" placeholder="Buscar Pokémon" autocomplete="off">
+        <input id="dxQ" type="search" placeholder="Buscar Pokemon" autocomplete="off">
       </label>
       <select id="dxType" aria-label="Filtrar por tipo"></select>
       <span class="label count" id="dxCount"></span>
@@ -1214,7 +1214,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     </section>
     <section>
       <div class="sec-head"><div><div class="label" id="drMovesCount"></div><h2>Movimientos desde el <em>draft</em></h2></div></div>
-      <p class="mv-note">Comparación entre el tablero del draft y los rosters actuales. No distingue si un cambio fue trade o free agency.</p>
+      <p class="mv-note">Comparacion entre el tablero del draft y los rosters actuales. No distingue si un cambio fue trade o free agency.</p>
       <div class="mv-g" id="drMoves"></div>
     </section>
     <section>
@@ -1228,7 +1228,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <!-- ================= MI EQUIPO ================= -->
 <main id="page-mi-equipo" hidden></main>
 
-<!-- ================= SALÓN DE LA FAMA ================= -->
+<!-- ================= SALON DE LA FAMA ================= -->
 <main id="page-salon" hidden>
   <section class="t-hero hof-hero">
     <div class="wrap">
@@ -1237,12 +1237,12 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section>
-      <div class="sec-head"><div><div class="label">Un título por temporada</div><h2>Los <em>campeones</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeón</button></div>
+      <div class="sec-head"><div><div class="label">Un titulo por temporada</div><h2>Los <em>campeones</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeon</button></div>
       <div class="champs" id="hofChamps"></div>
-      <p class="hof-note">Las temporadas 1 a 3 salen de los títulos de cada coach en su perfil. Se muestra el equipo actual del coach: el nombre del equipo pudo ser otro en esa temporada.</p>
+      <p class="hof-note">Las temporadas 1 a 3 salen de los titulos de cada coach en su perfil. Se muestra el equipo actual del coach: el nombre del equipo pudo ser otro en esa temporada.</p>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">Fase regular y playoffs</div><h2>La temporada 4 en <em>números</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Fase regular y playoffs</div><h2>La temporada 4 en <em>numeros</em></h2></div></div>
       <div class="hof-g" id="hofRecords"></div>
     </section>
   </div>
@@ -1261,8 +1261,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <a href="https://www.instagram.com/ppvstagram/" target="_blank" rel="noopener" aria-label="Instagram de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5z"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg><span>Instagram</span></a>
       </div>
     </div>
-    <nav class="f-col" aria-label="Navegación del pie">
-      <h4>Navegación</h4>
+    <nav class="f-col" aria-label="Navegacion del pie">
+      <h4>Navegacion</h4>
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#standings">Standings</a></li>
@@ -1285,7 +1285,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="f-col">
       <h4>Temporada 5</h4>
       <dl>
-        <div><dt>Campeón</dt><dd id="fChamp">Por definir</dd></div>
+        <div><dt>Campeon</dt><dd id="fChamp">Por definir</dd></div>
         <div><dt>Equipos</dt><dd>18</dd></div>
         <div><dt>Fase regular</dt><dd>9 semanas</dd></div>
         <div><dt>Formato</dt><dd>Series al mejor de 3</dd></div>
@@ -1293,7 +1293,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     </div>
   </div>
   <div class="wrap f-bottom">
-    <span>© 2026 PPV Draft League. Proyecto de fans sin fines de lucro, no afiliado a Nintendo, Game Freak ni The Pokémon Company.</span>
+    <span>© 2026 PPV Draft League. Proyecto de fans sin fines de lucro, no afiliado a Nintendo, Game Freak ni The Pokemon Company.</span>
     <span>Sprites: <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokeAPI</a> · <button type="button" class="f-up" id="fUp">↑ Volver arriba</button></span>
   </div>
 </footer>
@@ -1302,7 +1302,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <div class="toast" id="toast" hidden></div>
 
 <script>
-// Datos reales de la fase regular (ppvdraftleague.com/standings). Un nombre se reemplazó por un marcador.
+// Datos reales de la fase regular (ppvdraftleague.com/standings). Un nombre se reemplazo por un marcador.
 const TEAMS=[
  {n:"Inter Di Lorenzo",c:"rojo",w:7,l:1,d:13,h:[350,320]},
  {n:"CanoLovers",c:"rojo",w:7,l:1,d:9,h:[28,10]},
@@ -1336,7 +1336,7 @@ const box=(n,cls="")=>BOX[n]?`<img class="${cls} boxi" src="${BOX_DATA[BOX[n]]||
 document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&/spr|mvp-art|boxi/.test(t.className))t.remove();},true);
 const CONF={rojo:{name:"RojoFuego",v:"var(--rojo)"},azul:{name:"VerdeHoja",v:"var(--verde)"}};
 
-const ME=12; // sesión simulada: Richampions VGC
+const ME=12; // sesion simulada: Richampions VGC
 // abreviaciones: primeras 3 consonantes; si el nombre empieza con vocal, esa vocal es la inicial (de palabras cortas como Los/La/Di solo la inicial; si se repite, se usa la siguiente consonante)
 const ABBR=["INT","CNL","CHW","CLN","VMP","BLC","MMT","NMB","CNH","LGR","MGV","LPT","RCH","GLD","BRN","PKV","WNS","BRW"];
 TEAMS.forEach((t,i)=>{t.pts=t.w*3;t.ab=ABBR[i];});
@@ -1372,10 +1372,10 @@ document.getElementById("tables").innerHTML=["rojo","azul"].map(c=>`
 
 /* bars */
 const max=MONS[0][1];
-document.getElementById("bars").innerHTML=MONS.map((m,i)=>`<div class="bar ${i===0?"top":""}"><span class="i num">${i+1}</span><span class="p">${box(m[0],"spr-s")}${m[0]}</span><span class="t"><i style="width:${m[1]/max*100}%;animation-delay:${i*.06}s"></i></span><span class="v num">${m[1]}</span></div>`).join("")+`<div class="note">Mejor K/D de la temporada: <strong style="color:var(--volt)">Ceruledge, 8.00</strong> (16 KOs, 2 caídas)</div>`;
+document.getElementById("bars").innerHTML=MONS.map((m,i)=>`<div class="bar ${i===0?"top":""}"><span class="i num">${i+1}</span><span class="p">${box(m[0],"spr-s")}${m[0]}</span><span class="t"><i style="width:${m[1]/max*100}%;animation-delay:${i*.06}s"></i></span><span class="v num">${m[1]}</span></div>`).join("")+`<div class="note">Mejor K/D de la temporada: <strong style="color:var(--volt)">Ceruledge, 8.00</strong> (16 KOs, 2 caidas)</div>`;
 
 /* teams page */
-document.getElementById("confsum").innerHTML=["rojo","azul"].map(c=>{const l=by(c)[0];return `<div class="cs" style="--c:${CONF[c].v}"><div><span class="label">Conferencia</span><b style="color:${CONF[c].v}">${CONF[c].name}</b></div><div class="lead-t"><span class="label">${by(c).length} equipos · Líder</span><div>${esc(l.n)} ${l.w}-${l.l}</div></div></div>`}).join("");
+document.getElementById("confsum").innerHTML=["rojo","azul"].map(c=>{const l=by(c)[0];return `<div class="cs" style="--c:${CONF[c].v}"><div><span class="label">Conferencia</span><b style="color:${CONF[c].v}">${CONF[c].name}</b></div><div class="lead-t"><span class="label">${by(c).length} equipos · Lider</span><div>${esc(l.n)} ${l.w}-${l.l}</div></div></div>`}).join("");
 
 let filter="all";
 const q=document.getElementById("q"),sortSel=document.getElementById("sort");
@@ -1384,7 +1384,7 @@ function card(t){
   return `<button type="button" class="card ${t.q?"":"out"} ${TEAMS.indexOf(t)===ME?"mine":""}" data-i="${TEAMS.indexOf(t)}" data-rank="${t.rank}" style="--cc:${CONF[t.c].v}" aria-label="${esc(t.n)}, ${t.w} ganados, ${t.l} perdidos">
    <div class="top">${crest(t)}<div style="min-width:0"><h3>${esc(t.n)}</h3><div class="chips"><span class="chip ab"><i>#${t.ab}</i></span><span class="chip cf"><i>${CONF[t.c].name} #${t.rank}</i></span>${TEAMS.indexOf(t)===ME?'<span class="chip me"><i>Tu equipo</i></span>':""}${t.q?`<span class="chip q"><i>Playoffs</i></span>`:`<span class="chip x"><i>Eliminado</i></span>`}</div></div></div>
    <div class="form" aria-hidden="true" title="Victorias sobre 8 semanas">${form}</div>
-   <div class="nums"><div><b class="num">${t.w}-${t.l}</b><span>Récord</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
+   <div class="nums"><div><b class="num">${t.w}-${t.l}</b><span>Record</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
   </button>`;
 }
 function renderTeams(){
@@ -1399,7 +1399,7 @@ function renderTeams(){
     if(!list.length)return "";
     return `<section style="--c:${CONF[c].v}"><div class="conf-title"><h2 style="color:${CONF[c].v}">${CONF[c].name}</h2><span class="label">${list.length} equipos</span><span class="rule"></span></div><div class="cards">${list.map(card).join("")}</div></section>`;
   }).join("");
-  document.getElementById("grid").innerHTML=html||`<div class="empty">Ningún equipo coincide con “${esc(q.value)}”. Prueba con otro nombre.</div>`;
+  document.getElementById("grid").innerHTML=html||`<div class="empty">Ningun equipo coincide con “${esc(q.value)}”. Prueba con otro nombre.</div>`;
   document.getElementById("count").textContent=`${total} de ${TEAMS.length} equipos`;
 }
 document.querySelectorAll("#page-teams .seg button").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.f;document.querySelectorAll("#page-teams .seg button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderTeams();}));
@@ -1416,7 +1416,7 @@ document.getElementById("grid").addEventListener("click",e=>{const cc=e.target.c
     <div style="display:flex;gap:18px;align-items:center">${crest(t)}<div><div class="label" style="color:${CONF[t.c].v}">${CONF[t.c].name} · #${t.rank}</div><h2>${esc(t.n)}</h2></div></div>
     <div class="dstats"><div><b class="num">${t.w}</b><span>W</span></div><div><b class="num">${t.l}</b><span>L</span></div><div><b class="num">${t.d>0?"+":""}${t.d}</b><span>Diff</span></div><div><b class="num">${t.pts}</b><span>Pts</span></div></div>
     <div><div class="label" style="margin-bottom:10px">Roster drafteado</div><div class="roster">${Array.from({length:12},(_,i)=>`<div>Pick ${i+1}</div>`).join("")}</div></div>
-    <p style="color:var(--mute);margin:0;font-size:.9rem">En el sitio real, aquí van el coach, los sprites del roster y los resultados semana a semana.</p>
+    <p style="color:var(--mute);margin:0;font-size:.9rem">En el sitio real, aqui van el coach, los sprites del roster y los resultados semana a semana.</p>
   </div>`;
   drawer.hidden=false;document.getElementById("closeD").focus();
 });
@@ -1437,7 +1437,7 @@ function srow(t,cut){
   const pj=t.w+t.l,pct=Math.round(t.w/pj*100);
   return `<tr class="${t.q?"in":"out"}${cut&&t.rank===5?" cut":""}${t.n===TEAMS[ME].n?" mine":""}" style="--c:${CONF[t.c].v}">
    <td class="pos l">${sView==="conf"?t.rank:t.gr}</td>
-   <td class="l"><span class="tm">${crest(t)}<a class="nm" href="#team-${slug(t)}"><span class="full">${esc(t.n)}</span><span class="short">#${t.ab}</span></a>${t.n===TEAMS[ME].n?'<span class="you">Tú</span>':""}${sView==="all"?`<span class="chip cf" style="--cc:${CONF[t.c].v}"><i>${CONF[t.c].name} #${t.rank}</i></span>`:""}</span></td>
+   <td class="l"><span class="tm">${crest(t)}<a class="nm" href="#team-${slug(t)}"><span class="full">${esc(t.n)}</span><span class="short">#${t.ab}</span></a>${t.n===TEAMS[ME].n?'<span class="you">Tu</span>':""}${sView==="all"?`<span class="chip cf" style="--cc:${CONF[t.c].v}"><i>${CONF[t.c].name} #${t.rank}</i></span>`:""}</span></td>
    <td>${pj}</td><td>${t.w}</td><td>${t.l}</td>
    <td class="${t.d>0?"up":""}">${sign(t.d)}</td>
    <td><span class="wp" aria-hidden="true"><i style="width:${pct}%"></i></span><span class="wpn">${pct}%</span></td>
@@ -1470,17 +1470,17 @@ document.getElementById("toMons").addEventListener("click",()=>document.getEleme
 
 const bestDiff=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
 document.getElementById("leaders").innerHTML=[
-  ["Líder RojoFuego",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
-  ["Líder VerdeHoja",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
+  ["Lider RojoFuego",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
+  ["Lider VerdeHoja",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
   ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--good)"]
 ].map(([lab,t,val,c])=>`<div class="ld" style="--c:${c}">${crest(t)}<div><span class="label">${lab}</span><strong>${esc(t.n)}</strong></div><b class="num">${val}</b></div>`).join("");
 
 const topBy=k=>MONS_FULL.slice().sort((a,b)=>b[k]-a[k])[0];
 const tk_=topBy("k"),tkd=topBy("kd"),tg=topBy("g");
 document.getElementById("mtiles").innerHTML=[
-  ["Más KOs",tk_.n,tk_.k,"var(--volt)"],
+  ["Mas KOs",tk_.n,tk_.k,"var(--volt)"],
   ["Mejor K/D",tkd.n,tkd.kd.toFixed(2),"var(--good)"],
-  ["Más partidas",tg.n,tg.g,"var(--verde)"]
+  ["Mas partidas",tg.n,tg.g,"var(--verde)"]
 ].map(([lab,n,v,c])=>`<div class="mt" style="--c:${c}"><div><span class="label">${lab}</span><strong>${n}</strong></div><b class="num">${v}</b></div>`).join("");
 
 const MDEF={n:1,g:-1,k:-1,d:1,kd:-1};
@@ -1489,7 +1489,7 @@ const maxK=Math.max(...MONS_FULL.map(m=>m.k)),bestKd=tkd.kd;
 function renderMons(){
   const mth=(k,l,c="")=>`<th class="${c}" aria-sort="${mKey===k?(mDir===1?"ascending":"descending"):"none"}"><button type="button" data-mk="${k}">${l}</button></th>`;
   const list=sortBy(MONS_FULL,mKey,mDir,(a,b)=>b.k-a.k||a.n.localeCompare(b.n));
-  document.getElementById("mtable").innerHTML=`<thead><tr><th class="l">#</th>${mth("n","Pokémon","l")}${mth("k","Kills","l")}${mth("d","Deaths")}${mth("g","Partidas")}${mth("kd","K/D")}</tr></thead><tbody>${list.map((m,i)=>`
+  document.getElementById("mtable").innerHTML=`<thead><tr><th class="l">#</th>${mth("n","Pokemon","l")}${mth("k","Kills","l")}${mth("d","Deaths")}${mth("g","Partidas")}${mth("kd","K/D")}</tr></thead><tbody>${list.map((m,i)=>`
    <tr class="in" style="--c:var(--volt)"><td class="pos l">${i+1}</td><td class="l"><span class="nm">${box(m.n,"spr-s")}${m.n}</span></td>
    <td class="l"><span class="kc"><span class="kb" aria-hidden="true"><i style="width:${m.k/maxK*100}%"></i></span><b>${m.k}</b></span></td>
    <td>${m.d}</td><td>${m.g}</td><td class="${m.kd===bestKd?"best":""}">${m.kd.toFixed(2)}</td></tr>`).join("")}</tbody>`;
@@ -1570,20 +1570,20 @@ mteam.addEventListener("change",()=>{mTeam=mteam.value;renderMatches();});
 document.getElementById("mbody").addEventListener("click",e=>{if(e.target.id==="mclear"){mTeam="";mteam.value="";renderMatches();}});
 renderMatches();
 
-/* team profiles — de ppvdraftleague.com/teams: [coach, título, puntos de draft, movimientos FA, favorito, roster: [pokémon, costo, tipos, habilidades, obtenido, partidas, kills, deaths]] */
-const PROFILES=[["Manuel Guillen","Season 1 y 3 Champ","57/60",0,"Dragapult",[["Gardevoir",13,"psychic/fairy","Synchronize / Trace / Telepathy","Draft",11,8,5],["Maushold",10,"normal","Friend Guard / Cheek Pouch / Technician","Draft",15,0,9],["Bellibolt",2,"electric","Electromorphosis / Static / Damp","Draft",4,8,1],["Hydreigon",7,"dark/dragon","Levitate","Draft",8,12,3],["Mamoswine",8,"ice/ground","Oblivious / Snow Cloak / Thick Fat","Draft",5,4,2],["Ceruledge",5,"fire/ghost","Flash Fire / Weak Armor","Draft",9,16,2],["Paldean Tauros Aqua",6,"fighting/water","Intimidate / Anger Point / Cud Chew","Draft",7,6,3],["Araquanid",6,"water/bug","Water Bubble / Water Absorb","Draft",5,9,1]]],["Héctor López","Amo del reglamento","57/60",0,"Mantine",[["Volcarona",13,"bug/fire","Flame Body / Swarm","Draft",11,11,6],["Sneasler",13,"fighting/poison","Pressure / Poison Touch","Draft",11,5,10],["Rotom-Wash",9,"electric/water","Levitate","Draft",11,10,5],["Runerigus",3,"ground/ghost","Wandering Spirit","Draft",1,0,1],["Morpeko",2,"electric/dark","Hunger Switch","Draft",11,8,7],["Wyrdeer",6,"normal/psychic","Intimidate / Frisk / Sap Sipper","Draft",3,0,1],["Skarmory",5,"steel/flying","Keen Eye / Sturdy / Weak Armor","Draft",6,4,5],["Meowstic Female",6,"psychic","Keen Eye / Infiltrator / Competitive","Draft",7,3,7]]],["Luis Gerardo","-","60/60",0,"Totodile",[["Gallade",11,"psychic/fighting","Steadfast / Justified","Draft",9,3,8],["Garchomp",13,"dragon/ground","Sand Veil / Rough Skin","Draft",13,16,7],["Pidgeot",5,"normal/flying","Keen Eye / Tangled Feet / Big Pecks","Draft",0,0,0],["Hisuian Typhlosion",10,"fire/ghost","Blaze / Flash Fire","Draft",12,12,8],["Whimsicott",15,"grass/fairy","Prankster / Infiltrator / Chlorophyll","Draft",11,1,10],["Basculegion-Female",6,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",7,4,6]]],["David Rojas","-","60/60",0,"Scizor",[["Floette",15,"fairy","Flower Veil / Symbiosis","Draft",15,15,7],["Talonflame",10,"fire/flying","Flame Body / Gale Wings","Draft",14,3,12],["Palafin",10,"water","Zero to Hero","Draft",4,7,1],["Kommo-o",6,"dragon/fighting","Bulletproof / Soundproof / Overcoat","Draft",12,12,7],["Hisuian Zoroark",9,"normal/ghost","Illusion","Draft",12,8,11],["Alolan Raichu",4,"electric/psychic","Surge Surfer","Draft",3,1,1],["Salazzle",5,"poison/fire","Corrosion / Oblivious","Draft",1,0,1],["Ariados",1,"bug/poison","Swarm / Insomnia / Sniper","Draft",3,0,3]]],["Armando Padilla","King of Horses","55/60",0,"Rillaboom",[["Gengar",15,"ghost/poison","Cursed Body","Draft",8,14,4],["Tsareena",6,"grass","Leaf Guard / Queenly Majesty / Sweet Veil","Draft",6,1,4],["Chimecho",5,"psychic","Levitate","Draft",3,2,0],["Klefki",7,"steel/fairy","Prankster / Magician","Draft",10,1,5],["Mudsdale",4,"ground","Own Tempo / Stamina / Inner Focus","Draft",13,16,8],["Infernape",5,"fire/fighting","Blaze / Iron Fist","Draft",5,0,3],["Dragapult",10,"dragon/ghost","Clear Body / Infiltrator / Cursed Body","Draft",1,0,1],["Toucannon",3,"normal/flying","Keen Eye / Skill Link / Sheer Force","Draft",4,5,3]]],["Juan Pablo","-","57/60",0,"-",[["Gyarados",11,"water/flying","Intimidate / Moxie","Draft",12,16,6],["Greninja",9,"water/dark","Torrent / Protean","Draft",7,4,7],["Hisuian Goodra",7,"steel/dragon","Sap Sipper / Overcoat / Gooey","Draft",7,3,6],["Raichu",5,"electric","Static / Lightning rod","Draft",6,2,4],["Galarian Slowking",7,"poison/psychic","Curious Medicine / Own Tempo / Regenerator","Draft",5,1,4],["Vanilluxe",5,"ice","Ice Body / Snow Warning / Weak Armor","Draft",2,3,1],["Starmie",11,"water/psychic","Illuminate / Natural Cure / Analytic","Draft",6,6,4],["Gliscor",2,"ground/flying","Hyper Cutter / Sand Veil / Poison Heal","Draft",8,5,4]]],["Luis Morgan","-","55/60",0,"Ninetales",[["Kingambit",13,"dark/steel","Defiant / Supreme Overlord / Pressure","Draft",6,6,4],["Golurk",7,"ground/ghost","Iron Fist / Klutz / No Guard","Draft",8,6,6],["Paldean Tauros Blaze",6,"fighting/fire","Intimidate / Anger Point / Cud Chew","Draft",3,2,3],["Rampardos",2,"rock","Mold Breaker / Sheer Force","Draft",6,1,4],["Slowking",6,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",3,1,3],["Hydrapple",5,"grass/dragon","Supersweet Syrup / Regenerator / Sticky Hold","Draft",1,1,1],["Rotom-Heat",8,"electric/fire","Levitate","Draft",4,2,3],["Hatterene",8,"psychic/fairy","Healer / Anticipation / Magic Bounce","Draft",4,1,2]]],["Juan Chavez","Tilt Diff","55/60",0,"Cloyster",[["Charizard",15,"fire/flying","Blaze / Solar Power","Draft",9,3,8],["Aegislash",11,"steel/ghost","Stance Change","Draft",9,2,9],["Banette",9,"ghost","Insomnia / Frisk / Cursed Body","Draft",3,2,3],["Chandelure",9,"ghost/fire","Flash Fire / Flame Body / Infiltrator","Draft",7,1,6],["Venusaur",11,"grass/poison","Overgrow / Chlorophyll","Draft",7,2,6]]],["Gustavo Herrera","Canolo Hater","56/60",0,"Rhyperior",[["Kangaskhan",13,"normal","Early Bird / Scrappy / Inner Focus","Draft",9,6,8],["Reuniclus",5,"psychic","Overcoat / Magic Guard / Regenerator","Draft",2,0,2],["Mr. Rime",2,"ice/psychic","Tangled Feet / Screen Cleaner / Ice Body","Draft",4,0,4],["Archaludon",11,"steel/dragon","Stamina / Sturdy / Stalwart","Draft",5,4,4],["Meganium",10,"grass","Overgrow / Leaf Guard","Draft",3,3,3],["Sableye",7,"dark/ghost","Keen Eye / Stall / Prankster","Draft",9,1,6],["Vivillon",8,"bug/flying","Shield Dust / Compound Eyes / Friend Guard","Draft",6,3,5]]],["Luis Carlos","Nintendo Hater","60/60",0,"Blastoise",[["Tyranitar",15,"rock/dark","Sand Stream / Unnerve","Draft",15,12,8],["Primarina",10,"water/fairy","Torrent / Liquid Voice","Draft",19,22,9],["Glimmora",11,"rock/poison","Toxic Debris / Corrosion","Draft",10,6,8],["Scizor",9,"bug/steel","Swarm / Technician / Light Metal","Draft",9,6,2],["Oranguru",7,"normal/psychic","Inner Focus / Telepathy / Symbiosis","Draft",9,3,4],["Armarouge",6,"fire/psychic","Flash Fire / Weak Armor","Draft",6,5,0],["Rotom-Fan",2,"electric/flying","Levitate","Draft",7,7,4]]],["Eduardo Aviles","Season 2 Champ","58/60",0,"Charizard",[["Dragonite",13,"dragon/flying","Inner Focus / Multiscale","Draft",3,1,3],["Politoed",9,"water","Water Absorb / Damp / Drizzle","Draft",7,3,3],["Jolteon",3,"electric","Volt Absorb / Quick Feet","Draft",3,0,2],["Kleavor",5,"bug/rock","Swarm / Sheer Force / Steadfast","Draft",9,8,6],["Sylveon",8,"fairy","Cute Charm / Pixilate","Draft",13,17,5],["Scovillain",6,"grass/fire","Chlorophyll / Insomnia / Moody","Draft",15,21,8],["Conkeldurr",7,"fighting","Guts / Sheer Force / Iron Fist","Draft",2,3,2],["Galarian Slowbro",7,"poison/psychic","Quick Draw / Own Tempo / Regenerator","Draft",9,8,5]]],["Jesús Patrón","Campeón Apócrifo","59/60",0,"Typhlosion",[["Alolan Ninetales",10,"ice/fairy","Snow Cloak / Snow Warning","Draft",1,0,1],["Alakazam",7,"psychic","Synchronize / Inner Focus / Magic Guard","Draft",11,20,4],["Meowstic Male",7,"psychic","Keen Eye / Infiltrator / Prankster","Draft",10,7,6],["Snorlax",6,"normal","Immunity / Thick Fat / Gluttony","Draft",9,10,5],["Corviknight",8,"flying/steel","Pressure / Unnerve / Mirror Armor","Draft",7,6,4],["Hisuian Samurott",4,"water/dark","Torrent / Shell Armor","Draft",7,3,5],["Hawlucha",7,"fighting/flying","Limber / Unburden / Mold Breaker","Draft",5,5,3],["Arcanine",10,"fire","Intimidate / Flash Fire / Justified","Draft",7,8,5]]],["Rick","Point Prover","60/60",0,"Rhyhorn",[["Pelipper",13,"water/flying","Keen Eye / Drizzle / Rain Dish","Draft",17,14,7],["Manectric",9,"electric","Static / Lightning Rod / Minus","Draft",9,9,6],["Blastoise",9,"water","Torrent / Rain Dish","Draft",18,24,8],["Rhyperior",5,"ground/rock","Lightning Rod / Solid Rock / Reckless","Draft",14,7,11],["Mimikyu",8,"ghost/fairy","Disguise","Draft",5,4,4],["Emboar",5,"fire/fighting","Blaze / Reckless","Draft",5,4,4],["Umbreon",6,"dark","Synchronize / Inner Focus","Draft",4,1,2],["Chesnaught",5,"grass/fighting","Overgrow / Bulletproof","Draft",4,3,1]]],["Eduardo Acuesta","-","55/60",0,"Wobbuffet",[["Basculegion-Male",10,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",14,15,7],["Delphox",9,"fire/psychic","Blaze / Magician","Draft",9,13,4],["Clefable",11,"fairy","Cute Charm / Magic Guard / Unaware","Draft",12,1,11],["Krookodile",5,"ground/dark","Intimidate / Moxie / Anger Point","Draft",4,2,3],["Lopunny",9,"normal","Cute Charm / Klutz / Limber","Draft",5,6,3],["Toxicroak",5,"poison/fighting","Anticipation / Dry Skin / Poison Touch","Draft",5,7,4],["Heliolisk",2,"electric/normal","Dry Skin / Sand Veil / Solar Power","Draft",5,3,2],["Toxapex",4,"poison/water","Merciless / Limber / Regenerator","Draft",1,0,0]]],["Brandon Aviles","PPV CMM","57/60",0,"Dialga",[["Aerodactyl",11,"rock/flying","Rock Head / Pressure / Unnerve","Draft",14,5,10],["Milotic",9,"water","Marvel Scale / Competitive / Cute Charm","Draft",14,8,9],["Ditto",7,"normal","Limber / Imposter","Draft",15,17,9],["Empoleon",7,"water/steel","Torrent / Defiant","Draft",7,4,3],["Pikachu",3,"electric","Static / Lightning rod","Draft",6,0,5],["Liepard",7,"dark","Limber / Unburden / Prankster","Draft",11,5,11],["Rotom-Mow",5,"electric/grass","Levitate","Draft",4,2,4],["Meowscarada",8,"grass/dark","Overgrow / Protean","Draft",0,0,0]]],["Kevin Valencia","-","57/60",0,"Dragonite",[["Incineroar",15,"fire/dark","Blaze / Intimidate","Draft",6,2,6],["Excadrill",11,"ground/steel","Sand Rush / Sand Force / Mold Breaker","Draft",8,7,7],["Torkoal",9,"fire","White Smoke / Drought / Shell Armor","Draft",9,2,8],["Skeledirge",5,"fire/ghost","Blaze / Unaware","Draft",0,0,0],["Tinkaton",5,"fairy/steel","Mold Breaker / Own Tempo / Pickpocket","Draft",3,0,2],["Noivern",5,"flying/dragon","Frisk / Infiltrator / Telepathy","Draft",4,0,4],["Hippowdon",7,"ground","Sand Stream / Sand Force","Draft",6,1,5]]],["Jorge Wright","Leyenda sin cara","60/60",0,"-",[["Sinistcha",13,"grass/ghost","Hospitality / Heatproof","Draft",10,5,8],["Farigiraf",11,"normal/psychic","Cud Chew / Armor Tail / Sap Sipper","Draft",12,8,11],["Drampa",9,"normal/dragon","Berserk / Sap Sipper / Cloud Nine","Draft",5,2,5],["Heracross",9,"bug/fighting","Swarm / Guts / Moxie","Draft",4,1,4],["Slowbro",9,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",8,8,4],["Aggron",7,"steel/rock","Sturdy / Rock Head / Heavy Metal","Draft",11,8,8],["Aurorus",2,"rock/ice","Refrigerate / Snow Warning","Draft",5,2,4]]],["Alan Pico","Vulpina suprema","56/60",0,"Rowlet",[["Froslass",11,"ice/ghost","Snow Cloak / Cursed Body","Draft",9,2,8],["Hisuian Arcanine",8,"fire/rock","Intimidate / Flash Fire / Justified","Draft",11,5,11],["Rotom-Frost",4,"electric/ice","Levitate","Draft",7,2,7],["Orthworm",7,"steel","Earth Eater / Sand Veil","Draft",12,4,12],["Altaria",7,"dragon/flying","Natural Cure / Cloud Nine","Draft",7,0,7],["Azumarill",7,"water/fairy","Thick Fat / Huge Power / Sap Sipper","Draft",11,3,10],["Garganacl",7,"rock","Purifying Salt / Sturdy / Clear Body","Draft",7,5,6],["Espathra",5,"psychic","Opportunist / Frisk / Speed Boost","Draft",4,0,3]]]];
-// Champions ID por equipo (índice en TEAMS); los que no tienen se muestran como "Por registrar"
+/* team profiles — de ppvdraftleague.com/teams: [coach, titulo, puntos de draft, movimientos FA, favorito, roster: [pokemon, costo, tipos, habilidades, obtenido, partidas, kills, deaths]] */
+const PROFILES=[["Manuel Guillen","Season 1 y 3 Champ","57/60",0,"Dragapult",[["Gardevoir",13,"psychic/fairy","Synchronize / Trace / Telepathy","Draft",11,8,5],["Maushold",10,"normal","Friend Guard / Cheek Pouch / Technician","Draft",15,0,9],["Bellibolt",2,"electric","Electromorphosis / Static / Damp","Draft",4,8,1],["Hydreigon",7,"dark/dragon","Levitate","Draft",8,12,3],["Mamoswine",8,"ice/ground","Oblivious / Snow Cloak / Thick Fat","Draft",5,4,2],["Ceruledge",5,"fire/ghost","Flash Fire / Weak Armor","Draft",9,16,2],["Paldean Tauros Aqua",6,"fighting/water","Intimidate / Anger Point / Cud Chew","Draft",7,6,3],["Araquanid",6,"water/bug","Water Bubble / Water Absorb","Draft",5,9,1]]],["Hector Lopez","Amo del reglamento","57/60",0,"Mantine",[["Volcarona",13,"bug/fire","Flame Body / Swarm","Draft",11,11,6],["Sneasler",13,"fighting/poison","Pressure / Poison Touch","Draft",11,5,10],["Rotom-Wash",9,"electric/water","Levitate","Draft",11,10,5],["Runerigus",3,"ground/ghost","Wandering Spirit","Draft",1,0,1],["Morpeko",2,"electric/dark","Hunger Switch","Draft",11,8,7],["Wyrdeer",6,"normal/psychic","Intimidate / Frisk / Sap Sipper","Draft",3,0,1],["Skarmory",5,"steel/flying","Keen Eye / Sturdy / Weak Armor","Draft",6,4,5],["Meowstic Female",6,"psychic","Keen Eye / Infiltrator / Competitive","Draft",7,3,7]]],["Luis Gerardo","-","60/60",0,"Totodile",[["Gallade",11,"psychic/fighting","Steadfast / Justified","Draft",9,3,8],["Garchomp",13,"dragon/ground","Sand Veil / Rough Skin","Draft",13,16,7],["Pidgeot",5,"normal/flying","Keen Eye / Tangled Feet / Big Pecks","Draft",0,0,0],["Hisuian Typhlosion",10,"fire/ghost","Blaze / Flash Fire","Draft",12,12,8],["Whimsicott",15,"grass/fairy","Prankster / Infiltrator / Chlorophyll","Draft",11,1,10],["Basculegion-Female",6,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",7,4,6]]],["David Rojas","-","60/60",0,"Scizor",[["Floette",15,"fairy","Flower Veil / Symbiosis","Draft",15,15,7],["Talonflame",10,"fire/flying","Flame Body / Gale Wings","Draft",14,3,12],["Palafin",10,"water","Zero to Hero","Draft",4,7,1],["Kommo-o",6,"dragon/fighting","Bulletproof / Soundproof / Overcoat","Draft",12,12,7],["Hisuian Zoroark",9,"normal/ghost","Illusion","Draft",12,8,11],["Alolan Raichu",4,"electric/psychic","Surge Surfer","Draft",3,1,1],["Salazzle",5,"poison/fire","Corrosion / Oblivious","Draft",1,0,1],["Ariados",1,"bug/poison","Swarm / Insomnia / Sniper","Draft",3,0,3]]],["Armando Padilla","King of Horses","55/60",0,"Rillaboom",[["Gengar",15,"ghost/poison","Cursed Body","Draft",8,14,4],["Tsareena",6,"grass","Leaf Guard / Queenly Majesty / Sweet Veil","Draft",6,1,4],["Chimecho",5,"psychic","Levitate","Draft",3,2,0],["Klefki",7,"steel/fairy","Prankster / Magician","Draft",10,1,5],["Mudsdale",4,"ground","Own Tempo / Stamina / Inner Focus","Draft",13,16,8],["Infernape",5,"fire/fighting","Blaze / Iron Fist","Draft",5,0,3],["Dragapult",10,"dragon/ghost","Clear Body / Infiltrator / Cursed Body","Draft",1,0,1],["Toucannon",3,"normal/flying","Keen Eye / Skill Link / Sheer Force","Draft",4,5,3]]],["Juan Pablo","-","57/60",0,"-",[["Gyarados",11,"water/flying","Intimidate / Moxie","Draft",12,16,6],["Greninja",9,"water/dark","Torrent / Protean","Draft",7,4,7],["Hisuian Goodra",7,"steel/dragon","Sap Sipper / Overcoat / Gooey","Draft",7,3,6],["Raichu",5,"electric","Static / Lightning rod","Draft",6,2,4],["Galarian Slowking",7,"poison/psychic","Curious Medicine / Own Tempo / Regenerator","Draft",5,1,4],["Vanilluxe",5,"ice","Ice Body / Snow Warning / Weak Armor","Draft",2,3,1],["Starmie",11,"water/psychic","Illuminate / Natural Cure / Analytic","Draft",6,6,4],["Gliscor",2,"ground/flying","Hyper Cutter / Sand Veil / Poison Heal","Draft",8,5,4]]],["Luis Morgan","-","55/60",0,"Ninetales",[["Kingambit",13,"dark/steel","Defiant / Supreme Overlord / Pressure","Draft",6,6,4],["Golurk",7,"ground/ghost","Iron Fist / Klutz / No Guard","Draft",8,6,6],["Paldean Tauros Blaze",6,"fighting/fire","Intimidate / Anger Point / Cud Chew","Draft",3,2,3],["Rampardos",2,"rock","Mold Breaker / Sheer Force","Draft",6,1,4],["Slowking",6,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",3,1,3],["Hydrapple",5,"grass/dragon","Supersweet Syrup / Regenerator / Sticky Hold","Draft",1,1,1],["Rotom-Heat",8,"electric/fire","Levitate","Draft",4,2,3],["Hatterene",8,"psychic/fairy","Healer / Anticipation / Magic Bounce","Draft",4,1,2]]],["Juan Chavez","Tilt Diff","55/60",0,"Cloyster",[["Charizard",15,"fire/flying","Blaze / Solar Power","Draft",9,3,8],["Aegislash",11,"steel/ghost","Stance Change","Draft",9,2,9],["Banette",9,"ghost","Insomnia / Frisk / Cursed Body","Draft",3,2,3],["Chandelure",9,"ghost/fire","Flash Fire / Flame Body / Infiltrator","Draft",7,1,6],["Venusaur",11,"grass/poison","Overgrow / Chlorophyll","Draft",7,2,6]]],["Gustavo Herrera","Canolo Hater","56/60",0,"Rhyperior",[["Kangaskhan",13,"normal","Early Bird / Scrappy / Inner Focus","Draft",9,6,8],["Reuniclus",5,"psychic","Overcoat / Magic Guard / Regenerator","Draft",2,0,2],["Mr. Rime",2,"ice/psychic","Tangled Feet / Screen Cleaner / Ice Body","Draft",4,0,4],["Archaludon",11,"steel/dragon","Stamina / Sturdy / Stalwart","Draft",5,4,4],["Meganium",10,"grass","Overgrow / Leaf Guard","Draft",3,3,3],["Sableye",7,"dark/ghost","Keen Eye / Stall / Prankster","Draft",9,1,6],["Vivillon",8,"bug/flying","Shield Dust / Compound Eyes / Friend Guard","Draft",6,3,5]]],["Luis Carlos","Nintendo Hater","60/60",0,"Blastoise",[["Tyranitar",15,"rock/dark","Sand Stream / Unnerve","Draft",15,12,8],["Primarina",10,"water/fairy","Torrent / Liquid Voice","Draft",19,22,9],["Glimmora",11,"rock/poison","Toxic Debris / Corrosion","Draft",10,6,8],["Scizor",9,"bug/steel","Swarm / Technician / Light Metal","Draft",9,6,2],["Oranguru",7,"normal/psychic","Inner Focus / Telepathy / Symbiosis","Draft",9,3,4],["Armarouge",6,"fire/psychic","Flash Fire / Weak Armor","Draft",6,5,0],["Rotom-Fan",2,"electric/flying","Levitate","Draft",7,7,4]]],["Eduardo Aviles","Season 2 Champ","58/60",0,"Charizard",[["Dragonite",13,"dragon/flying","Inner Focus / Multiscale","Draft",3,1,3],["Politoed",9,"water","Water Absorb / Damp / Drizzle","Draft",7,3,3],["Jolteon",3,"electric","Volt Absorb / Quick Feet","Draft",3,0,2],["Kleavor",5,"bug/rock","Swarm / Sheer Force / Steadfast","Draft",9,8,6],["Sylveon",8,"fairy","Cute Charm / Pixilate","Draft",13,17,5],["Scovillain",6,"grass/fire","Chlorophyll / Insomnia / Moody","Draft",15,21,8],["Conkeldurr",7,"fighting","Guts / Sheer Force / Iron Fist","Draft",2,3,2],["Galarian Slowbro",7,"poison/psychic","Quick Draw / Own Tempo / Regenerator","Draft",9,8,5]]],["Jesus Patron","Campeon Apocrifo","59/60",0,"Typhlosion",[["Alolan Ninetales",10,"ice/fairy","Snow Cloak / Snow Warning","Draft",1,0,1],["Alakazam",7,"psychic","Synchronize / Inner Focus / Magic Guard","Draft",11,20,4],["Meowstic Male",7,"psychic","Keen Eye / Infiltrator / Prankster","Draft",10,7,6],["Snorlax",6,"normal","Immunity / Thick Fat / Gluttony","Draft",9,10,5],["Corviknight",8,"flying/steel","Pressure / Unnerve / Mirror Armor","Draft",7,6,4],["Hisuian Samurott",4,"water/dark","Torrent / Shell Armor","Draft",7,3,5],["Hawlucha",7,"fighting/flying","Limber / Unburden / Mold Breaker","Draft",5,5,3],["Arcanine",10,"fire","Intimidate / Flash Fire / Justified","Draft",7,8,5]]],["Rick","Point Prover","60/60",0,"Rhyhorn",[["Pelipper",13,"water/flying","Keen Eye / Drizzle / Rain Dish","Draft",17,14,7],["Manectric",9,"electric","Static / Lightning Rod / Minus","Draft",9,9,6],["Blastoise",9,"water","Torrent / Rain Dish","Draft",18,24,8],["Rhyperior",5,"ground/rock","Lightning Rod / Solid Rock / Reckless","Draft",14,7,11],["Mimikyu",8,"ghost/fairy","Disguise","Draft",5,4,4],["Emboar",5,"fire/fighting","Blaze / Reckless","Draft",5,4,4],["Umbreon",6,"dark","Synchronize / Inner Focus","Draft",4,1,2],["Chesnaught",5,"grass/fighting","Overgrow / Bulletproof","Draft",4,3,1]]],["Eduardo Acuesta","-","55/60",0,"Wobbuffet",[["Basculegion-Male",10,"water/ghost","Rattled / Adaptability / Mold Breaker","Draft",14,15,7],["Delphox",9,"fire/psychic","Blaze / Magician","Draft",9,13,4],["Clefable",11,"fairy","Cute Charm / Magic Guard / Unaware","Draft",12,1,11],["Krookodile",5,"ground/dark","Intimidate / Moxie / Anger Point","Draft",4,2,3],["Lopunny",9,"normal","Cute Charm / Klutz / Limber","Draft",5,6,3],["Toxicroak",5,"poison/fighting","Anticipation / Dry Skin / Poison Touch","Draft",5,7,4],["Heliolisk",2,"electric/normal","Dry Skin / Sand Veil / Solar Power","Draft",5,3,2],["Toxapex",4,"poison/water","Merciless / Limber / Regenerator","Draft",1,0,0]]],["Brandon Aviles","PPV CMM","57/60",0,"Dialga",[["Aerodactyl",11,"rock/flying","Rock Head / Pressure / Unnerve","Draft",14,5,10],["Milotic",9,"water","Marvel Scale / Competitive / Cute Charm","Draft",14,8,9],["Ditto",7,"normal","Limber / Imposter","Draft",15,17,9],["Empoleon",7,"water/steel","Torrent / Defiant","Draft",7,4,3],["Pikachu",3,"electric","Static / Lightning rod","Draft",6,0,5],["Liepard",7,"dark","Limber / Unburden / Prankster","Draft",11,5,11],["Rotom-Mow",5,"electric/grass","Levitate","Draft",4,2,4],["Meowscarada",8,"grass/dark","Overgrow / Protean","Draft",0,0,0]]],["Kevin Valencia","-","57/60",0,"Dragonite",[["Incineroar",15,"fire/dark","Blaze / Intimidate","Draft",6,2,6],["Excadrill",11,"ground/steel","Sand Rush / Sand Force / Mold Breaker","Draft",8,7,7],["Torkoal",9,"fire","White Smoke / Drought / Shell Armor","Draft",9,2,8],["Skeledirge",5,"fire/ghost","Blaze / Unaware","Draft",0,0,0],["Tinkaton",5,"fairy/steel","Mold Breaker / Own Tempo / Pickpocket","Draft",3,0,2],["Noivern",5,"flying/dragon","Frisk / Infiltrator / Telepathy","Draft",4,0,4],["Hippowdon",7,"ground","Sand Stream / Sand Force","Draft",6,1,5]]],["Jorge Wright","Leyenda sin cara","60/60",0,"-",[["Sinistcha",13,"grass/ghost","Hospitality / Heatproof","Draft",10,5,8],["Farigiraf",11,"normal/psychic","Cud Chew / Armor Tail / Sap Sipper","Draft",12,8,11],["Drampa",9,"normal/dragon","Berserk / Sap Sipper / Cloud Nine","Draft",5,2,5],["Heracross",9,"bug/fighting","Swarm / Guts / Moxie","Draft",4,1,4],["Slowbro",9,"water/psychic","Oblivious / Own Tempo / Regenerator","Draft",8,8,4],["Aggron",7,"steel/rock","Sturdy / Rock Head / Heavy Metal","Draft",11,8,8],["Aurorus",2,"rock/ice","Refrigerate / Snow Warning","Draft",5,2,4]]],["Alan Pico","Vulpina suprema","56/60",0,"Rowlet",[["Froslass",11,"ice/ghost","Snow Cloak / Cursed Body","Draft",9,2,8],["Hisuian Arcanine",8,"fire/rock","Intimidate / Flash Fire / Justified","Draft",11,5,11],["Rotom-Frost",4,"electric/ice","Levitate","Draft",7,2,7],["Orthworm",7,"steel","Earth Eater / Sand Veil","Draft",12,4,12],["Altaria",7,"dragon/flying","Natural Cure / Cloud Nine","Draft",7,0,7],["Azumarill",7,"water/fairy","Thick Fat / Huge Power / Sap Sipper","Draft",11,3,10],["Garganacl",7,"rock","Purifying Salt / Sturdy / Clear Body","Draft",7,5,6],["Espathra",5,"psychic","Opportunist / Frisk / Speed Boost","Draft",4,0,3]]]];
+// Champions ID por equipo (indice en TEAMS); los que no tienen se muestran como "Por registrar"
 const CHAMPIONS_ID={12:"677893762316"};
 const fmtCid=id=>id.replace(/(\d{4})(?=\d)/g,"$1 ");
-const TYPE={normal:["Normal","#A8A77A"],fire:["Fuego","#EE8130"],water:["Agua","#6390F0"],electric:["Eléctrico","#F7D02C"],grass:["Planta","#7AC74C"],ice:["Hielo","#96D9D6"],fighting:["Lucha","#D04A44"],poison:["Veneno","#B159AF"],ground:["Tierra","#E2BF65"],flying:["Volador","#A98FF3"],psychic:["Psíquico","#F95587"],bug:["Bicho","#A6B91A"],rock:["Roca","#B6A136"],ghost:["Fantasma","#8C6DB8"],dragon:["Dragón","#8A5CFF"],dark:["Siniestro","#9A7C68"],steel:["Acero","#B7B7CE"],fairy:["Hada","#E39BC0"]};
+const TYPE={normal:["Normal","#A8A77A"],fire:["Fuego","#EE8130"],water:["Agua","#6390F0"],electric:["Electrico","#F7D02C"],grass:["Planta","#7AC74C"],ice:["Hielo","#96D9D6"],fighting:["Lucha","#D04A44"],poison:["Veneno","#B159AF"],ground:["Tierra","#E2BF65"],flying:["Volador","#A98FF3"],psychic:["Psiquico","#F95587"],bug:["Bicho","#A6B91A"],rock:["Roca","#B6A136"],ghost:["Fantasma","#8C6DB8"],dragon:["Dragon","#8A5CFF"],dark:["Siniestro","#9A7C68"],steel:["Acero","#B7B7CE"],fairy:["Hada","#E39BC0"]};
 const PROFILE_ORDER=["rojo","azul"].flatMap(c=>TEAMS.map((t,i)=>[t,i]).filter(([t])=>t.c===c).sort((a,b)=>a[0].rank-b[0].rank).map(([,i])=>i));
 function seriesFor(ti){
   return MATCHES.filter(m=>m.a===ti||m.b===ti).sort((x,y)=>x.w-y.w)
     .map(m=>m.a===ti?m:{...m,a:m.b,b:m.a,ga:m.gb,gb:m.ga,seq:[...m.seq].map(x=>x==="a"?"b":"a").join("")});
 }
-/* tabla de tipos: multiplicador de daño de cada tipo atacante contra cada Pokémon (solo por tipos, sin habilidades) */
+/* tabla de tipos: multiplicador de daño de cada tipo atacante contra cada Pokemon (solo por tipos, sin habilidades) */
 const TYPE_ORDER=["normal","fire","water","electric","grass","ice","fighting","poison","ground","flying","psychic","bug","rock","ghost","dragon","dark","steel","fairy"];
-const TYPE_ABBR={normal:"NOR",fire:"FUE",water:"AGU",electric:"ELÉ",grass:"PLA",ice:"HIE",fighting:"LUC",poison:"VEN",ground:"TIE",flying:"VOL",psychic:"PSÍ",bug:"BIC",rock:"ROC",ghost:"FAN",dragon:"DRA",dark:"SIN",steel:"ACE",fairy:"HAD"};
+const TYPE_ABBR={normal:"NOR",fire:"FUE",water:"AGU",electric:"ELE",grass:"PLA",ice:"HIE",fighting:"LUC",poison:"VEN",ground:"TIE",flying:"VOL",psychic:"PSI",bug:"BIC",rock:"ROC",ghost:"FAN",dragon:"DRA",dark:"SIN",steel:"ACE",fairy:"HAD"};
 const CHART={
  normal:{rock:.5,ghost:0,steel:.5},
  fire:{fire:.5,water:.5,grass:2,ice:2,bug:2,rock:.5,dragon:.5,steel:2},
@@ -1610,14 +1610,14 @@ function typeChart(roster){
   const rows=roster.map(r=>({n:r[0],ts:r[2].split("/")}));
   const weak=TYPE_ORDER.map(a=>rows.filter(p=>mult(a,p.ts)>1).length);
   const res=TYPE_ORDER.map(a=>rows.filter(p=>mult(a,p.ts)<1).length);
-  const head=`<thead><tr><th class="pkn" scope="col">Pokémon</th>${TYPE_ORDER.map(t=>`<th scope="col" title="${TYPE[t][0]}"><span class="tyh" style="--tc:${TYPE[t][1]}"><i>${TYPE_ABBR[t]}</i></span></th>`).join("")}</tr></thead>`;
+  const head=`<thead><tr><th class="pkn" scope="col">Pokemon</th>${TYPE_ORDER.map(t=>`<th scope="col" title="${TYPE[t][0]}"><span class="tyh" style="--tc:${TYPE[t][1]}"><i>${TYPE_ABBR[t]}</i></span></th>`).join("")}</tr></thead>`;
   const body=rows.map(p=>`<tr><th class="pkn" scope="row">${box(p.n,"spr-s")}${esc(p.n)}</th>${TYPE_ORDER.map(a=>{const m=mult(a,p.ts),c=CELL[m];return c?`<td class="${c[0]}" title="${TYPE[a][0]}: x${m}">${c[1]}</td>`:"<td></td>";}).join("")}</tr>`).join("");
-  const foot=`<tfoot><tr><th class="pkn" scope="row">Débiles</th>${weak.map((w,i)=>`<td class="${w>=3||w-res[i]>=2?"hot":w?"":"zero"}">${w}</td>`).join("")}</tr>
+  const foot=`<tfoot><tr><th class="pkn" scope="row">Debiles</th>${weak.map((w,i)=>`<td class="${w>=3||w-res[i]>=2?"hot":w?"":"zero"}">${w}</td>`).join("")}</tr>
     <tr><th class="pkn" scope="row">Resisten</th>${res.map(r=>`<td class="${r?"cool":"zero"}">${r}</td>`).join("")}</tr></tfoot>`;
   return `<div class="tchart-w"><table class="tc">${head}<tbody>${body}</tbody>${foot}</table></div>
-   <div class="tlegend"><span><i class="x4">4×</i>Muy débil</span><span><i class="x2">2×</i>Débil</span><span><i class="r2">½</i>Resiste</span><span><i class="r4">¼</i>Resiste mucho</span><span><i class="im">INM</i>Inmune</span><span><i class="hot">3</i>Punto débil del equipo</span><span>Calculado solo por tipos, sin contar habilidades.</span></div>`;
+   <div class="tlegend"><span><i class="x4">4×</i>Muy debil</span><span><i class="x2">2×</i>Debil</span><span><i class="r2">½</i>Resiste</span><span><i class="r4">¼</i>Resiste mucho</span><span><i class="im">INM</i>Inmune</span><span><i class="hot">3</i>Punto debil del equipo</span><span>Calculado solo por tipos, sin contar habilidades.</span></div>`;
 }
-/* perfiles: al pasar el mouse por una tarjeta del roster, el sprite pasa a su versión animada (5.a gen, PokeAPI) */
+/* perfiles: al pasar el mouse por una tarjeta del roster, el sprite pasa a su version animada (5.a gen, PokeAPI) */
 const ANIM_IDS=new Set([3,6,9,15,18,24,25,26,36,38,59,65,68,71,80,91,94,111,115,121,127,128,130,132,134,135,136,142,143,149,154,157,158,160,168,181,184,186,196,197,199,202,205,208,212,214,226,227,229,248,279,282,302,306,308,310,319,323,324,334,350,351,354,358,359,362,389,392,395,405,407,409,411,428,442,445,448,450,454,460,461,464,470,471,472,473,475,478,479,483,497,500,503,505,510,512,514,516,530,531,534,547,553,563,569,571,579,584,587,609,614,618,623,635,637,652,658,663,666,670,671,675,681,685,693,697,700,702,706,707,709,713,715,722,727,730,733,740,745,748,750,752,778,780,784,823,844,858,866,867,869,877,887,899,902,925,1019,10008,10009,10010,10011,10012,10100,10104,10126,10152,10165,10172,10236,10239,10242,10248]);
 const animUrl=n=>ANIM_IDS.has(SPR_IDS[n])?SPR_BASE+"animated/"+SPR_IDS[n]+".gif":"";
 const NO_MOTION=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1631,13 +1631,13 @@ function wireRosterAnim(root){
     card.addEventListener("mouseleave",()=>{img.src=still;img.classList.remove("anim");});
   });
 }
-/* apodo de un Pokémon según su dueño actual (seguro aunque OWNER/getNick aún no existan al cargar) */
+/* apodo de un Pokemon segun su dueño actual (seguro aunque OWNER/getNick aun no existan al cargar) */
 function nickOf(n){try{const o=OWNER[n];return o!=null?getNick(o,n):"";}catch(e){return "";}}
 function refreshLeaderNicks(){
   const h=document.querySelector(".mvp h3");if(h){const nk=nickOf("Blastoise");h.innerHTML=nk?`${esc(nk)}<small class="sp-mvp">Blastoise</small>`:"Blastoise";}
   const mt=document.getElementById("mvpTeam");if(mt){let o=null;try{o=OWNER[MONS[0][0]];}catch(e){}mt.innerHTML=o!=null?`${crest(TEAMS[o])}<div><small>Equipo actual</small><a href="#team-${slug(TEAMS[o])}">${esc(TEAMS[o].n)}</a></div>`:"<div><small>Equipo actual</small><span>Agente libre</span></div>";}
 }
-/* apodos de Pokémon (demo: se guardan en este navegador; en el sitio real irían a la base de datos) */
+/* apodos de Pokemon (demo: se guardan en este navegador; en el sitio real irian a la base de datos) */
 const NICK_KEY="ppv-apodos-v1";
 let NICKS={};try{NICKS=JSON.parse(localStorage.getItem(NICK_KEY)||"{}")||{};}catch(e){NICKS={};}
 const getNick=(ti,n)=>(NICKS[ti]&&NICKS[ti][n])||"";
@@ -1648,10 +1648,10 @@ function openNick(n){
     <button type="button" class="close" id="closeD">Cerrar</button>
     <div class="nk-head">${spr(n,"nk-spr")}<div><span class="label">Apodo para</span><h2>${esc(n)}</h2></div></div>
     <form class="nk-form" id="nkForm" autocomplete="off">
-      <label class="label" for="nkIn">Apodo (máximo 16 caracteres)</label>
+      <label class="label" for="nkIn">Apodo (maximo 16 caracteres)</label>
       <input id="nkIn" type="text" maxlength="16" value="${esc(cur)}" placeholder="Ej. El Tanque">
       <div class="sh-actions"><button type="submit" class="btn">Guardar apodo</button>${cur?'<button type="button" class="btn ghost" id="nkDel">Quitar apodo</button>':""}</div>
-      <p class="sc-note">Demo: el apodo se guarda en este navegador. En el sitio real lo verían todos los visitantes.</p>
+      <p class="sc-note">Demo: el apodo se guarda en este navegador. En el sitio real lo verian todos los visitantes.</p>
     </form></div>`;
   drawer.hidden=false;const inp=document.getElementById("nkIn");inp.focus();inp.select();
   const done=v=>{setNick(ME,n,v);closeD();refreshLeaderNicks();if(location.hash==="#team-"+slug(TEAMS[ME]))renderProfile(ME);toastMsg(v?`${n} ahora se llama “${getNick(ME,n)}”.`:`Quitaste el apodo de ${n}.`);};
@@ -1694,16 +1694,16 @@ function renderProfile(ti){
           <h1>${esc(t.n)}</h1>
           <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
           <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
-          <div class="p-cid"><span class="label">Pokémon favorito</span><span class="cid">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
+          <div class="p-cid"><span class="label">Pokemon favorito</span><span class="cid">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
           <div class="p-share"><button type="button" class="btn" data-share="${ti}">⤴ Compartir perfil</button></div>
         </div>
       </div>
     </div>
   </section>
   <div class="strip p-strip"><div class="wrap">
-    <div class="stat"><b class="num">${t.w}-${t.l}</b><span>Récord en series</span></div>
+    <div class="stat"><b class="num">${t.w}-${t.l}</b><span>Record en series</span></div>
     <div class="stat"><b class="num">${gw}-${gl}</b><span>Juegos ganados</span></div>
-    <div class="stat"><b class="num">${sign(t.d)}</b><span>Diferencia de Pokémon</span></div>
+    <div class="stat"><b class="num">${sign(t.d)}</b><span>Diferencia de Pokemon</span></div>
     <div class="stat"><b class="num">${t.pts}</b><span>Puntos de liga</span></div>
     <div class="stat"><b class="num">${kills}</b><span>KOs del roster</span></div>
     <div class="stat"><b class="num">${esc(draftPts)}</b><span>Puntos de draft</span></div>
@@ -1714,12 +1714,12 @@ function renderProfile(ti){
       <div class="path-w"><div class="path" style="--c:${C}">${path}</div></div>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">${roster.length} Pokémon · ${kills} KOs · ${deaths} caídas</div><h2>El <em>roster</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="roster" data-arg="${ti}">⤴ Compartir roster</button></div>
+      <div class="sec-head"><div><div class="label">${roster.length} Pokemon · ${kills} KOs · ${deaths} caidas</div><h2>El <em>roster</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="roster" data-arg="${ti}">⤴ Compartir roster</button></div>
       <div class="p-note"><span>Movimientos de free agency: <strong>${fa}</strong></span><span>Todos obtenidos en el <strong>draft</strong></span></div>
       <div class="roster-g">${roster.slice().sort((a,b)=>b[1]-a[1]).map(pk).join("")}</div>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">Debilidades y resistencias del roster</div><h2>Análisis de <em>tipos</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Debilidades y resistencias del roster</div><h2>Analisis de <em>tipos</em></h2></div></div>
       ${typeChart(roster)}
     </section>
     <section>
@@ -1746,11 +1746,11 @@ function renderProfile(ti){
 document.getElementById("page-profile").addEventListener("click",e=>{
   const b=e.target.closest(".cid-copy");if(!b)return;
   const done=()=>{b.textContent="Copiado";setTimeout(()=>b.textContent="Copiar",1600);};
-  const sel=()=>{const c=b.previousElementSibling;const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selecciónalo y copia";};
+  const sel=()=>{const c=b.previousElementSibling;const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Seleccionalo y copia";};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(b.dataset.cid).then(done,sel);else sel();
 });
-/* playoffs — formato escalera de ppvdraftleague.com/playoffs (índices de TEAMS).
-   Resultado: w = "a" o "b" (quién ganó la serie). Si se conoce el marcador, agrega seq con el ganador de cada juego ("aba"). */
+/* playoffs — formato escalera de ppvdraftleague.com/playoffs (indices de TEAMS).
+   Resultado: w = "a" o "b" (quien gano la serie). Si se conoce el marcador, agrega seq con el ganador de cada juego ("aba"). */
 const PLAYOFFS={
   A:{wc:{a:2,b:12,w:"b"},qf:{a:10,w:"a"},sf:{a:0,w:"a"}},
   B:{wc:{a:11,b:3,w:"a"},qf:{a:1,w:"b"},sf:{a:9,w:"a"}},
@@ -1785,7 +1785,7 @@ function renderPlayoffs(){
   document.getElementById("po-status").innerHTML=`
     <div><b class="num">8</b><span class="label">Equipos</span></div>
     <div><b class="num">${done}/7</b><span class="label">Series jugadas</span></div>
-    <div><b>${champ!=null?esc(TEAMS[champ].n):RNAME[next]}</b><span class="label">${champ!=null?"Campeón":"Ronda actual"}</span></div>`;
+    <div><b>${champ!=null?esc(TEAMS[champ].n):RNAME[next]}</b><span class="label">${champ!=null?"Campeon":"Ronda actual"}</span></div>`;
   const A=P.A,B=P.B;
   document.getElementById("bracket").innerHTML=`<div class="bk">
     <span class="rl" style="grid-column:1">Wild Card</span><span class="rl" style="grid-column:2">Cuartos de final</span><span class="rl" style="grid-column:3">Semifinal</span><span class="rl fin" style="grid-column:4">Gran Final</span>
@@ -1798,7 +1798,7 @@ function renderPlayoffs(){
     ${pmatch(B.qf,"Cuartos · Lado B","","Ganador Wild Card 2","to-r","grid-column:2;grid-row:3;--o:6")}
     ${pmatch(B.sf,"Semifinal · Lado B","","Ganador Cuartos B","to-fu","grid-column:3;grid-row:3;--o:7")}
     <div class="fin" style="--o:98">${pmatch(P.final,"Gran Final","Ganador Semifinal A","Ganador Semifinal B","final","",
-      `<div class="champ ${champ!=null?"":"tbd"}">${TROPHY}${champ!=null?crest(TEAMS[champ]):""}<div><span class="label">Campeón Temporada 5</span><strong>${champ!=null?esc(TEAMS[champ].n):"Por definir"}</strong></div></div>`)}</div>
+      `<div class="champ ${champ!=null?"":"tbd"}">${TROPHY}${champ!=null?crest(TEAMS[champ]):""}<div><span class="label">Campeon Temporada 5</span><strong>${champ!=null?esc(TEAMS[champ].n):"Por definir"}</strong></div></div>`)}</div>
   </div>`;
   const entry=t=>t.rank===1?["Semifinal","doble bye"]:t.rank===2?["Cuartos de final","bye en Wild Card"]:["Wild Card","juega desde la primera ronda"];
   const seeds=[0,9,10,1,2,12,11,3];
@@ -1807,18 +1807,18 @@ function renderPlayoffs(){
 }
 renderPlayoffs();
 
-/* footer: campeón y volver arriba */
+/* footer: campeon y volver arriba */
 (()=>{const c=winnerOf(resolvePlayoffs().final),el=document.getElementById("fChamp");if(el)el.textContent=c!=null?TEAMS[c].n:"Por definir";
   const up=document.getElementById("fUp");if(up)up.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));})();
-/* ---------- sesión simulada (demo) ---------- */
+/* ---------- sesion simulada (demo) ---------- */
 const toastMsg=m=>{const t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toastMsg.t);toastMsg.t=setTimeout(()=>t.hidden=true,2800);};
 (()=>{const t=TEAMS[ME],chip=document.getElementById("meChip");
   chip.href="#mi-equipo";chip.style.setProperty("--c",CONF[t.c].v);
   chip.innerHTML=`${crest(t)}<span><b>${esc(PROFILES[ME][0])}</b><small>${esc(t.n)}</small></span>`;
-  chip.setAttribute("aria-label",`Sesión iniciada: ${PROFILES[ME][0]}, ${t.n}. Ir a mi panel`);
+  chip.setAttribute("aria-label",`Sesion iniciada: ${PROFILES[ME][0]}, ${t.n}. Ir a mi panel`);
   const fl=document.getElementById("fMine");if(fl)fl.href="#mi-equipo";})();
 
-/* ---------- Pokedex: pool del draft (ppvdraftleague.com/pokedex) — [pokémon, costo, tipos, id PokeAPI] ---------- */
+/* ---------- Pokedex: pool del draft (ppvdraftleague.com/pokedex) — [pokemon, costo, tipos, id PokeAPI] ---------- */
 const POOL=[["Charizard",15,"fire/flying",6],["Floette",15,"fairy",670],["Gengar",15,"ghost/poison",94],["Incineroar",15,"fire/dark",727],["Tyranitar",15,"rock/dark",248],["Whimsicott",15,"grass/fairy",547],["Dragonite",13,"dragon/flying",149],["Garchomp",13,"dragon/ground",445],["Gardevoir",13,"psychic/fairy",282],["Kangaskhan",13,"normal",115],["Kingambit",13,"dark/steel",983],["Pelipper",13,"water/flying",279],["Sinistcha",13,"grass/ghost",1013],["Sneasler",13,"fighting/poison",903],["Volcarona",13,"bug/fire",637],["Aegislash",11,"steel/ghost",681],["Aerodactyl",11,"rock/flying",142],["Archaludon",11,"steel/dragon",1018],["Clefable",11,"fairy",36],["Excadrill",11,"ground/steel",530],["Farigiraf",11,"normal/psychic",981],["Froslass",11,"ice/ghost",478],["Gallade",11,"psychic/fighting",475],["Glimmora",11,"rock/poison",970],["Gyarados",11,"water/flying",130],["Starmie",11,"water/psychic",121],["Venusaur",11,"grass/poison",3],["Alolan Ninetales",10,"ice/fairy",10104],["Arcanine",10,"fire",59],["Basculegion-Male",10,"water/ghost",902],["Dragapult",10,"dragon/ghost",887],["Hisuian Typhlosion",10,"fire/ghost",10233],["Maushold",10,"normal",925],["Meganium",10,"grass",154],["Palafin",10,"water",964],["Primarina",10,"water/fairy",730],["Talonflame",10,"fire/flying",663],["Banette",9,"ghost",354],["Blastoise",9,"water",9],["Chandelure",9,"ghost/fire",609],["Delphox",9,"fire/psychic",655],["Drampa",9,"normal/dragon",780],["Feraligatr",9,"water",160],["Greninja",9,"water/dark",658],["Heracross",9,"bug/fighting",214],["Hisuian Zoroark",9,"normal/ghost",10239],["Lopunny",9,"normal",428],["Lucario",9,"fighting/steel",448],["Manectric",9,"electric",310],["Medicham",9,"fighting/psychic",308],["Milotic",9,"water",350],["Politoed",9,"water",186],["Rotom-Wash",9,"electric/water",10009],["Scizor",9,"bug/steel",212],["Sharpedo",9,"water/dark",319],["Slowbro",9,"water/psychic",80],["Torkoal",9,"fire",324],["Corviknight",8,"flying/steel",823],["Hatterene",8,"psychic/fairy",858],["Hisuian Arcanine",8,"fire/rock",10230],["Mamoswine",8,"ice/ground",473],["Meowscarada",8,"grass/dark",908],["Mimikyu",8,"ghost/fairy",778],["Rotom-Heat",8,"electric/fire",10008],["Sylveon",8,"fairy",700],["Vivillon",8,"bug/flying",666],["Abomasnow",7,"grass/ice",460],["Aggron",7,"steel/rock",306],["Alakazam",7,"psychic",65],["Altaria",7,"dragon/flying",334],["Ampharos",7,"electric",181],["Azumarill",7,"water/fairy",184],["Beedrill",7,"bug/poison",15],["Camerupt",7,"fire/ground",323],["Conkeldurr",7,"fighting",534],["Crabominable",7,"fighting/ice",740],["Ditto",7,"normal",132],["Empoleon",7,"water/steel",395],["Galarian Slowbro",7,"poison/psychic",10165],["Galarian Slowking",7,"poison/psychic",10172],["Garganacl",7,"rock",934],["Golurk",7,"ground/ghost",623],["Hawlucha",7,"fighting/flying",701],["Hippowdon",7,"ground",450],["Hisuian Goodra",7,"steel/dragon",10242],["Houndoom",7,"dark/fire",229],["Hydreigon",7,"dark/dragon",635],["Klefki",7,"steel/fairy",707],["Liepard",7,"dark",510],["Meowstic Male",7,"psychic",678],["Oranguru",7,"normal/psychic",765],["Orthworm",7,"steel",968],["Pinsir",7,"bug",127],["Sableye",7,"dark/ghost",302],["Serperior",7,"grass",497],["Weavile",7,"dark/ice",461],["Araquanid",6,"water/bug",752],["Armarouge",6,"fire/psychic",936],["Basculegion-Female",6,"water/ghost",10248],["Kommo-o",6,"dragon/fighting",784],["Meowstic Female",6,"psychic",10025],["Paldean Tauros Aqua",6,"fighting/water",10252],["Paldean Tauros Blaze",6,"fighting/fire",10251],["Scovillain",6,"grass/fire",952],["Slowking",6,"water/psychic",199],["Snorlax",6,"normal",143],["Tsareena",6,"grass",763],["Umbreon",6,"dark",197],["Wyrdeer",6,"normal/psychic",899],["Absol",5,"dark",359],["Alcremie",5,"fairy",869],["Beartic",5,"ice",614],["Ceruledge",5,"fire/ghost",937],["Chesnaught",5,"grass/fighting",652],["Chimecho",5,"psychic",358],["Clawitzer",5,"water",693],["Emboar",5,"fire/fighting",500],["Espathra",5,"psychic",956],["Glalie",5,"ice",362],["Goodra",5,"dragon",706],["Hisuian Decidueye",5,"grass/fighting",10244],["Hydrapple",5,"grass/dragon",1019],["Infernape",5,"fire/fighting",392],["Kleavor",5,"bug/rock",900],["Krookodile",5,"ground/dark",553],["Machamp",5,"fighting",68],["Ninetales",5,"fire",38],["Noivern",5,"flying/dragon",715],["Pidgeot",5,"normal/flying",18],["Raichu",5,"electric",26],["Reuniclus",5,"psychic",579],["Rhyperior",5,"ground/rock",464],["Rotom-Mow",5,"electric/grass",10012],["Salazzle",5,"poison/fire",758],["Skarmory",5,"steel/flying",227],["Skeledirge",5,"fire/ghost",911],["Steelix",5,"steel/ground",208],["Tinkaton",5,"fairy/steel",959],["Toxicroak",5,"poison/fighting",454],["Vanilluxe",5,"ice",584],["Victreebel",5,"grass/poison",71],["Zoroark",5,"dark",571],["Alolan Raichu",4,"electric/psychic",10100],["Audino",4,"normal",531],["Diggersby",4,"normal/ground",660],["Glaceon",4,"ice",471],["Hisuian Samurott",4,"water/dark",10236],["Leafeon",4,"grass",470],["Mudsdale",4,"ground",750],["Pangoro",4,"fighting/dark",675],["Passimian",4,"fighting",766],["Quaquaval",4,"water/fighting",914],["Rotom-Frost",4,"electric/ice",10010],["Toxapex",4,"poison/water",748],["Typhlosion",4,"fire",157],["Aromatisse",3,"fairy",683],["Hisuian Avalugg",3,"ice/rock",10243],["Jolteon",3,"electric",135],["Luxray",3,"electric",405],["Lycanroc (Midday)",3,"rock",745],["Lycanroc (Midnight)",3,"rock",10126],["Pikachu",3,"electric",25],["Polteageist",3,"ghost",855],["Runerigus",3,"ground/ghost",867],["Simipour",3,"water",516],["Simisage",3,"grass",512],["Simisear",3,"fire",514],["Toucannon",3,"normal/flying",733],["Trevenant",3,"ghost/grass",709],["Vaporeon",3,"water",134],["Appletun",2,"grass/dragon",842],["Arbok",2,"poison",24],["Aurorus",2,"rock/ice",699],["Avalugg",2,"ice",713],["Bastiodon",2,"rock/steel",411],["Bellibolt",2,"electric",939],["Cofagrigus",2,"ghost",563],["Decidueye",2,"grass/ghost",724],["Espeon",2,"psychic",196],["Flapple",2,"grass/dragon",841],["Flareon",2,"fire",136],["Florges",2,"fairy",671],["Furfrou",2,"normal",676],["Gliscor",2,"ground/flying",472],["Gourgeist",2,"ghost/grass",711],["Heliolisk",2,"electric/normal",695],["Lycanroc (Dusk)",2,"rock",10152],["Morpeko",2,"electric/dark",877],["Mr. Rime",2,"ice/psychic",866],["Rampardos",2,"rock",409],["Roserade",2,"grass/poison",407],["Rotom-Fan",2,"electric/flying",10011],["Samurott",2,"water",503],["Sandaconda",2,"ground",844],["Tauros",2,"normal",128],["Torterra",2,"grass/ground",389],["Tyrantrum",2,"rock/dragon",697],["Ariados",1,"bug/poison",168],["Castform",1,"normal",351],["Dedenne",1,"electric/fairy",702],["Emolga",1,"electric/flying",587],["Forretress",1,"bug/steel",205],["Galarian Stunfisk",1,"ground/steel",10180],["Garbodor",1,"poison",569],["Rotom",1,"electric/ghost",479],["Slurpuff",1,"fairy",685],["Spiritomb",1,"ghost/dark",442],["Stunfisk",1,"ground/electric",618],["Watchog",1,"normal",505]];
 POOL.forEach(p=>{SPR_IDS[p[0]]=p[3];});
 const OWNER={};PROFILES.forEach((p,i)=>p[5].forEach(r=>{OWNER[r[0]]=i;}));
@@ -1827,7 +1827,7 @@ const dxQ=document.getElementById("dxQ"),dxType=document.getElementById("dxType"
 dxType.innerHTML='<option value="">Todos los tipos</option>'+TYPE_ORDER.map(t=>`<option value="${t}">${TYPE[t][0]}</option>`).join("");
 const owned=POOL.filter(p=>OWNER[p[0]]!=null).length;
 document.getElementById("dxStats").innerHTML=`
-  <div><b class="num">${POOL.length}</b><span class="label">Pokémon en el pool</span></div>
+  <div><b class="num">${POOL.length}</b><span class="label">Pokemon en el pool</span></div>
   <div><b class="num">${owned}</b><span class="label">Con dueño</span></div>
   <div><b class="num">${POOL.length-owned}</b><span class="label">Libres</span></div>
   <div><b class="num">${new Set(POOL.map(p=>p[1])).size}</b><span class="label">Niveles (15 a 1 pts)</span></div>`;
@@ -1851,8 +1851,8 @@ function renderDex(){
     return true;});
   const tiers=[...new Set(list.map(p=>p[1]))].sort((a,b)=>b-a);
   document.getElementById("dxBody").innerHTML=tiers.length?tiers.map(t=>{const g=list.filter(p=>p[1]===t),fr=g.filter(p=>OWNER[p[0]]==null).length;
-    return `<section class="tier"><div class="tier-h"><h2 class="num">${t}<small>pts</small></h2><span class="label">${g.length} Pokémon · ${fr} libres</span><span class="rule"></span></div><div class="dx-g">${g.map(dxCard).join("")}</div></section>`;}).join("")
-    :`<div class="empty">Ningún Pokémon coincide con esos filtros. Prueba con otro nombre o tipo.</div>`;
+    return `<section class="tier"><div class="tier-h"><h2 class="num">${t}<small>pts</small></h2><span class="label">${g.length} Pokemon · ${fr} libres</span><span class="rule"></span></div><div class="dx-g">${g.map(dxCard).join("")}</div></section>`;}).join("")
+    :`<div class="empty">Ningun Pokemon coincide con esos filtros. Prueba con otro nombre o tipo.</div>`;
   document.getElementById("dxCount").textContent=`${list.length} de ${POOL.length}`;
 }
 document.querySelectorAll("#dxSeg button").forEach(b=>b.addEventListener("click",()=>{dxS=b.dataset.s;document.querySelectorAll("#dxSeg button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderDex();}));
@@ -1875,26 +1875,26 @@ function renderDraft(){
   const t=TEAMS[ME],col=DRAFT_ORDER.indexOf(ME),roster=PROFILES[ME][5].map(r=>r[0]);
   const mine=DRAFT_ROUNDS.map((row,ri)=>({r:ri+1,k:pickNo(ri,col),g:ri*N+pickNo(ri,col),n:row[col]}));
   const spent=mine.reduce((s,m)=>s+(m.n?PTS[m.n]||0:0),0),kept=mine.filter(m=>m.n&&roster.includes(m.n)).length;
-  document.getElementById("drMineSum").innerHTML=`<span>Draftaste <b>${mine.filter(m=>m.n).length} Pokémon</b> por <b>${spent} pts</b></span><span><b>${kept}</b> siguen en tu roster</span><span>Roster actual: <b>${PROFILES[ME][2]} pts</b></span>`;
+  document.getElementById("drMineSum").innerHTML=`<span>Draftaste <b>${mine.filter(m=>m.n).length} Pokemon</b> por <b>${spent} pts</b></span><span><b>${kept}</b> siguen en tu roster</span><span>Roster actual: <b>${PROFILES[ME][2]} pts</b></span>`;
   document.getElementById("drMine").innerHTML=mine.map(m=>m.n
-    ?`<article class="mp ${roster.includes(m.n)?"":"gone"}" style="--c:${CONF[t.c].v}">${spr(m.n,"")}<span class="label">Ronda ${m.r} · Pick ${m.r}.${m.k} · #${m.g} global</span><strong>${esc(m.n)}</strong><span class="meta"><b>${PTS[m.n]} pts</b> · ${roster.includes(m.n)?"En tu roster":"Ya no está en tu roster"}</span></article>`
+    ?`<article class="mp ${roster.includes(m.n)?"":"gone"}" style="--c:${CONF[t.c].v}">${spr(m.n,"")}<span class="label">Ronda ${m.r} · Pick ${m.r}.${m.k} · #${m.g} global</span><strong>${esc(m.n)}</strong><span class="meta"><b>${PTS[m.n]} pts</b> · ${roster.includes(m.n)?"En tu roster":"Ya no esta en tu roster"}</span></article>`
     :`<article class="mp empty"><span class="label">Ronda ${m.r} · Pick ${m.r}.${m.k}</span><strong>Sin pick</strong></article>`).join("");
   // tablero
   document.getElementById("drBoard").innerHTML=`<table class="db v"><colgroup><col class="c-tm">${DRAFT_ROUNDS.map(()=>"<col>").join("")}</colgroup>
     <thead><tr><th class="tmh" scope="col">Equipo</th>${DRAFT_ROUNDS.map((_,ri)=>`<th scope="col">Ronda ${ri+1}<span aria-label="${ri%2?"de abajo hacia arriba":"de arriba hacia abajo"}">${ri%2?"↑":"↓"}</span></th>`).join("")}</tr></thead>
-    <tbody>${DRAFT_ORDER.map((ti,ci)=>{const T=TEAMS[ti];return `<tr class="${ti===ME?"mine":""}" style="--c:${CONF[T.c].v}"><th class="tm" scope="row"><a href="#team-${slug(T)}"><span class="dpos num">${ci+1}</span>${crest(T)}<span class="tn"><b class="ab">#${T.ab}</b><small>${esc(T.n)}</small></span>${ti===ME?'<span class="you">Tú</span>':""}</a></th>${DRAFT_ROUNDS.map((row,ri)=>{const n=row[ci];return `<td><div class="${n?"":"empty"}">${n?`${box(n,"db-spr")}<b>${esc(n)}</b><small>${PTS[n]??"?"} pts · ${ri+1}.${pickNo(ri,ci)}</small>`:`<b>Sin pick</b><small>${ri+1}.${pickNo(ri,ci)}</small>`}</div></td>`;}).join("")}</tr>`;}).join("")}</tbody></table>`;
+    <tbody>${DRAFT_ORDER.map((ti,ci)=>{const T=TEAMS[ti];return `<tr class="${ti===ME?"mine":""}" style="--c:${CONF[T.c].v}"><th class="tm" scope="row"><a href="#team-${slug(T)}"><span class="dpos num">${ci+1}</span>${crest(T)}<span class="tn"><b class="ab">#${T.ab}</b><small>${esc(T.n)}</small></span>${ti===ME?'<span class="you">Tu</span>':""}</a></th>${DRAFT_ROUNDS.map((row,ri)=>{const n=row[ci];return `<td><div class="${n?"":"empty"}">${n?`${box(n,"db-spr")}<b>${esc(n)}</b><small>${PTS[n]??"?"} pts · ${ri+1}.${pickNo(ri,ci)}</small>`:`<b>Sin pick</b><small>${ri+1}.${pickNo(ri,ci)}</small>`}</div></td>`;}).join("")}</tr>`;}).join("")}</tbody></table>`;
   // free agency
   const free=POOL.filter(p=>OWNER[p[0]]==null).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
   const left=60-PROFILES[ME][5].reduce((s,r)=>s+r[1],0);
-  document.getElementById("drFaNote").innerHTML=`<span>Te quedan <b>${left} pts</b> de presupuesto.</span><span>${left>0?"Puedes fichar Pokémon que cuesten hasta "+left+" pts.":"Para fichar a alguien tendrías que liberar primero a un Pokémon de tu roster."}</span>`;
-  document.getElementById("drFa").innerHTML=`<thead><tr><th>Pokémon</th><th>Tipos</th><th>Costo</th><th></th></tr></thead><tbody>${free.map(p=>`<tr><td><span class="fa-n">${box(p[0],"")}${esc(p[0])}</span></td><td><div class="types">${p[2].split("/").map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div></td><td class="pts num">${p[1]}</td><td><button type="button" class="fa-btn" data-fa="${esc(p[0])}">Solicitar</button></td></tr>`).join("")}</tbody>`;
-  document.getElementById("drFaCount").textContent=`${free.length} Pokémon libres`;
+  document.getElementById("drFaNote").innerHTML=`<span>Te quedan <b>${left} pts</b> de presupuesto.</span><span>${left>0?"Puedes fichar Pokemon que cuesten hasta "+left+" pts.":"Para fichar a alguien tendrias que liberar primero a un Pokemon de tu roster."}</span>`;
+  document.getElementById("drFa").innerHTML=`<thead><tr><th>Pokemon</th><th>Tipos</th><th>Costo</th><th></th></tr></thead><tbody>${free.map(p=>`<tr><td><span class="fa-n">${box(p[0],"")}${esc(p[0])}</span></td><td><div class="types">${p[2].split("/").map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div></td><td class="pts num">${p[1]}</td><td><button type="button" class="fa-btn" data-fa="${esc(p[0])}">Solicitar</button></td></tr>`).join("")}</tbody>`;
+  document.getElementById("drFaCount").textContent=`${free.length} Pokemon libres`;
 }
-document.getElementById("drFa").addEventListener("click",e=>{const b=e.target.closest("[data-fa]");if(!b)return;toastMsg(`Demo: aquí ${PROFILES[ME][0]} enviaría la solicitud de free agency por ${b.dataset.fa}.`);});
-document.getElementById("meOut").addEventListener("click",()=>toastMsg("Demo: la sesión de Richampions VGC está simulada, no hay cierre de sesión."));
+document.getElementById("drFa").addEventListener("click",e=>{const b=e.target.closest("[data-fa]");if(!b)return;toastMsg(`Demo: aqui ${PROFILES[ME][0]} enviaria la solicitud de free agency por ${b.dataset.fa}.`);});
+document.getElementById("meOut").addEventListener("click",()=>toastMsg("Demo: la sesion de Richampions VGC esta simulada, no hay cierre de sesion."));
 renderDraft();
 
-/* tablero del draft: todas las filas toman la altura de la celda más alta */
+/* tablero del draft: todas las filas toman la altura de la celda mas alta */
 function equalizeBoard(){
   const t=document.querySelector("#drBoard table.db.v");if(!t||!t.offsetParent)return;
   t.style.removeProperty("--cellh");
@@ -1904,15 +1904,15 @@ function equalizeBoard(){
 }
 if(document.fonts)document.fonts.ready.then(equalizeBoard);
 let eqT;addEventListener("resize",()=>{clearTimeout(eqT);eqT=setTimeout(equalizeBoard,120);});
-/* menú móvil */
+/* menu movil */
 (()=>{const b=document.getElementById("navToggle"),n=document.getElementById("mainNav");if(!b||!n)return;
-  const set=o=>{n.classList.toggle("open",o);b.setAttribute("aria-expanded",o);b.setAttribute("aria-label",o?"Cerrar menú":"Abrir menú");};
+  const set=o=>{n.classList.toggle("open",o);b.setAttribute("aria-expanded",o);b.setAttribute("aria-label",o?"Cerrar menu":"Abrir menu");};
   b.addEventListener("click",()=>set(!n.classList.contains("open")));
   n.addEventListener("click",e=>{if(e.target.closest("a"))set(false);});
   addEventListener("keydown",e=>{if(e.key==="Escape"&&n.classList.contains("open")){set(false);b.focus();}});
   addEventListener("hashchange",()=>set(false));
   document.addEventListener("click",e=>{if(n.classList.contains("open")&&!e.target.closest("header.nav"))set(false);});})();
-/* ---------- detalle de serie: Pokémon usados en cada juego (ppvdraftleague.com/matches) — [serie][juego][lado A, lado B] ---------- */
+/* ---------- detalle de serie: Pokemon usados en cada juego (ppvdraftleague.com/matches) — [serie][juego][lado A, lado B] ---------- */
 const GAMES=[[[["Floette","Talonflame","Kommo-o","Hisuian Zoroark"],["Galarian Slowking","Kleavor","Raichu","Gyarados"]],[["Floette","Talonflame","Ariados","Palafin"],["Galarian Slowking","Kleavor","Raichu","Gyarados"]],[["Floette","Talonflame","Palafin","Hisuian Zoroark"],["Kleavor","Hisuian Goodra","Raichu","Gyarados"]]],[[["Golurk","Paldean Tauros Blaze","Rotom-Mow","Gallade"],["Volcarona","Sneasler","Corviknight","Medicham"]],[["Golurk","Paldean Tauros Blaze","Rotom-Mow","Gallade"],["Volcarona","Sneasler","Corviknight","Medicham"]]],[[["Garchomp","Empoleon","Emboar","Sableye"],["Kangaskhan","Whimsicott","Mr. Rime","Hisuian Typhlosion"]],[["Garchomp","Empoleon","Emboar","Sableye"],["Kangaskhan","Whimsicott","Mr. Rime","Hisuian Typhlosion"]]],[[["Gengar","Arcanine","Klefki"],["Banette","Chandelure","Charizard","Aegislash"]],[["Gengar","Arcanine","Klefki"],["Banette","Charizard","Aegislash","Leafeon"]]],[[["Aerodactyl","Ditto","Hatterene","Snorlax"],["Sinistcha","Farigiraf","Slowbro","Aggron"]],[["Aerodactyl","Milotic","Ditto","Liepard"],["Sinistcha","Farigiraf","Heracross","Slowbro"]],[["Aerodactyl","Milotic","Ditto","Liepard"],["Sinistcha","Farigiraf","Slowbro","Aggron"]]],[[["Sylveon","Scovillain","Pikachu","Galarian Slowbro"],["Pelipper","Blastoise","Rhyperior","Mimikyu"]],[["Sylveon","Scovillain","Pikachu"],["Pelipper","Blastoise","Rhyperior","Mimikyu"]],[["Greninja","Sylveon","Pikachu","Galarian Slowbro"],["Pelipper","Blastoise","Rhyperior","Mimikyu"]]],[[["Basculegion-Male","Delphox","Clefable"],["Froslass","Altaria","Rotom-Frost","Orthworm"]],[["Basculegion-Male","Delphox","Clefable"],["Froslass","Altaria","Hisuian Arcanine","Azumarill"]]],[[["Excadrill","Torkoal","Incineroar","Hippowdon"],["Tyranitar","Primarina","Oranguru","Camerupt"]],[["Excadrill","Torkoal","Incineroar","Hippowdon"],["Tyranitar","Primarina","Oranguru","Camerupt"]]],[[["Garchomp","Vivillon","Meganium","Sableye"],["Volcarona","Rotom-Wash","Medicham","Morpeko"]],[["Garchomp","Vivillon","Meganium","Sableye"],["Volcarona","Corviknight","Medicham","Morpeko"]],[["Garchomp","Vivillon","Meganium","Emboar"],["Volcarona","Corviknight","Medicham","Runerigus"]]],[[["Tsareena","Klefki","Ampharos","Mudsdale"],["Galarian Slowking","Basculegion-Female","Crabominable","Politoed"]],[["Tsareena","Klefki","Ampharos","Mudsdale"],["Galarian Slowking","Basculegion-Female","Crabominable","Hisuian Goodra"]]],[[["Gardevoir","Maushold","Ceruledge","Paldean Tauros Aqua"],["Whimsicott","Kangaskhan","Hisuian Typhlosion","Mr. Rime"]],[["Gardevoir","Maushold","Ceruledge","Paldean Tauros Aqua"],["Whimsicott","Kangaskhan","Hisuian Typhlosion","Mr. Rime"]]],[[["Kingambit","Golurk","Paldean Tauros Blaze","Rotom-Mow"],["Floette","Meowstic Female","Kommo-o","Hisuian Zoroark"]],[["Gallade","Kingambit","Golurk","Rampardos"],["Floette","Meowstic Female","Kommo-o","Hisuian Zoroark"]]],[[["Basculegion-Male","Lopunny","Clefable","Chesnaught"],["Tyranitar","Primarina","Scizor","Oranguru"]],[["Basculegion-Male","Lopunny","Clefable","Krookodile"],["Tyranitar","Primarina","Scizor","Oranguru"]],[["Basculegion-Male","Lopunny","Clefable","Krookodile"],["Tyranitar","Primarina","Scizor","Oranguru"]]],[[["Ninetales","Sylveon","Dragonite","Galarian Slowbro"],["Farigiraf","Slowbro","Aggron","Aurorus"]],[["Scovillain","Ninetales","Sylveon"],["Farigiraf","Slowbro","Aggron","Aurorus"]]],[[["Alakazam","Meowstic Male"],["Froslass","Hisuian Arcanine","Azumarill","Rotom-Frost"]],[["Alakazam","Meowstic Male","Snorlax","Armarouge"],["Hisuian Arcanine","Orthworm","Azumarill","Altaria"]]],[[["Excadrill","Torkoal","Tinkaton","Noivern"],["Aerodactyl","Milotic","Ditto","Liepard"]],[["Excadrill","Torkoal","Noivern","Hippowdon"],["Aerodactyl","Milotic","Ditto","Rotom-Heat"]],[["Excadrill","Torkoal","Tinkaton","Hippowdon"],["Aerodactyl","Milotic","Ditto","Rotom-Heat"]]],[[["Gengar","Infernape","Mudsdale","Klefki"],["Slowking","Rotom-Heat","Rampardos","Gallade"]],[["Gengar","Infernape","Mudsdale","Klefki"],["Slowking","Rotom-Heat","Rampardos","Gallade"]]],[[["Garchomp","Empoleon","Victreebel","Whimsicott"],["Meowstic Female","Talonflame","Typhlosion","Floette"]],[["Garchomp","Empoleon","Luxray","Chimecho"],["Meowstic Female","Talonflame","Typhlosion","Kommo-o"]]],[[["Kangaskhan","Sableye","Archaludon","Reuniclus"],["Volcarona","Morpeko","Sneasler","Medicham"]],[["Kangaskhan","Sableye","Archaludon","Reuniclus"],["Volcarona","Morpeko","Sneasler","Medicham"]]],[[["Maushold","Hydreigon","Ceruledge"],["Charizard","Aegislash","Chandelure","Venusaur"]],[["Maushold","Hydreigon","Ceruledge"],["Charizard","Aegislash","Chandelure","Venusaur"]]],[[["Krookodile","Clefable","Basculegion-Male","Delphox"],["Milotic","Liepard","Ditto","Aerodactyl"]],[["Clefable","Basculegion-Male","Delphox","Heliolisk"],["Milotic","Liepard","Ditto","Aerodactyl"]],[["Clefable","Delphox","Heliolisk"],["Milotic","Liepard","Ditto","Aerodactyl"]]],[[["Scovillain"],[]],[["Sylveon"],[]]],[[["Meowstic Male","Alakazam","Passimian","Snorlax"],["Mimikyu","Umbreon","Blastoise","Rhyperior"]],[["Meowstic Male","Alakazam","Passimian","Snorlax"],["Mimikyu","Umbreon","Blastoise","Rhyperior"]]],[[["Hisuian Arcanine","Orthworm","Azumarill","Garganacl"],["Tyranitar","Primarina","Glimmora","Oranguru"]],[["Hisuian Arcanine","Orthworm","Azumarill","Garganacl"],["Tyranitar","Primarina","Glimmora","Oranguru"]],[["Hisuian Arcanine","Orthworm","Azumarill","Garganacl"],["Tyranitar","Primarina","Glimmora","Scizor"]]],[[["Maushold","Hydreigon","Ceruledge","Paldean Tauros Aqua"],["Volcarona","Sneasler","Rotom-Wash","Skarmory"]],[["Gardevoir","Maushold","Hydreigon","Ceruledge"],["Volcarona","Sneasler","Rotom-Wash","Skarmory"]],[["Gardevoir","Maushold","Hydreigon","Salazzle"],["Volcarona","Sneasler","Rotom-Wash","Skarmory"]]],[[["Kangaskhan","Sableye","Archaludon","Vivillon"],["Floette","Kommo-o","Typhlosion","Ariados"]],[["Kangaskhan","Sableye","Archaludon","Vivillon"],["Floette","Typhlosion","Ariados","Hisuian Zoroark"]],[["Kangaskhan","Sableye","Archaludon","Vivillon"],["Floette","Talonflame","Kommo-o","Typhlosion"]]],[[["Charizard","Aegislash","Chandelure","Venusaur"],["Gyarados","Raichu","Kleavor","Politoed"]],[["Charizard","Aegislash","Chandelure","Venusaur"],["Gyarados","Kleavor","Politoed","Basculegion-Female"]],[["Charizard","Aegislash","Chandelure","Venusaur"],["Gyarados","Raichu","Kleavor","Politoed"]]],[[["Empoleon","Victreebel","Hisuian Typhlosion","Luxray"],["Gengar","Tsareena","Mudsdale","Spiritomb"]],[["Empoleon","Victreebel","Hisuian Typhlosion","Garchomp"],["Arcanine","Mudsdale","Infernape","Spiritomb"]],[["Empoleon","Hisuian Typhlosion","Garchomp","Whimsicott"],["Gengar","Mudsdale","Infernape","Spiritomb"]]],[[["Delphox","Clefable","Toxicroak","Basculegion-Male"],["Scovillain","Galarian Slowbro","Greninja","Sylveon"]],[["Delphox","Clefable","Basculegion-Male","Krookodile"],["Scovillain","Galarian Slowbro","Sylveon","Pikachu"]]],[[["Lucario","Corviknight","Passimian","Hisuian Samurott"],["Primarina","Scizor","Armarouge","Rotom-Fan"]],[["Alakazam","Meowstic Male","Lucario","Passimian"],["Primarina","Scizor","Armarouge","Rotom-Fan"]]],[[["Pelipper","Manectric","Blastoise","Rhyperior"],["Sinistcha","Farigiraf","Drampa","Heracross"]],[["Pelipper","Manectric","Blastoise","Rhyperior"],["Sinistcha","Farigiraf","Drampa","Slowbro"]]],[[["Froslass","Hisuian Arcanine","Garganacl","Espathra"],["Aerodactyl","Milotic","Ditto","Liepard"]],[["Froslass","Orthworm","Garganacl","Espathra"],["Aerodactyl","Milotic","Ditto","Liepard"]]],[[["Kingambit","Golurk","Hatterene","Rampardos"],[]],[["Kingambit","Golurk","Hatterene","Rampardos"],[]]],[[["Maushold","Hydreigon","Mamoswine","Ceruledge"],["Victreebel","Hisuian Typhlosion","Whimsicott","Basculegion-Female"]],[["Gardevoir","Maushold","Hydreigon","Mamoswine"],["Victreebel","Hisuian Typhlosion","Whimsicott","Basculegion-Female"]]],[[["Talonflame","Palafin","Floette","Hisuian Zoroark"],["Charizard","Aegislash","Chandelure","Venusaur"]],[["Talonflame","Kommo-o","Floette","Hisuian Zoroark"],["Charizard","Aegislash","Banette","Venusaur"]]],[[["Gyarados","Hisuian Goodra","Raichu","Starmie"],["Sneasler","Rotom-Wash","Morpeko","Meowstic Female"]],[["Starmie","Gliscor"],["Volcarona","Sneasler","Rotom-Wash","Morpeko"]],[["Politoed","Hisuian Goodra","Starmie","Gliscor"],["Sneasler","Rotom-Wash","Morpeko","Meowstic Female"]]],[[["Hawlucha","Snorlax"],["Farigiraf","Aggron","Sinistcha","Heracross"]],[["Hawlucha","Snorlax","Arcanine"],["Farigiraf","Aggron","Sinistcha","Drampa"]]],[[["Pelipper","Blastoise","Rhyperior","Umbreon"],["Incineroar","Torkoal","Tinkaton","Noivern"]],[["Pelipper","Blastoise","Rhyperior","Umbreon"],["Incineroar","Excadrill","Torkoal","Hippowdon"]]],[[["Espathra","Orthworm","Garganacl","Hisuian Arcanine"],["Greninja","Scovillain","Ninetales","Galarian Slowbro"]],[["Espathra","Orthworm","Garganacl","Azumarill"],["Scovillain","Ninetales","Sylveon","Galarian Slowbro"]]],[[["Primarina","Scizor","Oranguru","Rotom-Fan"],["Milotic","Rotom-Mow","Ditto","Liepard"]],[["Primarina","Scizor","Oranguru","Rotom-Fan"],["Aerodactyl","Milotic","Ditto","Gallade"]]],[[["Gardevoir","Maushold","Araquanid","Bellibolt"],["Floette","Talonflame","Kommo-o","Hisuian Zoroark"]],[["Gardevoir","Maushold","Araquanid","Bellibolt"],["Floette","Talonflame","Kommo-o","Hisuian Zoroark"]]],[[["Rotom-Wash","Morpeko","Wyrdeer","Skarmory"],["Gengar","Dragapult","Klefki","Mudsdale"]],[["Rotom-Wash","Morpeko","Wyrdeer","Skarmory"],["Tsareena","Klefki","Mudsdale","Toucannon"]]],[[["Gyarados","Gliscor","Weavile","Politoed"],[]],[["Gyarados","Gliscor","Weavile","Politoed"],[]]],[[[],["Garchomp","Hisuian Typhlosion"]],[[],["Garchomp","Hisuian Typhlosion"]]],[[["Hisuian Samurott","Arcanine","Hawlucha","Snorlax"],["Aerodactyl","Milotic","Ditto","Liepard"]],[["Hisuian Samurott","Arcanine","Hawlucha","Snorlax"],["Aerodactyl","Milotic","Ditto","Liepard"]],[["Hisuian Samurott","Arcanine","Hawlucha","Alakazam"],[]]],[[["Tyranitar","Primarina","Glimmora","Armarouge"],["Dragonite","Galarian Slowbro","Conkeldurr","Scovillain"]],[["Tyranitar","Primarina","Glimmora","Armarouge"],["Dragonite","Conkeldurr","Pikachu","Scovillain"]]],[[[],[]],[[],[]]],[[["Pelipper","Manectric","Rhyperior","Blastoise"],["Toxicroak","Heliolisk","Basculegion-Male","Delphox"]],[["Pelipper","Manectric","Rhyperior","Blastoise"],["Toxicroak","Heliolisk","Basculegion-Male","Delphox"]],[["Pelipper","Manectric","Rhyperior","Blastoise"],["Toxicroak","Heliolisk","Basculegion-Male","Clefable"]]],[[["Gardevoir","Maushold","Araquanid"],["Kingambit","Golurk","Slowking","Hydrapple"]],[["Gardevoir","Maushold","Mamoswine","Araquanid"],["Kingambit","Golurk","Rampardos","Hatterene"]]],[[["Greninja","Hisuian Goodra","Starmie","Gliscor"],["Gallade","Victreebel","Hisuian Typhlosion","Whimsicott"]],[["Greninja","Hisuian Goodra","Starmie","Gliscor"],["Gallade","Garchomp","Whimsicott","Basculegion-Female"]],[["Gyarados","Greninja","Starmie","Gliscor"],["Gallade","Garchomp","Whimsicott","Basculegion-Female"]]],[[["Alolan Raichu","Talonflame","Floette","Kommo-o"],["Tsareena","Chimecho","Mudsdale"]],[["Talonflame","Floette","Palafin","Hisuian Zoroark"],["Tsareena","Chimecho","Mudsdale","Toucannon"]]],[[[],[]],[[],[]]],[[["Pelipper","Blastoise","Rhyperior","Chesnaught"],["Froslass","Rotom-Frost","Orthworm","Altaria"]],[["Pelipper","Blastoise","Rhyperior","Manectric"],["Froslass","Rotom-Frost","Altaria","Azumarill"]]],[[[],[]],[[],[]]],[[[],[]],[[],[]]],[[[],["Scovillain"]],[[],["Sylveon"]]],[[[],[]],[[],[]]],[[[],[]],[[],[]]],[[["Gardevoir","Maushold","Ceruledge","Paldean Tauros Aqua"],["Gengar","Klefki","Mudsdale","Toucannon"]],[["Maushold","Ceruledge","Paldean Tauros Aqua","Araquanid"],["Klefki","Mudsdale","Infernape","Toucannon"]]],[[[],[]],[[],[]]],[[["Excadrill","Hippowdon","Torkoal","Incineroar"],["Basculegion-Male","Toxapex","Lopunny"]],[["Excadrill","Torkoal","Incineroar","Noivern"],["Basculegion-Male","Clefable","Lopunny","Toxicroak"]]],[[["Tyranitar","Primarina","Glimmora","Rotom-Fan"],["Pelipper","Manectric","Emboar","Chesnaught"]],[["Tyranitar","Primarina","Glimmora","Rotom-Fan"],["Pelipper","Manectric","Blastoise","Chesnaught"]],[["Tyranitar","Primarina","Glimmora","Rotom-Fan"],["Pelipper","Manectric","Blastoise","Emboar"]]],[[["Sinistcha","Aurorus","Aggron"],["Hisuian Arcanine","Rotom-Frost","Orthworm","Azumarill"]],[["Sinistcha","Farigiraf","Aggron","Slowbro"],["Froslass","Rotom-Frost","Orthworm","Altaria"]]],[[["Alakazam","Meowstic Male","Hisuian Samurott","Corviknight"],["Jolteon","Kleavor","Scovillain","Sylveon"]],[["Alakazam","Meowstic Male","Hisuian Samurott","Corviknight"],["Jolteon","Kleavor","Scovillain","Sylveon"]],[["Alakazam","Alolan Ninetales","Meowstic Male","Hisuian Samurott"],["Jolteon","Kleavor","Scovillain","Sylveon"]]],[[[],[]],[[],[]]],[[["Gardevoir","Bellibolt","Mamoswine","Paldean Tauros Aqua"],["Gyarados","Hisuian Goodra","Galarian Slowking","Vanilluxe"]],[["Bellibolt","Hydreigon","Mamoswine","Paldean Tauros Aqua"],["Gyarados","Greninja","Vanilluxe","Gliscor"]]],[[["Rotom-Wash","Skarmory","Sneasler","Morpeko"],["Talonflame","Kommo-o","Alolan Raichu","Hisuian Zoroark"]],[["Meowstic Female","Rotom-Wash","Wyrdeer","Morpeko"],["Talonflame","Kommo-o","Alolan Raichu","Hisuian Zoroark"]]],[[[],[]],[[],[]]],[[[],[]],[[],[]]],[[[],[]],[[],[]]],[[["Aggron","Aurorus","Sinistcha","Drampa"],["Tyranitar","Primarina","Glimmora"]],[["Aggron","Aurorus","Farigiraf","Drampa"],["Tyranitar","Primarina","Glimmora","Scizor"]]],[[[],["Blastoise","Pelipper"]],[[],["Blastoise","Pelipper"]]]];
 const gameSide=(gi,ti)=>{const m=MATCHES[gi];return m.a===ti?0:m.b===ti?1:-1;};
 function openSeries(i){
@@ -1927,7 +1927,7 @@ function openSeries(i){
     <div class="label">Semana ${m.w} · Serie al mejor de 3</div>
     <div class="sd-score"><a href="#team-${slug(A)}">${crest(A)}<span>${esc(A.n)}</span></a><b class="num">${m.ga}<i>-</i>${m.gb}</b><a href="#team-${slug(B)}">${crest(B)}<span>${esc(B.n)}</span></a></div>
     <div class="sh-btns"><button type="button" class="btn sh-sm" data-sharek="series" data-arg="${i}">⤴ Compartir resultado</button></div>
-    ${one}${games}${any?"":'<p class="sd-none">Esta serie no tiene registrados los Pokémon de cada juego.</p>'}
+    ${one}${games}${any?"":'<p class="sd-none">Esta serie no tiene registrados los Pokemon de cada juego.</p>'}
   </div>`;
   drawer.hidden=false;document.getElementById("closeD").focus();
 }
@@ -1935,19 +1935,19 @@ document.addEventListener("click",e=>{const c=e.target.closest(".mc[data-mi]");i
 document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const c=e.target;if(!c.matches||!c.matches(".mc[data-mi]"))return;e.preventDefault();openSeries(+c.dataset.mi);});
 addEventListener("hashchange",()=>{if(!drawer.hidden)closeD();});
 
-/* uso de Pokémon por equipo (juegos registrados) */
+/* uso de Pokemon por equipo (juegos registrados) */
 function usage(ti){const c={};MATCHES.forEach((m,i)=>{const s=gameSide(i,ti);if(s<0)return;(GAMES[i]||[]).forEach(gm=>(gm[s]||[]).forEach(n=>{c[n]=(c[n]||0)+1;}));});return Object.entries(c).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));}
 const ROSTER=ti=>PROFILES[ti][5];
 const typesOf=n=>{const r=PROFILES.flatMap(p=>p[5]).find(x=>x[0]===n);if(r)return r[2].split("/");const p=POOL.find(x=>x[0]===n);return p?p[2].split("/"):[];};
 
-/* ---------- Mi equipo (sesión simulada) ---------- */
+/* ---------- Mi equipo (sesion simulada) ---------- */
 function playoffRun(ti){
   const P=resolvePlayoffs(),seq=[];["A","B"].forEach(k=>["wc","qf","sf"].forEach(r=>{const m=P[k][r];if(m.a===ti||m.b===ti)seq.push([r,m]);}));
   if(P.final.a===ti||P.final.b===ti)seq.push(["final",P.final]);
   if(!seq.length)return null;
   const [r,m]=seq[seq.length-1],w=winnerOf(m);
   if(w==null)return {txt:`Juega ${RNAME[r]}`};
-  if(w===ti)return {txt:r==="final"?"Campeón de la temporada":`Ganó ${RNAME[r]}`,opp:null};
+  if(w===ti)return {txt:r==="final"?"Campeon de la temporada":`Gano ${RNAME[r]}`,opp:null};
   return {txt:`Eliminado en ${RNAME[r]}`,opp:m.a===ti?m.b:m.a};
 }
 function renderMine(){
@@ -1957,7 +1957,7 @@ function renderMine(){
   document.getElementById("page-mi-equipo").innerHTML=`
   <section class="p-hero mine-hero" style="--c:${C}">
     <div class="wrap">
-      <div class="label">Panel del coach · sesión de demostración</div>
+      <div class="label">Panel del coach · sesion de demostracion</div>
       <div class="mine-id">${crest(t)}<div><h1 style="font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.6rem,7vw,5rem);line-height:.9">Hola, ${esc(coach)}</h1>
         <div class="chips"><span class="chip ab"><i>#${t.ab}</i></span><span class="chip cf" style="--cc:${C}"><i>${CONF[t.c].name} · #${t.rank}</i></span><span class="chip x"><i>${t.w}-${t.l} · ${t.pts} pts</i></span></div></div>
         <a class="btn ghost" href="#team-${slug(t)}" style="margin-left:auto">Ver perfil de ${esc(t.n)}</a></div>
@@ -1968,14 +1968,14 @@ function renderMine(){
     <section>
       <div class="sec-head"><div><div class="label">Temporada 5 · Evolution</div><h2>Tu <em>semana</em></h2></div></div>
       <div class="m-cards">
-        <div class="m-card" style="--c:${C}"><span class="label">Próxima serie</span><h3>Calendario por publicar</h3><p>Cuando la liga publique el calendario de la Temporada 5, aquí aparecerán tu rival y la fecha límite para jugar.</p></div>
-        <div class="m-card" style="--c:var(--volt)"><span class="label">Presupuesto</span><span class="big num">${esc(draftPts)}</span><p>${left>0?`Te quedan ${left} pts para fichar.`:"No te quedan puntos libres: para fichar tendrías que liberar a un Pokémon."} Movimientos de free agency usados: ${fa}.</p></div>
-        <div class="m-card"><span class="label">Pendientes</span><h3>Nada por ahora</h3><p>Aquí aparecerán los replays por subir y los resultados por confirmar de tus series.</p></div>
+        <div class="m-card" style="--c:${C}"><span class="label">Proxima serie</span><h3>Calendario por publicar</h3><p>Cuando la liga publique el calendario de la Temporada 5, aqui apareceran tu rival y la fecha limite para jugar.</p></div>
+        <div class="m-card" style="--c:var(--volt)"><span class="label">Presupuesto</span><span class="big num">${esc(draftPts)}</span><p>${left>0?`Te quedan ${left} pts para fichar.`:"No te quedan puntos libres: para fichar tendrias que liberar a un Pokemon."} Movimientos de free agency usados: ${fa}.</p></div>
+        <div class="m-card"><span class="label">Pendientes</span><h3>Nada por ahora</h3><p>Aqui apareceran los replays por subir y los resultados por confirmar de tus series.</p></div>
       </div>
     </section>
     <section>
-      <div class="sec-head"><div><div class="label">Prepárate para tu rival</div><h2><em>Scouting</em></h2></div></div>
-      <div class="sc-bar"><label class="label" for="scRival">Rival</label><select id="scRival">${["rojo","azul"].map(c=>`<optgroup label="${CONF[c].name}">${TEAMS.map((x,i)=>[x,i]).filter(([x,i])=>x.c===c&&i!==ME).map(([x,i])=>`<option value="${i}" ${i===lastOpp?"selected":""}>${esc(x.n)}</option>`).join("")}</optgroup>`).join("")}</select>${lastOpp!=null?`<span class="sc-note">Seleccionado: tu último rival en playoffs.</span>`:""}</div>
+      <div class="sec-head"><div><div class="label">Preparate para tu rival</div><h2><em>Scouting</em></h2></div></div>
+      <div class="sc-bar"><label class="label" for="scRival">Rival</label><select id="scRival">${["rojo","azul"].map(c=>`<optgroup label="${CONF[c].name}">${TEAMS.map((x,i)=>[x,i]).filter(([x,i])=>x.c===c&&i!==ME).map(([x,i])=>`<option value="${i}" ${i===lastOpp?"selected":""}>${esc(x.n)}</option>`).join("")}</optgroup>`).join("")}</select>${lastOpp!=null?`<span class="sc-note">Seleccionado: tu ultimo rival en playoffs.</span>`:""}</div>
       <div id="scOut"></div>
     </section>
   </div>`;
@@ -1995,21 +1995,21 @@ function renderScout(ri){
   document.getElementById("scOut").innerHTML=`
     <div class="sc-head" style="--c:${RC}">${crest(R)}<div><span class="label">${CONF[R.c].name} · #${R.rank} · ${R.w}-${R.l}</span><strong>${esc(R.n)}</strong></div><a class="btn ghost" href="#team-${slug(R)}">Ver perfil</a></div>
     <div class="sc-g">
-      <div class="sc-box"><h3>Historial entre ustedes</h3>${h2h.length||po.length?`<div class="big num" style="font-family:var(--f-display);font-weight:900;font-size:2rem">${w}-${l} <span class="label">en series</span></div><div class="sc-h2h">${h2h.map(m=>mcard(m.a===ME?m:{...m,a:m.b,b:m.a,ga:m.gb,gb:m.ga,seq:[...m.seq].map(x=>x==="a"?"b":"a").join("")},ME)).join("")}</div>${po.map(([r,m])=>`<p class="sc-note">${r} de playoffs: ganó <b>${esc(TEAMS[winnerOf(m)].n)}</b></p>`).join("")}`:`<p class="sc-note">No se han enfrentado esta temporada (están en conferencias distintas o aún no se cruzan).</p>`}</div>
-      <div class="sc-box"><h3>Lo que más usa</h3>${used.length?`<div class="sc-list">${used.map(([n,c])=>row(n,c+" juegos")).join("")}</div>`:`<p class="sc-note">No hay juegos registrados con sus equipos.</p>`}</div>
-      <div class="sc-box"><h3>Sus amenazas (más KOs)</h3><div class="sc-list">${threats.map(r=>row(r[0],`${r[6]} KOs · ${r[7]?(r[6]/r[7]).toFixed(2):r[6]} K/D`)).join("")}</div></div>
-      <div class="sc-box"><h3>Sus tipos contra tu roster</h3>${cover.length?`<div class="sc-types">${cover.map(([a,c])=>`<span class="ty" style="--tc:${TYPE[a][1]}"><i>${TYPE[a][0]}<b>${c}</b></i></span>`).join("")}</div><p class="sc-note">Cuántos de tus Pokémon son débiles a cada tipo que tiene en su roster.</p>`:`<p class="sc-note">Ninguno de sus tipos te pega súper efectivo.</p>`}</div>
-      <div class="sc-box"><h3>Tus mejores respuestas</h3><div class="sc-list">${answers.map(([n,c])=>row(n,`súper efectivo vs ${c} de ${rv.length}`)).join("")}</div><p class="sc-note">Calculado solo por tipos, sin contar habilidades ni movimientos.</p></div>
+      <div class="sc-box"><h3>Historial entre ustedes</h3>${h2h.length||po.length?`<div class="big num" style="font-family:var(--f-display);font-weight:900;font-size:2rem">${w}-${l} <span class="label">en series</span></div><div class="sc-h2h">${h2h.map(m=>mcard(m.a===ME?m:{...m,a:m.b,b:m.a,ga:m.gb,gb:m.ga,seq:[...m.seq].map(x=>x==="a"?"b":"a").join("")},ME)).join("")}</div>${po.map(([r,m])=>`<p class="sc-note">${r} de playoffs: gano <b>${esc(TEAMS[winnerOf(m)].n)}</b></p>`).join("")}`:`<p class="sc-note">No se han enfrentado esta temporada (estan en conferencias distintas o aun no se cruzan).</p>`}</div>
+      <div class="sc-box"><h3>Lo que mas usa</h3>${used.length?`<div class="sc-list">${used.map(([n,c])=>row(n,c+" juegos")).join("")}</div>`:`<p class="sc-note">No hay juegos registrados con sus equipos.</p>`}</div>
+      <div class="sc-box"><h3>Sus amenazas (mas KOs)</h3><div class="sc-list">${threats.map(r=>row(r[0],`${r[6]} KOs · ${r[7]?(r[6]/r[7]).toFixed(2):r[6]} K/D`)).join("")}</div></div>
+      <div class="sc-box"><h3>Sus tipos contra tu roster</h3>${cover.length?`<div class="sc-types">${cover.map(([a,c])=>`<span class="ty" style="--tc:${TYPE[a][1]}"><i>${TYPE[a][0]}<b>${c}</b></i></span>`).join("")}</div><p class="sc-note">Cuantos de tus Pokemon son debiles a cada tipo que tiene en su roster.</p>`:`<p class="sc-note">Ninguno de sus tipos te pega super efectivo.</p>`}</div>
+      <div class="sc-box"><h3>Tus mejores respuestas</h3><div class="sc-list">${answers.map(([n,c])=>row(n,`super efectivo vs ${c} de ${rv.length}`)).join("")}</div><p class="sc-note">Calculado solo por tipos, sin contar habilidades ni movimientos.</p></div>
     </div>`;
 }
 renderMine();
 
-/* ---------- Salón de la Fama ---------- */
+/* ---------- Salon de la Fama ---------- */
 function renderHof(){
   const champ4=winnerOf(resolvePlayoffs().final);
-  const C=[[1,0,"Season 1 y 3 Champ"],[2,10,"Season 2 Champ"],[3,0,"Season 1 y 3 Champ"],[4,champ4,"Campeón de los playoffs"]];
+  const C=[[1,0,"Season 1 y 3 Champ"],[2,10,"Season 2 Champ"],[3,0,"Season 1 y 3 Champ"],[4,champ4,"Campeon de los playoffs"]];
   document.getElementById("hofChamps").innerHTML=C.map(([s,ti,src])=>{const t=TEAMS[ti];return `<a class="champ-c" data-s="${s}" href="#team-${slug(t)}" style="--c:${CONF[t.c].v}"><span class="label">Temporada ${s}</span>${crest(t)}<strong>${esc(PROFILES[ti][0])}</strong><p>${esc(t.n)}</p></a>`;}).join("")+
-    `<div class="champ-c now" data-s="5"><span class="label">Temporada 5 · Evolution</span><span class="crest" style="--sz:84px;--h1:hsl(40 10% 40%);--h2:hsl(40 10% 25%)">?</span><strong>En juego</strong><p>El próximo nombre del Hall of Fame</p></div>`;
+    `<div class="champ-c now" data-s="5"><span class="label">Temporada 5 · Evolution</span><span class="crest" style="--sz:84px;--h1:hsl(40 10% 40%);--h2:hsl(40 10% 25%)">?</span><strong>En juego</strong><p>El proximo nombre del Hall of Fame</p></div>`;
   const best=TEAMS.slice().sort((a,b)=>b.w-a.w||b.d-a.d)[0],bestD=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
   const all=PROFILES.flatMap((p,i)=>p[5].map(r=>[r,i]));
   const mk=all.slice().sort((a,b)=>b[0][6]-a[0][6])[0],kd=all.filter(x=>x[0][6]>=8).sort((a,b)=>(b[0][6]/(b[0][7]||1))-(a[0][6]/(a[0][7]||1)))[0];
@@ -2017,14 +2017,14 @@ function renderHof(){
   const sweeps=MATCHES.filter(m=>m.seq.length===2).length,threes=MATCHES.length-sweeps;
   const rec=(ic,lab,name,val,href)=>`<div class="hof-r"><span class="ic">${ic}</span><span class="label">${lab}</span><strong>${href?`<a class="nm" href="${href}">${name}</a>`:name}</strong><b class="num">${val}</b></div>`;
   document.getElementById("hofRecords").innerHTML=[
-    rec(crest(TEAMS[champ4]),"Campeón",esc(TEAMS[champ4].n),"🏆","#team-"+slug(TEAMS[champ4])),
-    rec(crest(best),"Mejor récord",esc(best.n),`${best.w}-${best.l}`,"#team-"+slug(best)),
+    rec(crest(TEAMS[champ4]),"Campeon",esc(TEAMS[champ4].n),"🏆","#team-"+slug(TEAMS[champ4])),
+    rec(crest(best),"Mejor record",esc(best.n),`${best.w}-${best.l}`,"#team-"+slug(best)),
     rec(crest(bestD),"Mejor diferencia",esc(bestD.n),sign(bestD.d),"#team-"+slug(bestD)),
-    rec(box(mk[0][0],""),"Más KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]])),
+    rec(box(mk[0][0],""),"Mas KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]])),
     rec(box(kd[0][0],""),"Mejor K/D (8+ KOs)",`${esc(kd[0][0])} · #${TEAMS[kd[1]].ab}`,(kd[0][6]/(kd[0][7]||1)).toFixed(2),"#team-"+slug(TEAMS[kd[1]])),
-    rec(box(top[0],""),"Pokémon más usado",esc(top[0]),`${top[1]} juegos`,""),
+    rec(box(top[0],""),"Pokemon mas usado",esc(top[0]),`${top[1]} juegos`,""),
     rec('<span class="crest" style="--sz:52px;--h1:hsl(45 90% 55%);--h2:hsl(35 90% 40%)">2-0</span>',"Barridas","Series ganadas 2-0",sweeps,""),
-    rec('<span class="crest" style="--sz:52px;--h1:hsl(200 80% 55%);--h2:hsl(220 80% 40%)">3</span>',"Series a 3 juegos","Las más peleadas",threes,"")
+    rec('<span class="crest" style="--sz:52px;--h1:hsl(200 80% 55%);--h2:hsl(220 80% 40%)">3</span>',"Series a 3 juegos","Las mas peleadas",threes,"")
   ].join("");
 }
 renderHof();
@@ -2042,7 +2042,7 @@ function renderMoves(){
   const tn=i=>`<a class="nm" href="#team-${slug(TEAMS[i])}">${esc(TEAMS[i].n)}</a>`;
   document.getElementById("drMoves").innerHTML=cards.map(({ti,out,inn})=>{const t=TEAMS[ti];
     return `<article class="mv ${ti===ME?"mine":""}" style="--c:${CONF[t.c].v}"><header>${crest(t)}<a href="#team-${slug(t)}">${esc(t.n)}</a><span>${inn.length} llegan · ${out.length} salen</span></header>
-      ${inn.map(x=>`<div class="mv-row in"><i>+</i>${box(x.n,"")}<div><b>${esc(x.n)}</b><small>${x.from!=null&&x.from!==ti?"Llegó de "+tn(x.from):"Fichado como agente libre"}</small></div></div>`).join("")}
+      ${inn.map(x=>`<div class="mv-row in"><i>+</i>${box(x.n,"")}<div><b>${esc(x.n)}</b><small>${x.from!=null&&x.from!==ti?"Llego de "+tn(x.from):"Fichado como agente libre"}</small></div></div>`).join("")}
       ${out.map(x=>`<div class="mv-row out"><i>−</i>${box(x.n,"")}<div><b>${esc(x.n)}</b><small>${x.to!=null?"Ahora en "+tn(x.to):"Liberado"}</small></div></div>`).join("")}
     </article>`;}).join("");
   document.getElementById("drMovesCount").textContent=`${cards.length} equipos con cambios`;
@@ -2050,7 +2050,7 @@ function renderMoves(){
 renderMoves();
 
 /* ---------- compartir perfil: imagen para Instagram (historia 1080x1920 o post 1080x1350) ---------- */
-const SHARE_URL="ppvdraftleague.com"; // dirección que aparece en la imagen y en el texto al compartir
+const SHARE_URL="ppvdraftleague.com"; // direccion que aparece en la imagen y en el texto al compartir
 const loadImg=(src,cors)=>new Promise(res=>{if(!src)return res(null);const i=new Image();if(cors)i.crossOrigin="anonymous";i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
 const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function wrapLines(x,text,maxW){const words=text.split(" "),lines=[];let cur="";words.forEach(w=>{const t=cur?cur+" "+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);return lines;}
@@ -2107,7 +2107,7 @@ async function makeShareImage(ti,fmt){
   y+=story?66:44;
   // cifras
   let gw=0,gl=0;seriesFor(ti).forEach(m=>{gw+=m.ga;gl+=m.gb;});
-  const stats=[[`${t.w}-${t.l}`,"RÉCORD"],[`${gw}-${gl}`,"JUEGOS"],[sign(t.d),"DIFF"],[String(t.pts),"PUNTOS"]];
+  const stats=[[`${t.w}-${t.l}`,"RECORD"],[`${gw}-${gl}`,"JUEGOS"],[sign(t.d),"DIFF"],[String(t.pts),"PUNTOS"]];
   const bw=(W-160-3*16)/4,bh=story?190:160;
   stats.forEach(([v,l],i)=>{const bx=80+i*(bw+16);x.fillStyle=INK2;x.fillRect(bx,y,bw,bh);x.fillStyle=C;x.fillRect(bx,y,bw,6);
     x.fillStyle=CH;x.font=`900 ${story?84:70}px "Big Shoulders Display", Impact, sans-serif`;x.textAlign="center";x.fillText(v,bx+bw/2,y+bh*.62);
@@ -2118,7 +2118,7 @@ async function makeShareImage(ti,fmt){
   if(spr){x.imageSmoothingEnabled=false;const s=story?230:180;x.drawImage(spr,100,y+(mh-s)/2,s,s);x.imageSmoothingEnabled=true;}
   const tx=story?360:310;x.textAlign="left";x.fillStyle=VO;x.font=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("MVP DEL EQUIPO",tx,y+mh*.3);
   x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((getNick(ti,mvp[0])||mvp[0]).toUpperCase(),tx,y+mh*.62);
-  x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${getNick(ti,mvp[0])?mvp[0]+" · ":""}${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
+  x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${getNick(ti,mvp[0])?mvp[0]+" · ":""}${mvp[6]} KOs · ${mvp[7]} caidas · ${mvp[5]} partidas`,tx,y+mh*.86);
   // pie
   if(lg){const h=story?100:56,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?50:34)-h,w,h);}
   x.textAlign="center";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow", sans-serif`;x.fillText(SHARE_URL,W/2,H-(story?70:50));
@@ -2135,7 +2135,7 @@ function openShareWith(opts){
     <div class="seg" role="group" aria-label="Formato" id="shFmt"><button type="button" data-f="story" aria-pressed="${shareState.fmt==="story"}">Historia 9:16</button><button type="button" data-f="post" aria-pressed="${shareState.fmt==="post"}">Post 4:5</button></div>
     <div class="sh-prev" id="shPrev"><span class="label">Generando imagen…</span></div>
     <div class="sh-actions"><button type="button" class="btn" id="shGo">Compartir</button><button type="button" class="btn ghost" id="shDl">Descargar</button></div>
-    <p class="sc-note" id="shMsg">En el teléfono, “Compartir” abre las apps instaladas (Instagram, WhatsApp…). En computadora, descarga la imagen y súbela desde la app.</p>
+    <p class="sc-note" id="shMsg">En el telefono, “Compartir” abre las apps instaladas (Instagram, WhatsApp…). En computadora, descarga la imagen y subela desde la app.</p>
   </div>`;
   drawer.hidden=false;
   document.querySelectorAll("#shFmt button").forEach(b=>b.addEventListener("click",()=>{shareState.fmt=b.dataset.f;document.querySelectorAll("#shFmt button").forEach(z=>z.setAttribute("aria-pressed",z===b));renderSharePreview();}));
@@ -2156,17 +2156,17 @@ const shareName=()=>`ppv-${shareState.opts.file}-${shareState.fmt==="story"?"his
 async function doShare(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
   const file=new File([b],shareName(),{type:"image/png"});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${shareState.opts.title} · PPV Draft League`,text:`${shareState.opts.text||shareState.opts.title} · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menú para compartir. Usa “Descargar”.";}}
-  else{await doDownload();if(!/cancelada|pendiente|No se pudo/.test(msg.textContent))msg.textContent="Este navegador no permite compartir archivos directamente: descarga la imagen y súbela desde Instagram.";}
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${shareState.opts.title} · PPV Draft League`,text:`${shareState.opts.text||shareState.opts.title} · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menu para compartir. Usa “Descargar”.";}}
+  else{await doDownload();if(!/cancelada|pendiente|No se pudo/.test(msg.textContent))msg.textContent="Este navegador no permite compartir archivos directamente: descarga la imagen y subela desde Instagram.";}
 }
 let dlCap;const getDl=async()=>{if(dlCap!==undefined)return dlCap;try{dlCap=(window.claude&&window.claude.use)?await window.claude.use("downloads"):null;}catch(e){dlCap=null;}return dlCap;};
 async function doDownload(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
   const dl=await getDl();
   if(dl){try{await dl.save({filename:shareName(),data:b});msg.textContent="Imagen guardada.";}
-    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en tu navegador para descargarla.";}return;}
+    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aqui. Abre el sitio en tu navegador para descargarla.";}return;}
   const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=shareName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-  msg.textContent="Si la descarga no empezó, mantén presionada la imagen para guardarla.";
+  msg.textContent="Si la descarga no empezo, manten presionada la imagen para guardarla.";
 }
 
 /* ---------- utilidades de dibujo ---------- */
@@ -2225,9 +2225,9 @@ async function drawSeries(i,fmt){
     y+=rh;});
   return f.cv;
 }
-/* 2. campeón */
+/* 2. campeon */
 async function drawChampion(fmt){
-  const P0=resolvePlayoffs(),ci=winnerOf(P0.final);const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","CAMPEÓN");const {x,W,story,P}=f;let y=f.y0;
+  const P0=resolvePlayoffs(),ci=winnerOf(P0.final);const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","CAMPEON");const {x,W,story,P}=f;let y=f.y0;
   if(ci==null){txt(x,"POR DEFINIR",`900 120px ${FD}`,P.CH,"center",W/2,y+200);return f.cv;}
   const t=TEAMS[ci],[coach]=PROFILES[ci];
   const svg=TROPHY.replace(/var\(--volt\)/g,P.VO).replace(/var\(--chalk\)/g,P.CH).replace(/var\(--ink\)/g,P.INK).replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" ');
@@ -2244,30 +2244,40 @@ async function drawChampion(fmt){
   return f.cv;
 }
 /* 3. tabla de posiciones */
-async function drawTable(fmt){
-  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","POSICIONES");const {x,W,story,P}=f;let y=f.y0;
+async function drawTable(fmt,view){
+  const general=view==="all";
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E",general?"TABLA GENERAL":"POSICIONES");const {x,W,story,P}=f;let y=f.y0;
   const imgs=await Promise.all(TEAMS.map(teamImg));
-  txt(x,"FASE REGULAR · 8 SEMANAS",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?36:24;
-  const rh=story?56:40,hh=story?62:44,L=80,R=W-80;
-  ["rojo","azul"].forEach(c=>{const C=confHex(c);x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?40:32}px ${FD}`,"#16161a","left",L+20,y+hh*.72);
-    ["W-L","DIFF","PTS"].forEach((h,k)=>txt(x,h,`700 ${story?24:20}px ${FL}`,"#16161a","right",R-20-(2-k)*(story?150:130),y+hh*.68));y+=hh;
-    by(c).forEach((t,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);
-      if(t.rank===5){x.save();x.strokeStyle=C;x.lineWidth=3;x.setLineDash([12,8]);x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();x.restore();}
-      const cy=y+rh/2,col=t.q?P.CH:P.MU;txt(x,String(t.rank),`900 ${story?40:32}px ${FD}`,t.q?C:P.MU,"left",L+20,cy+(story?14:11));
-      fit(x,imgs[TEAMS.indexOf(t)],L+(story?110:96),cy,rh-10);
-      x.font=`800 ${story?34:28}px ${FD}`;txt(x,ell(x,t.n.toUpperCase(),story?380:330),`800 ${story?34:28}px ${FD}`,col,"left",L+(story?160:136),cy+(story?12:10));
-      [`${t.w}-${t.l}`,sign(t.d),String(t.pts)].forEach((v,j)=>txt(x,v,`${j===2?900:700} ${story?36:30}px ${FD}`,j===2?P.CH:col,"right",R-20-(2-j)*(story?150:130),cy+(story?13:11)));
-      y+=rh;});
-    y+=story?36:22;});
-  txt(x,"- - -  línea de playoffs: top 4 de cada conferencia",`600 ${story?24:20}px ${FB}`,P.MU,"center",W/2,y+(story?10:4));
+  txt(x,general?"FASE REGULAR · 18 EQUIPOS":"FASE REGULAR · POR CONFERENCIA",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?36:24;
+  const rh=story?56:40,hh=story?62:44,L=80,R=W-80,colX=k=>R-20-(2-k)*(story?150:130);
+  const head=(label,bg,fg)=>{x.fillStyle=bg;x.fillRect(L,y,R-L,hh);txt(x,label,`900 ${story?40:32}px ${FD}`,fg,"left",L+20,y+hh*.72);
+    ["W-L","DIFF","PTS"].forEach((h,k)=>txt(x,h,`700 ${story?24:20}px ${FL}`,fg,"right",colX(k),y+hh*.68));y+=hh;};
+  const row=(t,k,pos,cut,C)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);
+    if(cut){x.save();x.strokeStyle=C;x.lineWidth=3;x.setLineDash([12,8]);x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();x.restore();}
+    if(general){x.fillStyle=confHex(t.c);x.fillRect(L,y,6,rh);}
+    const cy=y+rh/2,col=t.q?P.CH:P.MU;txt(x,String(pos),`900 ${story?40:32}px ${FD}`,t.q?(general?P.CH:C):P.MU,"left",L+20,cy+(story?14:11));
+    fit(x,imgs[TEAMS.indexOf(t)],L+(story?110:96),cy,rh-10);
+    x.font=`800 ${story?34:28}px ${FD}`;txt(x,ell(x,t.n.toUpperCase(),story?380:330),`800 ${story?34:28}px ${FD}`,col,"left",L+(story?160:136),cy+(story?12:10));
+    [`${t.w}-${t.l}`,sign(t.d),String(t.pts)].forEach((v,j)=>txt(x,v,`${j===2?900:700} ${story?36:30}px ${FD}`,j===2?P.CH:col,"right",colX(j),cy+(story?13:11)));
+    y+=rh;};
+  if(general){
+    head("GENERAL",P.VO,"#16161a");
+    TEAMS.slice().sort((a,b)=>a.gr-b.gr).forEach((t,k)=>row(t,k,t.gr,false));
+    y+=story?36:22;
+    x.fillStyle=P.RO;x.fillRect(W/2-(story?250:220),y-(story?8:6),16,16);x.fillStyle=P.VE;x.fillRect(W/2-(story?230:200),y-(story?8:6),16,16);
+    txt(x,"color de conferencia · en blanco: clasificados a playoffs",`600 ${story?24:20}px ${FB}`,P.MU,"left",W/2-(story?200:172),y+(story?6:5));
+  }else{
+    ["rojo","azul"].forEach(c=>{const C=confHex(c);head(CONF[c].name.toUpperCase(),C,"#16161a");by(c).forEach((t,k)=>row(t,k,t.rank,t.rank===5,C));y+=story?36:22;});
+    txt(x,"- - -  linea de playoffs: top 4 de cada conferencia",`600 ${story?24:20}px ${FB}`,P.MU,"center",W/2,y+(story?10:4));
+  }
   return f.cv;
 }
 /* 4. leaderboard */
 async function drawLeaders(fmt){
-  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LÍDERES EN KOS");const {x,W,story,P}=f;let y=f.y0;
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LIDERES EN KOS");const {x,W,story,P}=f;let y=f.y0;
   const N=7,list=MONS_FULL.slice().sort((a,b)=>b.k-a.k).slice(0,N+1),top=list[0];
   const [big,...bx]=await Promise.all([sprImg(top.n),...list.slice(1).map(m=>boxImg(m.n))]);
-  txt(x,"POKÉMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  txt(x,"POKEMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
   const bh=story?320:230;x.fillStyle=P.INK2;x.fillRect(80,y,W-160,bh);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(80,y,W-160,bh);
   fit(x,big,80+bh/2+10,y+bh/2,bh-20,true);const tx=80+bh+30,ow=OWNER[top.n];
   txt(x,"#1 · MVP DE LA TEMPORADA",`700 ${story?28:22}px ${FL}`,P.VO,"left",tx,y+bh*.22);
@@ -2316,7 +2326,7 @@ async function drawMyDraft(fmt){
     if(!p.n){txt(x,"SIN PICK",`800 ${story?40:32}px ${FD}`,P.MU,"left",cx+18,cy+ch*.6);return;}
     const s=story?170:120;x.save();if(gone)x.globalAlpha=.5;fit(x,sp[k],cx+cw-s/2-6,cy+ch*.56,s,true);x.restore();
     x.font=`900 ${story?44:34}px ${FD}`;txt(x,ell(x,p.n.toUpperCase(),cw-s-30),`900 ${story?44:34}px ${FD}`,gone?P.MU:P.CH,"left",cx+18,cy+ch*.58);
-    txt(x,`${PTS[p.n]} pts${gone?" · ya no está":""}`,`700 ${story?28:22}px ${FL}`,gone?P.MU:P.VO,"left",cx+18,cy+ch*.8);});
+    txt(x,`${PTS[p.n]} pts${gone?" · ya no esta":""}`,`700 ${story?28:22}px ${FL}`,gone?P.MU:P.VO,"left",cx+18,cy+ch*.8);});
   return f.cv;
 }
 
@@ -2338,9 +2348,9 @@ async function drawRoster(ti,fmt){
     if(r===mvp){x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(cx+2,cy+2,cw-4,ch-4);chip(x,cx+cw-(story?140:118),cy+10,story?34:28,"MVP",P.VO,"#16161a",null);}
     const s=story?170:120;fit(x,sp[k],cx+cw-s/2-6,cy+ch*.58,s,true);
     x.font=`900 ${story?40:30}px ${FD}`;txt(x,ell(x,(getNick(ti,n)||n).toUpperCase(),cw-s-24),`900 ${story?40:30}px ${FD}`,P.CH,"left",cx+18,cy+(story?56:44));
-    let tx=cx+18;const chh=story?32:26;ts.forEach(ty=>{tx+=chip(x,tx,cy+(story?76:58),chh,TYPE[ty][0].toUpperCase(),TYPE[ty][1],"#16161a",null)+8;});
+    let tx=cx+18;const chh=story?32:26;ts.forEach(ty=>{tx+=chip(x,tx,cy+ch*.42-chh/2,chh,TYPE[ty][0].toUpperCase(),TYPE[ty][1],"#16161a",null)+8;});
     txt(x,`${cost} PTS`,`900 ${story?44:34}px ${FD}`,P.VO,"left",cx+18,cy+ch*(story?.74:.76));
-    txt(x,`${getNick(ti,n)?n+" · ":""}${kk} KOs · ${d} caídas · ${g} partidas`,`600 ${story?24:19}px ${FB}`,P.MU,"left",cx+18,cy+ch*.9);});
+    txt(x,`${getNick(ti,n)?n+" · ":""}${kk} KOs · ${d} caidas · ${g} partidas`,`600 ${story?24:19}px ${FB}`,P.MU,"left",cx+18,cy+ch*.9);});
   return f.cv;
 }
 /* 8. juegos de la semana */
@@ -2369,13 +2379,13 @@ async function drawWeek(w,fmt){
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
   series:a=>{const m=MATCHES[a],A=TEAMS[m.a],B=TEAMS[m.b];return {kind:"Resultado",title:`${A.ab} ${m.ga}-${m.gb} ${B.ab}`,file:`serie-s${m.w}-${A.ab}-${B.ab}`.toLowerCase(),accent:CONF[m.c].v,text:`${A.n} ${m.ga}-${m.gb} ${B.n} · Semana ${m.w}`,draw:f=>drawSeries(a,f)};},
-  champ:()=>{const c=winnerOf(resolvePlayoffs().final);return {kind:"Campeón",title:c!=null?TEAMS[c].n:"Campeón",file:"campeon",accent:"var(--volt)",text:c!=null?`${TEAMS[c].n}, campeón de la PPV Draft League`:"Campeón de la PPV Draft League",draw:drawChampion};},
-  table:()=>({kind:"Tabla",title:"Tabla de posiciones",file:"tabla",accent:"var(--volt)",text:"Tabla de posiciones de la PPV Draft League",draw:drawTable}),
-  leaders:()=>({kind:"Leaderboard",title:"Líderes en KOs",file:"leaderboard",accent:"var(--volt)",text:"Los líderes en KOs de la PPV Draft League",draw:drawLeaders}),
+  champ:()=>{const c=winnerOf(resolvePlayoffs().final);return {kind:"Campeon",title:c!=null?TEAMS[c].n:"Campeon",file:"campeon",accent:"var(--volt)",text:c!=null?`${TEAMS[c].n}, campeon de la PPV Draft League`:"Campeon de la PPV Draft League",draw:drawChampion};},
+  table:()=>{const v=sView;return {kind:"Tabla",title:v==="all"?"Tabla general":"Tabla por conferencia",file:v==="all"?"tabla-general":"tabla-conferencias",accent:"var(--volt)",text:"Tabla de posiciones de la PPV Draft League",draw:f=>drawTable(f,v)};},
+  leaders:()=>({kind:"Leaderboard",title:"Lideres en KOs",file:"leaderboard",accent:"var(--volt)",text:"Los lideres en KOs de la PPV Draft League",draw:drawLeaders}),
   bracket:()=>({kind:"Bracket",title:"Playoffs",file:"bracket",accent:"var(--volt)",text:"Bracket de playoffs de la PPV Draft League",draw:drawBracket}),
   roster:a=>{const t=TEAMS[a];return {kind:"Roster",title:`Roster de ${t.n}`,file:`roster-${slug(t)}`,accent:CONF[t.c].v,text:`El roster de ${t.n}`,draw:f=>drawRoster(a,f)};},
   week:a=>({kind:"Semana",title:`Semana ${a}`,file:`semana-${a}`,accent:"var(--volt)",text:`Resultados de la semana ${a} en la PPV Draft League`,draw:f=>drawWeek(a,f)}),
-  draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Así quedó el draft de ${t.n}`,draw:drawMyDraft};}
+  draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Asi quedo el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
   if(b.dataset.share!=null)return openShareWith(SHARE_KINDS.profile(+b.dataset.share));
@@ -2400,5 +2410,5 @@ addEventListener("hashchange",route);route();
 
 /* placeholder links */
 const toast=document.getElementById("toast");let tt;
-document.addEventListener("click",e=>{const a=e.target.closest("[data-soon]");if(!a)return;e.preventDefault();toast.textContent="Esta sección no está incluida en el mockup (no está incluida en el mockup).";toast.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toast.hidden=true,2400);});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-soon]");if(!a)return;e.preventDefault();toast.textContent="Esta seccion no esta incluida en el mockup (no esta incluida en el mockup).";toast.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toast.hidden=true,2400);});
 </script>
