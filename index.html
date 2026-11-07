@@ -2963,8 +2963,8 @@ async function drawOverlay(mi){
   // roster: sprite HOME + costo de draft, ordenado por costo
   const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-30,112);
     const q=Math.min(G.x-28,sh-10);
-    ro.forEach((r,k)=>{const top=G.y+sh*k+(sh-q)/2;x.fillStyle=P.INK3;x.fillRect(cx-q/2,top,q,q);
-      fit(x,imgs[k],cx,top+(q-20)/2+2,Math.min(q-24,sz));txt(x,`${r[1]} PTS`,`700 16px ${FL}`,C,"center",cx,top+q-8);});};
+    ro.forEach((r,k)=>{const top=G.y+sh*k+(sh-q)/2;x.fillStyle=P.INK3;x.fillRect(cx-q/2,top,q,q);x.fillStyle=C;x.fillRect(cx-q/2,top+q-5,q,5);
+      fit(x,imgs[k],cx,top+(q-5)/2,Math.min(q-14,sz));});};
   await col(m.a,G.x/2,CA);await col(m.b,W-G.x/2,CB);
   // barra superior con entradas diagonales detras de cada equipo
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
@@ -2982,12 +2982,11 @@ async function drawOverlay(mi){
   txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,68);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 17px ${FL}`,P.MU,"center",cx,100);
   // barra inferior
   x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
-  poly([[0,fy],[420,fy],[392,H],[0,H]],P.INK3);
   txt(x,"TEMPORADA 5 · EVOLUTION",`700 20px ${FL}`,P.VO,"left",24,fy+39);
   // logo + nombre de la liga, juntos y centrados en la barra
   {const nf=`900 28px ${FD}`,lh=38,lw=lg?lg.width*lh/lg.height:0,gap=lg?12:0;x.font=nf;const nw=x.measureText("PPV DRAFT LEAGUE").width,sx=(W-(lw+gap+nw))/2;
     if(lg)x.drawImage(lg,sx,fy+(fh-lh)/2,lw,lh);txt(x,"PPV DRAFT LEAGUE",nf,P.CH,"left",sx+lw+gap,fy+fh/2+10);}
-  poly([[W-430,fy],[W,fy],[W,H],[W-402,H]],P.INK3);txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
+txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
   // ventana del juego: transparente con borde
   x.clearRect(G.x,G.y,G.w,G.h);x.lineWidth=4;
   x.strokeStyle=CA;x.beginPath();x.moveTo(G.x+G.w/2,G.y-2);x.lineTo(G.x-2,G.y-2);x.lineTo(G.x-2,G.y+G.h+2);x.lineTo(G.x+G.w/2,G.y+G.h+2);x.stroke();
