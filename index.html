@@ -440,6 +440,10 @@ table.st.m{min-width:560px}
 .mc .meta{border-left:1px solid var(--line);display:grid;align-content:center;justify-items:center;gap:8px;padding:10px 14px;min-width:104px;background:color-mix(in srgb,var(--ink-3) 60%,var(--ink-2))}
 .mc .meta .label{font-size:.68rem;text-align:center}
 .rps{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+/* cuadro de replays: siempre del ancho de 3 juegos (G1 G2 G3) */
+.mc .meta{box-sizing:border-box;width:128px;min-width:128px}
+.mc .meta .rps{flex-wrap:nowrap}
+@media (max-width:440px){.mc .meta{width:auto;min-width:0}}
 .rp{font-family:var(--f-label);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;text-decoration:none;color:var(--chalk);border:1px solid var(--line);padding:3px 8px;transition:border-color .15s,color .15s}
 .rp:hover{border-color:var(--volt);color:var(--volt)}
 .rps .none{font-size:.75rem;color:var(--mute)}
