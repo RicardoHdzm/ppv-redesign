@@ -2960,12 +2960,7 @@ async function drawOverlay(mi){
   const [la,lb,lg]=await Promise.all([teamImg(A),teamImg(B),shareLogo()]);
   const poly=(pts,fill)=>{x.beginPath();pts.forEach(([px,py],k)=>k?x.lineTo(px,py):x.moveTo(px,py));x.closePath();x.fillStyle=fill;x.fill();};
   const cap=f=>{x.font=f;return x.measureText("H").actualBoundingBoxAscent;}; // altura real de las mayusculas
-  // textura: tejido de fibra de carbono (celdas de 6px) muy tenue + degradado suave para dar volumen
-  const tile=document.createElement("canvas");tile.width=tile.height=12;const tc=tile.getContext("2d");
-  const cell=(x0,y0,v)=>{const g=v?tc.createLinearGradient(x0,y0,x0+6,y0):tc.createLinearGradient(x0,y0,x0,y0+6);g.addColorStop(0,"#ffffff");g.addColorStop(1,"#000000");tc.fillStyle=g;tc.fillRect(x0,y0,6,6);};
-  cell(0,0,false);cell(6,0,true);cell(0,6,true);cell(6,6,false);
-  const pat=x.createPattern(tile,"repeat");
-  const carbon=(x0,y0,w,h)=>{x.save();x.globalAlpha=.06;x.fillStyle=pat;x.fillRect(x0,y0,w,h);x.restore();};
+  // degradado suave para dar volumen a las barras
   const shade=(x0,y0,w,h,down)=>{const g=x.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,down?"rgba(255,255,255,.05)":"rgba(0,0,0,.28)");g.addColorStop(1,down?"rgba(0,0,0,.28)":"rgba(255,255,255,.05)");x.fillStyle=g;x.fillRect(x0,y0,w,h);};
   // medidas de referencia: margen exterior unico y zonas visibles (sin la linea del borde del juego, 4px)
   const M=26,BW=4,topH=G.y-BW,topC=topH/2,footY=G.y+G.h+BW,footC=footY+(H-footY)/2,colW=G.x-BW,colLC=colW/2,colRC=W-colW/2;
@@ -2978,7 +2973,7 @@ async function drawOverlay(mi){
       fit(x,imgs[k],cx,top+(q-5)/2,q-14);});};
   await col(m.a,colLC,CA);await col(m.b,colRC,CB);
   // barra superior
-  x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);carbon(0,0,W,G.y);shade(0,0,W,G.y,true);
+  x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);shade(0,0,W,G.y,true);
   poly([[700,0],[712,0],[666,G.y],[654,G.y]],CA);poly([[W-700,0],[W-712,0],[W-666,G.y],[W-654,G.y]],CB);
   const f1=`900 42px ${FD}`,f2=`900 30px ${FD}`,f3=`600 17px ${FL}`,a1=cap(f1),a2=cap(f2),a3=cap(f3),lg1=9,lg2=9,blk=a1+lg1+a2+lg2+a3,b1=topC-blk/2+a1,b2=b1+lg1+a2,b3=b2+lg2+a3;
   const side=(t,lo,C,left)=>{const ti=TEAMS.indexOf(t),ls=96;fit(x,lo,left?M+ls/2:W-M-ls/2,topC,ls);const tx=left?M+ls+20:W-M-ls-20,al=left?"left":"right";
@@ -2994,7 +2989,7 @@ async function drawOverlay(mi){
   x.fillStyle=CA;x.fillRect(cx-so,by+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+so-bs,by+bs-6,bs,6);
   txt(x,"VS",fv,P.VO,"center",cx,by+bs/2+cap(fv)/2);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,fs,P.MU,"center",cx,by+bs+sg+as);
   // barra inferior: todo centrado en la misma linea
-  x.fillStyle=P.INK2;x.fillRect(0,G.y+G.h,W,H-G.y-G.h);carbon(0,G.y+G.h,W,H-G.y-G.h);shade(0,G.y+G.h,W,H-G.y-G.h,false);
+  x.fillStyle=P.INK2;x.fillRect(0,G.y+G.h,W,H-G.y-G.h);shade(0,G.y+G.h,W,H-G.y-G.h,false);
   const ft=`700 20px ${FL}`,at=cap(ft);
   txt(x,"TEMPORADA 5 · EVOLUTION",ft,P.VO,"left",M,footC+at/2);
   txt(x,SHARE_URL.toUpperCase(),ft,P.VO,"right",W-M,footC+at/2);
