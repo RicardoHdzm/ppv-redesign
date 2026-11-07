@@ -2854,8 +2854,8 @@ async function drawConfs(fmt,view){
       x.fillStyle=P.INK3;x.fillRect(cx,cy,cw,ch);x.fillStyle=C;x.fillRect(cx,cy,cw,5);
       fit(x,imgs[TEAMS.indexOf(t)],cx+cw/2,cy+12+ls/2,ls);
       txt(x,"#"+t.rank,`900 ${story?30:22}px ${FD}`,t.q?C:P.MU,"left",cx+12,cy+(story?40:30));
-      txt(x,"#"+t.ab,`900 ${Math.round(ch*.2)}px ${FD}`,P.CH,"center",cx+cw/2,cy+12+ls+ch*.2);
-      const nf=`600 ${Math.round(ch*.115)}px ${FL}`;x.font=nf;txt(x,ell(x,t.n.toUpperCase(),cw-20),nf,P.MU,"center",cx+cw/2,cy+12+ls+ch*.2+ch*.15);});
+      let fz=Math.round(ch*.15);const N=t.n.toUpperCase();x.font=`800 ${fz}px ${FD}`;while(fz>ch*.1&&x.measureText(N).width>cw-20){fz--;x.font=`800 ${fz}px ${FD}`;}const nf=`800 ${fz}px ${FD}`;txt(x,ell(x,N,cw-20),nf,P.CH,"center",cx+cw/2,cy+12+ls+ch*.19);
+      txt(x,"#"+t.ab,`700 ${Math.round(ch*.1)}px ${FL}`,P.MU,"center",cx+cw/2,cy+12+ls+ch*.19+ch*.13);});
     y+=rows*(ch+gap)-gap+sep;});
   return f.cv;
 }
