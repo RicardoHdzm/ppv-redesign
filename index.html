@@ -1207,6 +1207,29 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .srch-none{padding:18px 12px;color:var(--mute)}
 .pk.flash{outline:3px solid var(--volt);outline-offset:3px}
 .p-share{display:flex;gap:10px;flex-wrap:wrap}
+/* ---------- MEDIA (community manager) ---------- */
+.md-hero::after{content:"CM"}
+.nav nav a.cm-link{color:var(--volt)}
+.cm-btn{flex:none;height:42px;min-width:42px;padding:0 10px;display:grid;place-items:center;border:1px solid var(--volt);color:var(--volt);text-decoration:none;font-family:var(--f-label);font-weight:700;letter-spacing:.12em;font-size:.8rem}
+.cm-btn:hover,.cm-btn.on{background:var(--volt);color:var(--ink)}
+@media (max-width:860px){.cm-btn{display:none}}
+@media (min-width:861px) and (max-width:1240px){.brand .name{display:none}}
+@media (min-width:861px){.nav .wrap{gap:14px}.nav nav a{padding:8px 9px}.nav nav a.on::after{left:9px;right:9px}}
+@media (min-width:861px){#navMedia{display:none!important}}
+.nav nav a.cm-link small{font-size:.62rem;letter-spacing:.12em;margin-left:5px;padding:1px 5px;border:1px solid currentColor;vertical-align:2px}
+.md-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px}
+.md-c{background:var(--ink-2);border:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;min-width:0}
+.md-prev{background:var(--ink);display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;border-bottom:1px solid var(--line)}
+.md-prev.story{aspect-ratio:9/16}
+.md-prev canvas{width:100%;height:100%;object-fit:contain;display:block}
+.md-b{padding:12px 14px 14px;display:grid;gap:6px;align-content:start}
+.md-b h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.25rem;margin:0;line-height:1.05}
+.md-b p{margin:0;color:var(--mute);font-size:.85rem}
+.md-tag{font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.68rem;color:var(--volt)}
+.md-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.md-acts .btn[disabled]{opacity:.45;cursor:wait}
+.md-note{color:var(--mute);font-size:.85rem;margin:0}
+.md-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1232,8 +1255,10 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <a href="#draft" data-page="draft">Draft</a>
       <a href="#pokedex" data-page="pokedex">Pokedex</a>
       <a href="#salon" data-page="salon">H.O.F.</a>
+      <a href="#media" data-page="media" class="cm-link" id="navMedia" hidden>Media<small>CM</small></a>
     </nav>
     <button type="button" class="nav-search" id="searchBtn" aria-label="Buscar (atajo: tecla /)" title="Buscar (/)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    <a class="cm-btn" id="cmBtn" href="#media" hidden title="Media · kit del community manager" aria-label="Media: kit del community manager">CM</a>
     <a class="me-chip" id="meChip" href="#"></a>
     <button type="button" class="me-out" id="meOut">Salir</button>
     <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menu"><span></span><span></span><span></span></button>
@@ -1445,6 +1470,27 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   <div class="wrap s-body">
     <section id="prBody"></section>
     <section><div class="sec-head"><div><div class="label" id="prTabLabel"></div><h2>Tabla de <em>aciertos</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="pickTable" id="prTabShare" hidden>⤴ Compartir tabla</button></div><div id="prTable"></div></section>
+  </div>
+</main>
+
+<!-- ================= MEDIA (community manager) ================= -->
+<main id="page-media" hidden>
+  <section class="t-hero md-hero">
+    <div class="wrap">
+      <div><div class="label">Community manager · Kit de la semana</div><h1>Media</h1></div>
+      <div class="weeks" id="mdWeeks" role="group" aria-label="Elegir semana"></div>
+    </div>
+  </section>
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="seg" role="group" aria-label="Formato de las imagenes" id="mdFmt"><button type="button" data-fm="post" aria-pressed="true">Post 4:5</button><button type="button" data-fm="story" aria-pressed="false">Historia 9:16</button></div>
+      <button type="button" class="btn sh-sm" id="mdAll" disabled>⤓ Descargar todas</button>
+      <span class="label count" id="mdCount"></span>
+    </div>
+  </div>
+  <div class="wrap s-body">
+    <div class="md-g" id="mdGrid"></div>
+    <p class="md-note">Demo: Rick tiene el rol de community manager. En el sitio real esta pagina solo aparece para las cuentas con ese rol. Los trades y fichajes no tienen fecha en los datos actuales, por eso se muestran todos los de la temporada.</p>
   </div>
 </main>
 
@@ -2719,12 +2765,12 @@ async function drawRoster(ti,fmt){
   return f.cv;
 }
 /* 8. juegos de la semana */
-async function drawWeek(w,fmt){
+async function drawWeek(w,fmt,sched){
   const wk=MATCHES.filter(m=>m.w===w);
-  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E",`SEMANA ${w}`);const {x,W,story,P}=f;let y=f.y0;
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E",sched?`CALENDARIO`:`SEMANA ${w}`);const {x,W,story,P}=f;let y=f.y0;
   const imgs=await Promise.all(TEAMS.map(teamImg));
   const sweeps=wk.filter(m=>m.seq.length===2).length;
-  txt(x,`${wk.length} SERIES · ${sweeps} EN 2-0 · ${wk.length-sweeps} A 3 JUEGOS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  txt(x,sched?`SEMANA ${w} · ${wk.length} SERIES AL MEJOR DE 3`:`${wk.length} SERIES · ${sweeps} EN 2-0 · ${wk.length-sweeps} A 3 JUEGOS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
   const hh=story?56:44,rh=story?124:92,L=80,R=W-80;
   ["rojo","azul"].forEach(c=>{const C=confHex(c),list=wk.filter(m=>m.c===c);
     x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?38:30}px ${FD}`,"#16161a","left",L+20,y+hh*.72);y+=hh;
@@ -2732,8 +2778,8 @@ async function drawWeek(w,fmt){
       const side=(ti,won,left)=>{const t=TEAMS[ti];x.save();if(!won)x.globalAlpha=.45;const lx=left?L+20+ls/2:R-20-ls/2;fit(x,imgs[ti],lx,cy,ls);
         const ax=left?L+20+ls+16:R-20-ls-16;txt(x,"#"+t.ab,`900 ${story?50:38}px ${FD}`,won?P.CH:P.MU,left?"left":"right",ax,cy+(story?10:8));
         x.font=`600 ${story?22:18}px ${FL}`;txt(x,ell(x,t.n.toUpperCase(),story?260:220),`600 ${story?22:18}px ${FL}`,P.MU,left?"left":"right",ax,cy+(story?38:30));x.restore();};
-      side(m.a,wA,true);side(m.b,!wA,false);
-      txt(x,`${m.ga} - ${m.gb}`,`900 ${story?64:50}px ${FD}`,P.CH,"center",W/2,cy+(story?22:17));y+=rh;});
+      side(m.a,sched||wA,true);side(m.b,sched||!wA,false);
+      txt(x,sched?"VS":`${m.ga} - ${m.gb}`,`900 ${story?64:50}px ${FD}`,P.CH,"center",W/2,cy+(story?22:17));y+=rh;});
     const playing=new Set(list.flatMap(m=>[m.a,m.b])),byes=TEAMS.map((t,i)=>[t,i]).filter(([t,i])=>t.c===c&&!playing.has(i));
     txt(x,byes.length?"Descansa: "+byes.map(([t])=>"#"+t.ab+" "+t.n).join(", "):"",`600 ${story?24:20}px ${FB}`,P.MU,"left",L+4,y+(story?32:26));
     y+=story?52:38;});
@@ -2860,6 +2906,29 @@ async function drawConfs(fmt,view){
   return f.cv;
 }
 
+/* 15. mercado: trades y fichajes */
+async function drawMarket(fmt){
+  const {trades,fas}=TX(),all=[...trades.map(t=>({tr:t})),...fas.map(t=>({fa:t}))];
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","MERCADO");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,`${trades.length} TRADES · ${fas.length} EQUIPOS EN FREE AGENCY`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  const rh=story?108:84,L=80,R=W-80,room=Math.floor((f.y1-y-(story?50:40))/rh),list=all.slice(0,room),ls=rh-(story?40:30);
+  const ab=i=>"#"+TEAMS[i].ab,join=a=>a.join(", ");
+  list.forEach((e,k)=>{const cy=y+rh/2;x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);
+    const lf=`900 ${story?36:28}px ${FD}`,sf=`600 ${story?24:19}px ${FB}`,tx=L+(e.tr?ls*2+44:ls+30),mw=R-20-tx;
+    if(e.tr){const t=e.tr;x.fillStyle=confHex(TEAMS[t.a].c);x.fillRect(L,y,6,rh);fit(x,imgs[t.a],L+18+ls/2,cy,ls);fit(x,imgs[t.b],L+30+ls*1.5,cy,ls);
+      txt(x,`${ab(t.a)} ⇄ ${ab(t.b)}`,lf,P.CH,"left",tx,cy-(story?6:4));
+      const parts=[t.ba.length?`${ab(t.a)} recibe ${join(t.ba)}`:"",t.ab.length?`${ab(t.b)} recibe ${join(t.ab)}`:""].filter(Boolean).join(" · ");
+      x.font=sf;txt(x,ell(x,parts,mw),sf,P.MU,"left",tx,cy+(story?30:24));}
+    else{const t=e.fa;x.fillStyle=confHex(TEAMS[t.ti].c);x.fillRect(L,y,6,rh);fit(x,imgs[t.ti],L+18+ls/2,cy,ls);
+      txt(x,`${ab(t.ti)} · FREE AGENCY`,lf,P.CH,"left",tx,cy-(story?6:4));
+      const parts=[t.inn.length?`Ficha ${join(t.inn)}`:"",t.out.length?`Libera ${join(t.out)}`:""].filter(Boolean).join(" · ");
+      x.font=sf;txt(x,ell(x,parts,mw),sf,P.MU,"left",tx,cy+(story?30:24));}
+    y+=rh;});
+  if(all.length>list.length)txt(x,`+${all.length-list.length} movimientos mas en ${SHARE_URL}`,`600 ${story?26:21}px ${FB}`,P.MU,"center",W/2,y+(story?40:32));
+  return f.cv;
+}
+
 /* botones */
 const SHARE_KINDS={
   profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
@@ -2876,6 +2945,8 @@ const SHARE_KINDS={
   picks:a=>{const w=a||prWeek,wk=MATCHES.filter(m=>m.w===w),st=prState(w),h=wk.filter(m=>st.p[m.i]===winSide(m)).length;return {kind:"Pronosticos",title:`Mis pronosticos · Semana ${w}`,file:`pronosticos-s${w}`,accent:"var(--volt)",text:st.rev?`Atine ${h} de ${wk.length} en la semana ${w} de la PPV Draft League`:`Mis pronosticos de la semana ${w} en la PPV Draft League`,draw:f=>drawPicks(w,f)};},
   pickTable:()=>{const {rows}=pickRows(),me=rows.find(r=>r.ti===ME);return {kind:"Pronosticos",title:"Tabla de aciertos",file:"pronosticos-tabla",accent:"var(--volt)",text:me?`Voy #${me.pos} en los pronosticos de la PPV Draft League`:"Tabla de aciertos de los pronosticos de la PPV Draft League",draw:drawPickTable};},
   confs:()=>{const v=filter,one=v!=="all";return {kind:"Conferencias",title:one?`Conferencia ${CONF[v].name}`:"Las conferencias",file:one?`conferencia-${CONF[v].name.toLowerCase().replace(/\s+/g,"-")}`:"conferencias",accent:one?CONF[v].v:"var(--volt)",text:one?`Los equipos de la conferencia ${CONF[v].name} en la PPV Draft League`:"Los equipos de cada conferencia de la PPV Draft League",draw:fm=>drawConfs(fm,v)};},
+  schedule:a=>({kind:"Calendario",title:`Calendario · Semana ${a}`,file:`calendario-${a}`,accent:"var(--volt)",text:`Los cruces de la semana ${a} en la PPV Draft League`,draw:f=>drawWeek(a,f,true)}),
+  market:()=>({kind:"Mercado",title:"Trades y fichajes",file:"mercado",accent:"var(--volt)",text:"Los trades y fichajes de la PPV Draft League",draw:drawMarket}),
   draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Asi quedo el draft de ${t.n}`,draw:drawMyDraft};}
 };
 document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
@@ -3103,17 +3174,62 @@ renderHomeExtras();
 renderMons(); // vuelve a pintar el leaderboard con el color de cada equipo
 renderMatches(); // vuelve a pintar Matches ahora que el Pokemon de la semana ya se puede calcular
 
+/* ---------- roles (demo) y pagina Media del community manager ---------- */
+const ROLES={12:["trainer","cm"]}; // en el sitio real vendria de la cuenta de cada usuario
+const hasRole=r=>(ROLES[ME]||[]).includes(r);
+if(hasRole("cm")){document.getElementById("navMedia").hidden=false;document.getElementById("cmBtn").hidden=false;}
+async function saveBlob(b,name){const dl=await getDl();
+  if(dl){try{await dl.save({filename:name,data:b});return "ok";}catch(e){return e&&e.code==="declined"?"declined":e&&e.code==="rate_limited"?"rate":"err";}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);return "ok";}
+let mdWeek=WEEKS,mdFmt="post",mdJob=0,mdItems=[],mdFiles=[];
+function mediaItems(w){return [
+  {tag:`Semana ${w}`,t:"Calendario de la semana",d:`Los cruces de la semana ${w}, sin resultados.`,o:()=>SHARE_KINDS.schedule(w)},
+  {tag:`Semana ${w}`,t:"Resultados de la semana",d:`Las series de la semana ${w} con su marcador.`,o:()=>SHARE_KINDS.week(w)},
+  {tag:`Semana ${w}`,t:"Power ranking",d:`Los 18 equipos despues de la semana ${w}.`,o:()=>SHARE_KINDS.power(w)},
+  {tag:`Semana ${w}`,t:"Pokemon de la semana",d:"El Pokemon con mas victorias de la semana.",o:()=>SHARE_KINDS.potw(w)},
+  {tag:"Temporada",t:"Standings por conferencia",d:"Las dos tablas con la linea de playoffs.",o:()=>({kind:"Tabla",title:"Standings por conferencia",file:"tabla-conferencias",accent:"var(--volt)",draw:f=>drawTable(f,"conf")})},
+  {tag:"Temporada",t:"Tabla general",d:"Los 18 equipos en una sola tabla.",o:()=>({kind:"Tabla",title:"Tabla general",file:"tabla-general",accent:"var(--volt)",draw:f=>drawTable(f,"all")})},
+  {tag:"Temporada",t:"Lideres en KOs",d:"El leaderboard de Pokemon.",o:()=>SHARE_KINDS.leaders()},
+  {tag:"Mercado",t:"Trades y fichajes",d:"Los movimientos de la temporada.",o:()=>SHARE_KINDS.market()},
+  {tag:"Playoffs",t:"Bracket",d:"El cuadro de playoffs con resultados.",o:()=>SHARE_KINDS.bracket()}];}
+async function renderMedia(){const box=document.getElementById("mdGrid");
+  if(!hasRole("cm")){box.innerHTML='<div class="empty">Esta pagina es solo para el rol de community manager.</div>';return;}
+  document.querySelectorAll("#mdWeeks button").forEach(b=>b.setAttribute("aria-pressed",+b.dataset.w===mdWeek));
+  document.querySelectorAll("#mdFmt button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.fm===mdFmt));
+  const job=++mdJob,all=document.getElementById("mdAll");mdItems=mediaItems(mdWeek);mdFiles=[];all.disabled=true;
+  document.getElementById("mdCount").textContent=`${mdItems.length} imagenes · semana ${mdWeek} · ${mdFmt==="story"?"historia":"post"}`;
+  box.innerHTML=mdItems.map((it,i)=>`<article class="md-c"><div class="md-prev ${mdFmt}" id="mdP${i}"><span class="label">Generando…</span></div><div class="md-b"><span class="md-tag">${esc(it.tag)}</span><h3>${esc(it.t)}</h3><p>${esc(it.d)}</p><div class="md-acts"><button type="button" class="btn sh-sm" data-mdl="${i}" disabled>⤓ Descargar</button><button type="button" class="btn ghost sh-sm" data-mds="${i}">⤴ Compartir</button></div></div></article>`).join("");
+  for(let i=0;i<mdItems.length;i++){const o=mdItems[i].o();let cv;try{cv=await o.draw(mdFmt);}catch(e){cv=null;}if(job!==mdJob)return;
+    const p=document.getElementById("mdP"+i);if(!cv){p.innerHTML='<span class="label">No disponible</span>';continue;}p.innerHTML="";p.appendChild(cv);
+    const blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});if(job!==mdJob)return;
+    mdFiles[i]=blob?{blob,name:`ppv-${/d/.test(o.file)?o.file:`s${mdWeek}-${o.file}`}-${mdFmt==="story"?"historia":"post"}.png`}:null;
+    const b=document.querySelector(`[data-mdl="${i}"]`);if(b)b.disabled=!blob;}
+  all.disabled=!mdFiles.some(Boolean);}
+document.getElementById("mdWeeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
+document.getElementById("mdWeeks").addEventListener("click",e=>{const b=e.target.closest("button[data-w]");if(!b)return;mdWeek=+b.dataset.w;renderMedia();});
+document.querySelectorAll("#mdFmt button").forEach(b=>b.addEventListener("click",()=>{mdFmt=b.dataset.fm;renderMedia();}));
+document.getElementById("mdGrid").addEventListener("click",async e=>{
+  const d=e.target.closest("[data-mdl]");if(d){const fl=mdFiles[+d.dataset.mdl];if(!fl)return;d.disabled=true;const r=await saveBlob(fl.blob,fl.name);d.disabled=false;toastMsg(r==="ok"?"Imagen guardada.":r==="declined"?"Descarga cancelada.":r==="rate"?"Hay una descarga pendiente; intenta en un momento.":"No se pudo guardar la imagen.");return;}
+  const s=e.target.closest("[data-mds]");if(s)openShareWith({...mdItems[+s.dataset.mds].o()});});
+document.getElementById("mdAll").addEventListener("click",async()=>{const btn=document.getElementById("mdAll"),files=mdFiles.filter(Boolean);btn.disabled=true;let ok=0;
+  for(let i=0;i<files.length;i++){btn.textContent=`⤓ Descargando ${i+1} de ${files.length}…`;let r=await saveBlob(files[i].blob,files[i].name);
+    if(r==="rate"){await new Promise(z=>setTimeout(z,1500));r=await saveBlob(files[i].blob,files[i].name);}
+    if(r==="declined")break;if(r==="ok")ok++;await new Promise(z=>setTimeout(z,350));}
+  btn.textContent="⤓ Descargar todas";btn.disabled=false;toastMsg(`${ok} de ${files.length} imagenes guardadas.`);});
+
 refreshLeaderNicks();
 /* routing */
 function route(){
   const h=location.hash.slice(1);
-  const PAGES=["home","teams","standings","matches","h2h","pronosticos","playoffs","draft","pokedex","mi-equipo","salon"];
+  const PAGES=["home","teams","standings","matches","h2h","pronosticos","playoffs","draft","pokedex","mi-equipo","salon","media"];
   const ti=h.startsWith("team-")?TEAMS.findIndex(t=>"team-"+slug(t)===h):-1;
   const hm=h.match(/^h2h-(\d+)-(\d+)$/);if(hm&&TEAMS[+hm[1]]&&TEAMS[+hm[2]]&&hm[1]!==hm[2])h2=[+hm[1],+hm[2]];
   const p=ti>=0?"profile":hm?"h2h":PAGES.includes(h)?h:"home";
   if(ti>=0)renderProfile(ti);
   if(p==="h2h")renderH2H();
   if(p==="pronosticos")renderPicks();
+  if(p==="media")renderMedia();
+  {const cb=document.getElementById("cmBtn");if(cb)cb.classList.toggle("on",p==="media");}
   [...PAGES,"profile"].forEach(x=>document.getElementById("page-"+x).hidden=p!==x);
   if(p==="draft")requestAnimationFrame(equalizeBoard);
   if(p==="matches"){const W=document.getElementById("weeks");W.scrollLeft=W.scrollWidth;}
