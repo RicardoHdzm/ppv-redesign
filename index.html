@@ -955,6 +955,22 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .strip.p-strip .stat{border-color:var(--line);padding-top:24px}
 .strip.p-strip .stat span{color:var(--mute)}
 .cid.fav-up{text-transform:uppercase;letter-spacing:.12em}
+/* móvil: siglas en lugar de nombres y columnas no esenciales ocultas para que las tablas quepan */
+.row .tm .short{display:none}
+@media (max-width:440px){
+  .row .tm .full{display:none}.row .tm .short{display:inline;letter-spacing:.06em}
+  .row{min-width:0;padding-left:12px;padding-right:12px}
+  table.st{min-width:0}
+  .st th,.st td{padding:8px 6px}
+  .st td.pos{width:30px;font-size:1.2rem}
+  #stables .st th:nth-child(3),#stables .st td:nth-child(3),#stables .st th:nth-child(7),#stables .st td:nth-child(7),#stables .st th:nth-child(9),#stables .st td:nth-child(9){display:none}
+  #stables .st .tm .chip{display:none}
+  .st .tm{gap:8px}.st .tm .logo,.st .tm .crest{--sz:28px}
+  table.st.m{min-width:0}
+  .kb{width:44px}
+  #mtable th:nth-child(5),#mtable td:nth-child(5){display:none}
+  .fa{min-width:0}.fa td,.fa th{padding:8px 8px}.fa th:nth-child(2),.fa td:nth-child(2){display:none}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1369,7 +1385,7 @@ document.getElementById("tables").innerHTML=["rojo","azul"].map(c=>`
    <div class="row hd"><span>#</span><span>Equipo</span><span>W-L</span><span>Diff</span><span style="text-align:right">Pts</span></div>
    ${by(c).map(t=>`<div class="row ${t.q?"in":"out"} ${t.rank===5?"cut":""}">
      <span class="pos num">${t.rank}</span>
-     <span class="tm">${crest(t)}<span>${esc(t.n)}</span></span>
+     <span class="tm">${crest(t)}<span class="full">${esc(t.n)}</span><span class="short">#${t.ab}</span></span>
      <span class="num">${t.w}-${t.l}</span>
      <span class="num">${t.d>0?"+":""}${t.d}</span>
      <span class="pts num">${t.pts}</span></div>`).join("")}
