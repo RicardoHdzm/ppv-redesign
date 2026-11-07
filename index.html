@@ -2350,8 +2350,8 @@ function openSeries(i){
     <div class="sh-btns"><button type="button" class="btn sh-sm" data-sharek="series" data-arg="${i}">⤴ Compartir resultado</button></div>
     <section class="sd-obs"><header><span class="label">Transmision · OBS</span></header>
       <div class="obs-prev" id="sdObsPrev" data-mi="${i}"><span class="label">Generando overlay…</span></div>
-      <div class="md-acts"><button type="button" class="btn sh-sm" data-obs="${i}" data-k="ov">⤓ Overlay</button><button type="button" class="btn ghost sh-sm" data-obs="${i}" data-k="in">⤓ Pantalla de inicio</button></div>
-      <p class="obs-tip">PNG de 1920×1080. En OBS pon la captura del juego en x 160, y 120 con tamaño 1600×900 y el overlay encima: el centro es transparente. La pantalla de inicio va en la escena de espera.</p>
+      <div class="md-acts"><button type="button" class="btn sh-sm" data-obs="${i}" data-k="ov">⤓ Overlay</button><button type="button" class="btn ghost sh-sm" data-obs="${i}" data-k="in" hidden>⤓ Pantalla de inicio</button><!-- oculto por ahora --></div>
+      <p class="obs-tip">PNG de 1920×1080. En OBS pon la captura del juego en x 160, y 120 con tamaño 1600×900 y el overlay encima: el centro es transparente.</p>
     </section>
     ${one}${games}${any?"":'<p class="sd-none">Esta serie no tiene registrados los Pokemon de cada juego.</p>'}
   </div>`;
