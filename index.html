@@ -1077,7 +1077,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .tx{background:var(--ink-2);border:1px solid var(--line);padding:14px 16px;display:grid;gap:10px;align-content:start;min-width:0}
 .tx-top{display:flex;align-items:center;gap:10px}
 .tx-kind{font-family:var(--f-label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;padding:3px 10px;background:var(--volt);color:var(--ink)}
-.tx-kind.fa{background:var(--ink-3);color:var(--chalk)}
+.tx-kind.k-fa{background:var(--ink-3);color:var(--chalk)}
 .tx-date{margin-left:auto;color:var(--mute);font-size:.78rem}
 .tx-sides{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:start}
 .tx-side{min-width:0;border-top:3px solid var(--c);padding-top:8px}
@@ -1867,7 +1867,7 @@ function mcard(m,top){
     :m.ids.map((id,i)=>`<a class="rp" href="${ytu(id)}" target="_blank" rel="noopener" aria-label="Replay del juego ${i+1}">G${i+1}</a>`).join("");
   let res="";
   if(top!==undefined){const mine=m.a===top?"a":"b";const won=(mine==="a"?m.ga:m.gb)===2;res=`<span class="res ${won?"w":"l"}">${won?"W":"L"}</span>`;}
-  const lab=top!==undefined?`Semana ${m.w}`:(m.seq.length===3?"Final · 3 juegos":"Final · barrida");
+  const lab=top!==undefined?`Semana ${m.w}`:(m.seq.length===3?"Final · 3 juegos":"Final · 2-0");
   return `<article class="mc ${top===undefined&&(m.a===ME||m.b===ME)?"mine":""}" data-mi="${m.i}" tabindex="0" style="--c:${CONF[m.c].v}" aria-label="Ver detalle de la serie: ${esc(TEAMS[m.a].n)} ${m.ga}, ${esc(TEAMS[m.b].n)} ${m.gb}"><div class="sides">${mside(m,"a")}${mside(m,"b")}</div><div class="meta">${res}<span class="label">${lab}</span><div class="rps">${reps}</div></div></article>`;
 }
 document.getElementById("weeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
@@ -1905,7 +1905,7 @@ function renderMatches(){
   };
   box.innerHTML=`<div class="wsum"><h2>Semana ${mWeek}</h2>
      <div><b class="num">${shown.length}</b><span class="label">Series</span></div>
-     <div><b class="num">${shown.length-three}</b><span class="label">Barridas 2-0</span></div>
+     <div><b class="num">${shown.length-three}</b><span class="label">Series 2-0</span></div>
      <div><b class="num">${three}</b><span class="label">Series a 3 juegos</span></div>
      <div><b class="num">${games}</b><span class="label">Juegos</span></div><button type="button" class="btn ghost sh-sm" data-sharek="week" data-arg="${mWeek}" style="margin-left:auto">⤴ Compartir semana</button></div>
     ${potwMini(mWeek)}<div class="mcols ${confs.length===1?"one":""}">${confs.map(col).join("")}</div>`;
@@ -2368,7 +2368,7 @@ function renderHof(){
     rec(box(mk[0][0],""),"Mas KOs",`${esc(mk[0][0])} · #${TEAMS[mk[1]].ab}`,mk[0][6],"#team-"+slug(TEAMS[mk[1]])),
     rec(box(kd[0][0],""),"Mejor K/D (8+ KOs)",`${esc(kd[0][0])} · #${TEAMS[kd[1]].ab}`,(kd[0][6]/(kd[0][7]||1)).toFixed(2),"#team-"+slug(TEAMS[kd[1]])),
     rec(box(top[0],""),"Pokemon mas usado",esc(top[0]),`${top[1]} juegos`,""),
-    rec('<span class="crest" style="--sz:52px;--h1:hsl(45 90% 55%);--h2:hsl(35 90% 40%)">2-0</span>',"Barridas","Series ganadas 2-0",sweeps,""),
+    rec('<span class="crest" style="--sz:52px;--h1:hsl(45 90% 55%);--h2:hsl(35 90% 40%)">2-0</span>',"Series 2-0","Ganadas sin perder un juego",sweeps,""),
     rec('<span class="crest" style="--sz:52px;--h1:hsl(200 80% 55%);--h2:hsl(220 80% 40%)">3</span>',"Series a 3 juegos","Las mas peleadas",threes,"")
   ].join("");
 }
@@ -2709,7 +2709,7 @@ async function drawWeek(w,fmt){
   const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E",`SEMANA ${w}`);const {x,W,story,P}=f;let y=f.y0;
   const imgs=await Promise.all(TEAMS.map(teamImg));
   const sweeps=wk.filter(m=>m.seq.length===2).length;
-  txt(x,`${wk.length} SERIES · ${sweeps} BARRIDAS · ${wk.length-sweeps} A 3 JUEGOS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  txt(x,`${wk.length} SERIES · ${sweeps} EN 2-0 · ${wk.length-sweeps} A 3 JUEGOS`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
   const hh=story?56:44,rh=story?124:92,L=80,R=W-80;
   ["rojo","azul"].forEach(c=>{const C=confHex(c),list=wk.filter(m=>m.c===c);
     x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?38:30}px ${FD}`,"#16161a","left",L+20,y+hh*.72);y+=hh;
@@ -2880,7 +2880,7 @@ function txTrade(x){const A=TEAMS[x.a],B=TEAMS[x.b];
   const side=(t,gets)=>`<div class="tx-side" style="--c:${CONF[t.c].v}">${txHead(t)}<small>Recibe</small>${gets.length?gets.map(n=>txMon(n,"in")).join(""):'<p class="tx-empty">Sin contraparte directa</p>'}</div>`;
   return `<article class="tx"><div class="tx-top"><span class="tx-kind">Trade</span><span class="tx-date">Fecha por registrar</span></div><div class="tx-sides">${side(A,x.ba)}<span class="tx-arrow" aria-hidden="true">⇄</span>${side(B,x.ab)}</div></article>`;}
 function txFa(x){const t=TEAMS[x.ti];
-  return `<article class="tx"><div class="tx-top"><span class="tx-kind fa">Free agency</span><span class="tx-date">Fecha por registrar</span></div><div class="tx-side" style="--c:${CONF[t.c].v}">${txHead(t)}${x.inn.length?`<small>Ficha</small>${x.inn.map(n=>txMon(n,"in")).join("")}`:""}${x.out.length?`<small>Libera</small>${x.out.map(n=>txMon(n,"out")).join("")}`:""}</div></article>`;}
+  return `<article class="tx"><div class="tx-top"><span class="tx-kind k-fa">Free agency</span><span class="tx-date">Fecha por registrar</span></div><div class="tx-side" style="--c:${CONF[t.c].v}">${txHead(t)}${x.inn.length?`<small>Ficha</small>${x.inn.map(n=>txMon(n,"in")).join("")}`:""}${x.out.length?`<small>Libera</small>${x.out.map(n=>txMon(n,"out")).join("")}`:""}</div></article>`;}
 function txTeamHTML(ti){const {trades,fas}=TX(),tr=trades.filter(x=>x.a===ti||x.b===ti),fa=fas.filter(x=>x.ti===ti);if(!tr.length&&!fa.length)return "";
   return `<section><div class="sec-head"><div><div class="label">${tr.length} ${tr.length===1?"trade":"trades"}${fa.length?" · free agency":""} desde el draft</div><h2>Trades y <em>fichajes</em></h2></div><a class="link" href="#draft" data-goto="txSec">Ver todo el mercado</a></div><div class="tx-g">${tr.map(txTrade).join("")}${fa.map(txFa).join("")}</div></section>`;}
 let txF="all";
