@@ -1006,7 +1006,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   <section class="block" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head">
-        <div><div class="label">Pokémon Leaderboard</div><h2>Los más <em>letales</em></h2></div>
+        <div><div class="label">Pokémon Leaderboard</div><h2>Líderes en <em>KOs</em></h2></div>
         <div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button><a class="link" href="#pokedex">Ver Pokedex</a></div>
       </div>
       <div class="lead">
@@ -2218,7 +2218,7 @@ async function drawTable(fmt){
 }
 /* 4. leaderboard */
 async function drawLeaders(fmt){
-  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LOS MÁS LETALES");const {x,W,story,P}=f;let y=f.y0;
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LÍDERES EN KOS");const {x,W,story,P}=f;let y=f.y0;
   const N=story?8:5,list=MONS_FULL.slice().sort((a,b)=>b.k-a.k).slice(0,N+1),top=list[0];
   const [big,...bx]=await Promise.all([sprImg(top.n),...list.slice(1).map(m=>boxImg(m.n))]);
   txt(x,"POKÉMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
@@ -2324,7 +2324,7 @@ const SHARE_KINDS={
   series:a=>{const m=MATCHES[a],A=TEAMS[m.a],B=TEAMS[m.b];return {kind:"Resultado",title:`${A.ab} ${m.ga}-${m.gb} ${B.ab}`,file:`serie-s${m.w}-${A.ab}-${B.ab}`.toLowerCase(),accent:CONF[m.c].v,text:`${A.n} ${m.ga}-${m.gb} ${B.n} · Semana ${m.w}`,draw:f=>drawSeries(a,f)};},
   champ:()=>{const c=winnerOf(resolvePlayoffs().final);return {kind:"Campeón",title:c!=null?TEAMS[c].n:"Campeón",file:"campeon",accent:"var(--volt)",text:c!=null?`${TEAMS[c].n}, campeón de la PPV Draft League`:"Campeón de la PPV Draft League",draw:drawChampion};},
   table:()=>({kind:"Tabla",title:"Tabla de posiciones",file:"tabla",accent:"var(--volt)",text:"Tabla de posiciones de la PPV Draft League",draw:drawTable}),
-  leaders:()=>({kind:"Leaderboard",title:"Los más letales",file:"leaderboard",accent:"var(--volt)",text:"Los Pokémon más letales de la PPV Draft League",draw:drawLeaders}),
+  leaders:()=>({kind:"Leaderboard",title:"Líderes en KOs",file:"leaderboard",accent:"var(--volt)",text:"Los líderes en KOs de la PPV Draft League",draw:drawLeaders}),
   bracket:()=>({kind:"Bracket",title:"Playoffs",file:"bracket",accent:"var(--volt)",text:"Bracket de playoffs de la PPV Draft League",draw:drawBracket}),
   roster:a=>{const t=TEAMS[a];return {kind:"Roster",title:`Roster de ${t.n}`,file:`roster-${slug(t)}`,accent:CONF[t.c].v,text:`El roster de ${t.n}`,draw:f=>drawRoster(a,f)};},
   week:a=>({kind:"Semana",title:`Semana ${a}`,file:`semana-${a}`,accent:"var(--volt)",text:`Resultados de la semana ${a} en la PPV Draft League`,draw:f=>drawWeek(a,f)}),
