@@ -2977,7 +2977,6 @@ async function drawOverlay(mi){
   side(A,la,CA,true);side(B,lb,CB,false);
   // marcador al centro sobre una placa inclinada
   const cx=W/2,bs=64;poly([[cx-206,10],[cx+206,10],[cx+184,G.y-14],[cx-184,G.y-14]],P.INK);
-  x.fillStyle=P.INK3;x.fillRect(cx-150,20,bs,bs);x.fillRect(cx+150-bs,20,bs,bs);
   x.fillStyle=CA;x.fillRect(cx-150,20+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+150-bs,20+bs-6,bs,6);
   txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,68);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 17px ${FL}`,P.MU,"center",cx,100);
   // barra inferior
