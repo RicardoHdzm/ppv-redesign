@@ -224,7 +224,7 @@ section.block{padding-block:72px}
 .bar .i{font-family:var(--f-display);font-weight:900;color:var(--mute);font-size:1.1rem}
 .bar .p{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .t{height:12px;background:var(--ink-3);position:relative;transform:skewX(-18deg)}
-.bar .t i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--rojo),var(--verde));animation:grow 1s cubic-bezier(.2,.9,.2,1) both}
+.bar .t i{position:absolute;inset:0 auto 0 0;background:var(--bc,var(--volt));animation:grow 1s cubic-bezier(.2,.9,.2,1) both}
 @keyframes grow{from{transform:scaleX(.15);transform-origin:left}}
 .bar .v{font-family:var(--f-display);font-weight:800;font-size:1.2rem;text-align:right}
 .bar.top .p{color:var(--volt)}
@@ -402,7 +402,7 @@ table.st.m{min-width:560px}
 .wpn{display:inline-block;min-width:4ch}
 .kc{display:inline-flex;align-items:center;gap:12px}
 .kb{display:inline-block;width:110px;height:10px;background:var(--ink-3);transform:skewX(-18deg);position:relative}
-.kb i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--rojo),var(--verde))}
+.kb i{position:absolute;inset:0 auto 0 0;background:var(--bc,var(--volt))}
 .kc b{font-family:var(--f-display);font-weight:900;font-size:1.4rem;min-width:2ch;color:var(--chalk)}
 .st td.best{color:var(--volt)}
 #mons-sec{scroll-margin-top:140px}
@@ -1848,7 +1848,7 @@ function renderMons(){
   const list=sortBy(MONS_FULL,mKey,mDir,(a,b)=>b.k-a.k||a.n.localeCompare(b.n));
   document.getElementById("mtable").innerHTML=`<thead><tr><th class="l">#</th>${mth("n","Pokemon","l")}${mth("k","Kills","l")}${mth("d","Deaths")}${mth("g","Partidas")}${mth("kd","K/D")}</tr></thead><tbody>${list.map((m,i)=>`
    <tr class="in" style="--c:var(--volt)"><td class="pos l">${i+1}</td><td class="l"><span class="nm">${box(m.n,"spr-s")}${m.n}</span></td>
-   <td class="l"><span class="kc"><span class="kb" aria-hidden="true"><i style="width:${m.k/maxK*100}%"></i></span><b>${m.k}</b></span></td>
+   <td class="l"><span class="kc"><span class="kb" aria-hidden="true"><i style="width:${m.k/maxK*100}%;${monConf(m.n)?"--bc:"+monConf(m.n):""}"></i></span><b>${m.k}</b></span></td>
    <td>${m.d}</td><td>${m.g}</td><td class="${m.kd===bestKd?"best":""}">${m.kd.toFixed(2)}</td></tr>`).join("")}</tbody>`;
 }
 document.getElementById("mtable").addEventListener("click",e=>{
@@ -1989,6 +1989,8 @@ function wireRosterAnim(root){
   });
 }
 /* apodo de un Pokemon segun su dueño actual (seguro aunque OWNER/getNick aun no existan al cargar) */
+/* color de la conferencia del equipo dueño de un Pokemon (vacio si aun no se puede saber o es agente libre) */
+function monConf(n){try{const o=OWNER[n];return o!=null?CONF[TEAMS[o].c].v:"";}catch(e){return "";}}
 function nickOf(n){try{const o=OWNER[n];return o!=null?getNick(o,n):"";}catch(e){return "";}}
 function refreshLeaderNicks(){
   const h=document.querySelector(".mvp h3");if(h){const nk=nickOf("Blastoise");h.innerHTML=nk?`${esc(nk)}<small class="sp-mvp">Blastoise</small>`:"Blastoise";}
@@ -3020,7 +3022,9 @@ renderHomeExtras();
 (()=>{const cc=n=>{const o=OWNER[n];return o!=null?CONF[TEAMS[o].c].v:null;};
   const kdN=MONS_FULL.slice().sort((a,b)=>b.kd-a.kd)[0].n,st=document.querySelector("#bars .note strong");if(st&&cc(kdN))st.style.color=cc(kdN);
   document.querySelectorAll("#mtiles .mt").forEach(t=>{const c=cc(t.querySelector("strong").textContent.trim());if(c)t.style.setProperty("--c",c);});
+  document.querySelectorAll("#bars .bar").forEach((b,i)=>{const c=MONS[i]&&cc(MONS[i][0]);const t=b.querySelector(".t i");if(c&&t)t.style.setProperty("--bc",c);});
   const tp=document.querySelector("#bars .bar.top .p");if(tp&&cc(MONS[0][0]))tp.style.color=cc(MONS[0][0]);})();
+renderMons(); // vuelve a pintar el leaderboard con el color de cada equipo
 renderMatches(); // vuelve a pintar Matches ahora que el Pokemon de la semana ya se puede calcular
 
 refreshLeaderNicks();
