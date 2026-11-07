@@ -922,6 +922,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .mv-row.out i{color:#FF5A5F}
 .mv-row small{display:block;color:var(--mute);font-size:.78rem}
 .mv-note{color:var(--mute);font-size:.85rem;margin:-10px 0 16px}
+.btn.sh-sm{padding:8px 14px;font-size:.78rem}
+.sh-btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 /* ---------- compartir perfil ---------- */
 .p-share{margin-top:16px}
 .sh-panel{gap:14px}
@@ -1005,7 +1007,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="wrap">
       <div class="sec-head">
         <div><div class="label">Pokémon Leaderboard</div><h2>Los más <em>letales</em></h2></div>
-        <a class="link" href="#" data-soon>Ver Pokedex</a>
+        <div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button><a class="link" href="#pokedex">Ver Pokedex</a></div>
       </div>
       <div class="lead">
         <div class="mvp">
@@ -1082,13 +1084,14 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <button type="button" data-v="all" aria-pressed="false">General</button>
       </div>
       <button type="button" class="link jump" id="toMons">Pokémon Leaderboard ↓</button>
+      <button type="button" class="btn ghost sh-sm" data-sharek="table">⤴ Compartir tabla</button>
       <span class="label count">Top 4 de cada conferencia van a playoffs · Victoria = 3 pts</span>
     </div>
   </div>
   <div class="wrap s-body">
     <div id="stables"></div>
     <section id="mons-sec">
-      <div class="sec-head"><div><div class="label">Rendimiento individual</div><h2>Pokémon <em>Leaderboard</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Rendimiento individual</div><h2>Pokémon <em>Leaderboard</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="leaders">⤴ Compartir</button></div>
       <div class="mtiles" id="mtiles"></div>
       <div class="table"><div class="rows"><table class="st m" id="mtable"></table></div></div>
     </section>
@@ -1127,7 +1130,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section>
-      <div class="sec-head"><div><div class="label">Formato escalera · Series al mejor de 3 · Cruce de conferencias</div><h2>El <em>bracket</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Formato escalera · Series al mejor de 3 · Cruce de conferencias</div><h2>El <em>bracket</em></h2></div><div class="sh-btns"><button type="button" class="btn ghost sh-sm" data-sharek="bracket">⤴ Compartir bracket</button><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeón</button></div></div>
       <div class="bk-w" id="bracket"></div>
     </section>
     <section>
@@ -1183,7 +1186,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section>
-      <div class="sec-head"><div><div class="label">Richampions VGC</div><h2>Tu <em>draft</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Richampions VGC</div><h2>Tu <em>draft</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="draft">⤴ Compartir mi draft</button></div>
       <div class="my-sum" id="drMineSum"></div>
       <div class="my-g" id="drMine"></div>
     </section>
@@ -1216,7 +1219,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </section>
   <div class="wrap s-body">
     <section>
-      <div class="sec-head"><div><div class="label">Un título por temporada</div><h2>Los <em>campeones</em></h2></div></div>
+      <div class="sec-head"><div><div class="label">Un título por temporada</div><h2>Los <em>campeones</em></h2></div><button type="button" class="btn ghost sh-sm" data-sharek="champ">⤴ Compartir campeón</button></div>
       <div class="champs" id="hofChamps"></div>
       <p class="hof-note">Las temporadas 1 a 3 salen de los títulos de cada coach en su perfil. Se muestra el equipo actual del coach: el nombre del equipo pudo ser otro en esa temporada.</p>
     </section>
@@ -1877,6 +1880,7 @@ function openSeries(i){
     <button type="button" class="close" id="closeD">Cerrar</button>
     <div class="label">Semana ${m.w} · Serie al mejor de 3</div>
     <div class="sd-score"><a href="#team-${slug(A)}">${crest(A)}<span>${esc(A.n)}</span></a><b class="num">${m.ga}<i>-</i>${m.gb}</b><a href="#team-${slug(B)}">${crest(B)}<span>${esc(B.n)}</span></a></div>
+    <div class="sh-btns"><button type="button" class="btn sh-sm" data-sharek="series" data-arg="${i}">⤴ Compartir resultado</button></div>
     ${one}${games}${any?"":'<p class="sd-none">Esta serie no tiene registrados los Pokémon de cada juego.</p>'}
   </div>`;
   drawer.hidden=false;document.getElementById("closeD").focus();
@@ -2075,12 +2079,13 @@ async function makeShareImage(ti,fmt){
   const rojo=cssVar("--rojo")||"#FF4B2B",verde=cssVar("--verde")||"#7ED13A";x.fillStyle=rojo;x.fillRect(0,H-14,W/2,14);x.fillStyle=verde;x.fillRect(W/2,H-14,W/2,14);
   return cv;
 }
-let shareState={ti:null,fmt:"story",blob:null};
-async function openShare(ti){
-  shareState={ti,fmt:shareState.fmt||"story",blob:null};const t=TEAMS[ti];
-  drawer.innerHTML=`<div class="panel sh-panel" role="dialog" aria-modal="true" aria-label="Compartir perfil de ${esc(t.n)}" style="--cc:${CONF[t.c].v}">
+/* ---------- panel de compartir (general) ---------- */
+let shareState={fmt:"story",blob:null,opts:null};
+function openShareWith(opts){
+  shareState.opts=opts;shareState.blob=null;
+  drawer.innerHTML=`<div class="panel sh-panel" role="dialog" aria-modal="true" aria-label="Compartir: ${esc(opts.title)}" style="--cc:${opts.accent||"var(--volt)"}">
     <button type="button" class="close" id="closeD">Cerrar</button>
-    <div><span class="label">Compartir en Instagram</span><h2 style="font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2rem;line-height:1;margin:6px 0 0">${esc(t.n)}</h2></div>
+    <div><span class="label">Compartir en Instagram · ${esc(opts.kind)}</span><h2 style="font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2rem;line-height:1;margin:6px 0 0">${esc(opts.title)}</h2></div>
     <div class="seg" role="group" aria-label="Formato" id="shFmt"><button type="button" data-f="story" aria-pressed="${shareState.fmt==="story"}">Historia 9:16</button><button type="button" data-f="post" aria-pressed="${shareState.fmt==="post"}">Post 4:5</button></div>
     <div class="sh-prev" id="shPrev"><span class="label">Generando imagen…</span></div>
     <div class="sh-actions"><button type="button" class="btn" id="shGo">Compartir</button><button type="button" class="btn ghost" id="shDl">Descargar</button></div>
@@ -2093,32 +2098,195 @@ async function openShare(ti){
   renderSharePreview();
 }
 async function renderSharePreview(){
-  const box=document.getElementById("shPrev");box.innerHTML='<span class="label">Generando imagen…</span>';
-  const cv=await makeShareImage(shareState.ti,shareState.fmt);
+  const box=document.getElementById("shPrev");if(!box)return;box.innerHTML='<span class="label">Generando imagen…</span>';
+  const want=shareState.fmt,opts=shareState.opts;
+  const cv=await opts.draw(want);
+  if(shareState.opts!==opts||shareState.fmt!==want)return;
   shareState.blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});
   box.innerHTML="";cv.className="sh-cv";box.appendChild(cv);
   if(!shareState.blob)document.getElementById("shMsg").textContent="No se pudo preparar el archivo en este navegador. Puedes tomar una captura de la vista previa.";
 }
-const shareName=()=>`ppv-${slug(TEAMS[shareState.ti])}-${shareState.fmt==="story"?"historia":"post"}.png`;
+const shareName=()=>`ppv-${shareState.opts.file}-${shareState.fmt==="story"?"historia":"post"}.png`;
 async function doShare(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
   const file=new File([b],shareName(),{type:"image/png"});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${TEAMS[shareState.ti].n} · PPV Draft League`,text:`${TEAMS[shareState.ti].n} en la PPV Draft League · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menú para compartir. Usa “Descargar”.";}}
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${shareState.opts.title} · PPV Draft League`,text:`${shareState.opts.text||shareState.opts.title} · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menú para compartir. Usa “Descargar”.";}}
   else{await doDownload();if(!/cancelada|pendiente|No se pudo/.test(msg.textContent))msg.textContent="Este navegador no permite compartir archivos directamente: descarga la imagen y súbela desde Instagram.";}
 }
 let dlCap;const getDl=async()=>{if(dlCap!==undefined)return dlCap;try{dlCap=(window.claude&&window.claude.use)?await window.claude.use("downloads"):null;}catch(e){dlCap=null;}return dlCap;};
 async function doDownload(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
   const dl=await getDl();
-  if(dl){ // dentro del visor de artifacts: guardar con confirmación del visor
-    try{await dl.save({filename:shareName(),data:b});msg.textContent="Imagen guardada.";}
-    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en tu navegador para descargarla.";}
-    return;
-  }
+  if(dl){try{await dl.save({filename:shareName(),data:b});msg.textContent="Imagen guardada.";}
+    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en tu navegador para descargarla.";}return;}
   const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=shareName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
   msg.textContent="Si la descarga no empezó, mantén presionada la imagen para guardarla.";
 }
-document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;openShare(+b.dataset.share);});
+
+/* ---------- utilidades de dibujo ---------- */
+const FD='"Big Shoulders Display", Impact, sans-serif',FL='"Barlow Condensed", sans-serif',FB='"Barlow", sans-serif';
+const sharePal=()=>({INK:cssVar("--ink")||"#0B0B0C",INK2:cssVar("--ink-2")||"#151517",INK3:cssVar("--ink-3")||"#202024",LINE:cssVar("--line")||"#2F2F35",CH:cssVar("--chalk")||"#F2F2F0",MU:cssVar("--mute")||"#9C9CA4",VO:cssVar("--volt")||"#FFB62E",RO:cssVar("--rojo")||"#FF4B2B",VE:cssVar("--verde")||"#7ED13A",GO:cssVar("--good")||"#36E3A0"});
+const confHex=c=>c==="rojo"?(cssVar("--rojo")||"#FF4B2B"):(cssVar("--verde")||"#7ED13A");
+const logoSrcOf=t=>t.ph?null:(typeof LOGOS!=="undefined"?LOGOS[slug(t)]:`logos/${(typeof LOGO_FILE!=="undefined"&&LOGO_FILE[slug(t)])||slug(t)+".webp"}`);
+const teamImg=t=>loadImg(logoSrcOf(t));
+const boxImg=n=>BOX[n]?loadImg(BOX_DATA[BOX[n]]||BOX_BASE+BOX[n]+".png",true):Promise.resolve(null);
+const sprImg=n=>SPR_IDS[n]?loadImg((typeof SPR_DATA!=="undefined"&&SPR_DATA[SPR_IDS[n]])||SPR_BASE+SPR_IDS[n]+".png",true):Promise.resolve(null);
+function txt(x,s,font,color,align,px,py){x.font=font;x.fillStyle=color;x.textAlign=align;x.textBaseline="alphabetic";x.fillText(s,px,py);}
+function fit(x,img,cx,cy,size,pixel){if(!img){x.save();x.fillStyle="#2a2a30";x.beginPath();x.arc(cx,cy,size*.42,0,7);x.fill();x.fillStyle="#9C9CA4";x.font=`900 ${Math.round(size*.4)}px ${FD}`;x.textAlign="center";x.textBaseline="middle";x.fillText("?",cx,cy+2);x.restore();return;}
+  const w=img.naturalWidth||img.width,h=img.naturalHeight||img.height,r=Math.min(size/w,size/h);if(pixel)x.imageSmoothingEnabled=false;x.drawImage(img,cx-w*r/2,cy-h*r/2,w*r,h*r);x.imageSmoothingEnabled=true;}
+function ell(x,s,maxW){if(x.measureText(s).width<=maxW)return s;while(s.length>1&&x.measureText(s+"…").width>maxW)s=s.slice(0,-1);return s+"…";}
+async function shareFrame(fmt,accent,label){
+  const story=fmt==="story",W=1080,H=story?1920:1350,P=sharePal();
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");
+  if(document.fonts)await document.fonts.ready;
+  const lg=await shareLogo();
+  x.fillStyle=P.INK;x.fillRect(0,0,W,H);
+  const bandH=story?820:560;x.save();x.beginPath();x.moveTo(0,0);x.lineTo(W,0);x.lineTo(W,bandH*.7);x.lineTo(0,bandH);x.closePath();x.clip();
+  const gr=x.createLinearGradient(0,0,W,bandH);gr.addColorStop(0,accent+"55");gr.addColorStop(1,accent+"10");x.fillStyle=gr;x.fillRect(0,0,W,bandH);
+  x.globalAlpha=.07;x.strokeStyle=P.CH;x.lineWidth=2;for(let i=-H;i<W;i+=70){x.beginPath();x.moveTo(i,0);x.lineTo(i+bandH,bandH);x.stroke();}x.globalAlpha=1;x.restore();
+  const top=story?110:64;
+  txt(x,"PPV DRAFT LEAGUE",`900 ${story?52:44}px ${FD}`,P.CH,"center",W/2,top+(story?50:42));
+  txt(x,"TEMPORADA 5 · EVOLUTION",`700 ${story?30:26}px ${FL}`,P.VO,"center",W/2,top+(story?92:78));
+  if(label){txt(x,label,`900 ${story?92:72}px ${FD}`,P.CH,"center",W/2,top+(story?220:170));}
+  if(lg){const h=story?100:56,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?50:34)-h,w,h);}
+  txt(x,SHARE_URL,`600 ${story?30:26}px ${FB}`,P.MU,"center",W/2,H-(story?70:50));
+  x.fillStyle=P.RO;x.fillRect(0,H-14,W/2,14);x.fillStyle=P.VE;x.fillRect(W/2,H-14,W/2,14);
+  return {cv,x,W,H,story,P,y0:top+(label?(story?290:220):(story?150:120)),y1:H-(story?250:150)};
+}
+function chipAt(x,cx,y,h,text,bg,fg,stroke,center){x.font=`700 ${Math.round(h*.5)}px ${FL}`;const w=x.measureText(text).width+h*.9;return chip(x,center?cx-w/2:cx,y,h,text,bg,fg,stroke);}
+
+/* 1. resultado de una serie */
+async function drawSeries(i,fmt){
+  const m=MATCHES[i],A=TEAMS[m.a],B=TEAMS[m.b],C=confHex(m.c);
+  const f=await shareFrame(fmt,C,"RESULTADO");const {x,W,story,P}=f;let y=f.y0;
+  const g=GAMES[i]||[],names=[...new Set(g.flat(2))];
+  const [la,lb,...sp]=await Promise.all([teamImg(A),teamImg(B),...names.map(boxImg)]);const SP=Object.fromEntries(names.map((n,k)=>[n,sp[k]]));
+  txt(x,`SEMANA ${m.w} · SERIE AL MEJOR DE 3`,`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?40:28;
+  const ls=story?280:200,wA=m.ga>m.gb;
+  [[A,la,W*.25,wA],[B,lb,W*.75,!wA]].forEach(([t,img,cx,won])=>{x.save();if(!won)x.globalAlpha=.45;fit(x,img,cx,y+ls/2,ls);x.restore();
+    txt(x,"#"+t.ab,`900 ${story?60:48}px ${FD}`,won?P.CH:P.MU,"center",cx,y+ls+(story?66:52));
+    x.font=`700 ${story?28:22}px ${FL}`;txt(x,ell(x,t.n.toUpperCase(),420),`700 ${story?28:22}px ${FL}`,P.MU,"center",cx,y+ls+(story?104:82));
+    if(won)chipAt(x,cx,y+ls+(story?124:98),story?50:40,"GANADOR",P.VO,"#16161a",null,true);});
+  txt(x,`${m.ga}-${m.gb}`,`900 ${story?190:150}px ${FD}`,P.CH,"center",W/2,y+ls*.66);
+  y+=ls+(story?220:170);
+  const rh=story?200:140;
+  [...m.seq].forEach((s,gi)=>{const [ga,gb]=g[gi]||[[],[]];x.fillStyle=P.INK2;x.fillRect(80,y,W-160,rh-14);x.fillStyle=s==="a"?confHex(A.c):confHex(B.c);x.fillRect(80,y,6,rh-14);
+    txt(x,`JUEGO ${gi+1}`,`700 ${story?28:24}px ${FL}`,P.MU,"left",110,y+(story?42:34));
+    txt(x,`GANA #${(s==="a"?A:B).ab}`,`700 ${story?28:24}px ${FL}`,P.VO,"right",W-110,y+(story?42:34));
+    const sz=story?96:70,cy=y+(story?120:88);
+    const row=(list,x0,dir,won)=>{if(!list.length){txt(x,"Sin registro",`600 ${story?26:22}px ${FB}`,P.MU,dir>0?"left":"right",x0,cy+8);return;}list.slice(0,4).forEach((n,k)=>{x.save();if(!won)x.globalAlpha=.55;fit(x,SP[n],x0+dir*(k*(sz+8)+sz/2),cy,sz,true);x.restore();});};
+    row(ga,110,1,s==="a");row(gb,W-110,-1,s==="b");txt(x,"VS",`900 ${story?34:28}px ${FD}`,P.MU,"center",W/2,cy+12);
+    y+=rh;});
+  return f.cv;
+}
+/* 2. campeón */
+async function drawChampion(fmt){
+  const P0=resolvePlayoffs(),ci=winnerOf(P0.final);const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","CAMPEÓN");const {x,W,story,P}=f;let y=f.y0;
+  if(ci==null){txt(x,"POR DEFINIR",`900 120px ${FD}`,P.CH,"center",W/2,y+200);return f.cv;}
+  const t=TEAMS[ci],[coach]=PROFILES[ci];
+  const svg=TROPHY.replace(/var\(--volt\)/g,P.VO).replace(/var\(--chalk\)/g,P.CH).replace(/var\(--ink\)/g,P.INK).replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" ');
+  const [tr,lo]=await Promise.all([loadImg("data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)),teamImg(t)]);
+  txt(x,"PLAYOFFS · TEMPORADA 4",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  const ts=story?170:110;if(tr)x.drawImage(tr,W/2-ts*.45,y,ts*.9,ts);y+=ts+(story?20:12);
+  const ls=story?400:260;x.save();x.shadowColor=P.VO+"88";x.shadowBlur=60;fit(x,lo,W/2,y+ls/2,ls);x.restore();y+=ls+(story?120:90);
+  let fs=story?120:92;x.font=`900 ${fs}px ${FD}`;let lines=wrapLines(x,t.n.toUpperCase(),940);
+  lines.forEach(l=>{txt(x,l,`900 ${fs}px ${FD}`,P.VO,"center",W/2,y);y+=fs*.9;});
+  txt(x,"COACH "+coach.toUpperCase(),`800 ${story?44:36}px ${FD}`,P.CH,"center",W/2,y+(story?20:10));y+=story?90:64;
+  const path=[];["A","B"].forEach(k=>["wc","qf","sf"].forEach(r=>{const m=P0[k][r];if(m.a===ci||m.b===ci)path.push([RNAME[r],m]);}));path.push(["Gran Final",P0.final]);
+  const rh=story?84:64;path.forEach(([r,m])=>{const o=TEAMS[m.a===ci?m.b:m.a];x.fillStyle=P.INK2;x.fillRect(140,y,W-280,rh-12);
+    txt(x,r.toUpperCase(),`700 ${story?28:22}px ${FL}`,P.MU,"left",170,y+rh*.55);txt(x,"vs #"+o.ab,`800 ${story?40:32}px ${FD}`,P.CH,"right",W-170,y+rh*.58);y+=rh;});
+  return f.cv;
+}
+/* 3. tabla de posiciones */
+async function drawTable(fmt){
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","POSICIONES");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,"FASE REGULAR · 8 SEMANAS",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?36:24;
+  const rh=story?56:40,hh=story?62:44,L=80,R=W-80;
+  ["rojo","azul"].forEach(c=>{const C=confHex(c);x.fillStyle=C;x.fillRect(L,y,R-L,hh);txt(x,CONF[c].name.toUpperCase(),`900 ${story?40:32}px ${FD}`,"#16161a","left",L+20,y+hh*.72);
+    ["W-L","DIFF","PTS"].forEach((h,k)=>txt(x,h,`700 ${story?24:20}px ${FL}`,"#16161a","right",R-20-(2-k)*(story?150:130),y+hh*.68));y+=hh;
+    by(c).forEach((t,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(L,y,R-L,rh);
+      if(t.rank===5){x.save();x.strokeStyle=C;x.lineWidth=3;x.setLineDash([12,8]);x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();x.restore();}
+      const cy=y+rh/2,col=t.q?P.CH:P.MU;txt(x,String(t.rank),`900 ${story?40:32}px ${FD}`,t.q?C:P.MU,"left",L+20,cy+(story?14:11));
+      fit(x,imgs[TEAMS.indexOf(t)],L+(story?110:96),cy,rh-10);
+      x.font=`800 ${story?34:28}px ${FD}`;txt(x,ell(x,t.n.toUpperCase(),story?380:330),`800 ${story?34:28}px ${FD}`,col,"left",L+(story?160:136),cy+(story?12:10));
+      [`${t.w}-${t.l}`,sign(t.d),String(t.pts)].forEach((v,j)=>txt(x,v,`${j===2?900:700} ${story?36:30}px ${FD}`,j===2?P.CH:col,"right",R-20-(2-j)*(story?150:130),cy+(story?13:11)));
+      y+=rh;});
+    y+=story?36:22;});
+  txt(x,"- - -  línea de playoffs: top 4 de cada conferencia",`600 ${story?24:20}px ${FB}`,P.MU,"center",W/2,y+(story?10:4));
+  return f.cv;
+}
+/* 4. leaderboard */
+async function drawLeaders(fmt){
+  const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","LOS MÁS LETALES");const {x,W,story,P}=f;let y=f.y0;
+  const N=story?8:5,list=MONS_FULL.slice().sort((a,b)=>b.k-a.k).slice(0,N+1),top=list[0];
+  const [big,...bx]=await Promise.all([sprImg(top.n),...list.slice(1).map(m=>boxImg(m.n))]);
+  txt(x,"POKÉMON LEADERBOARD · KOs",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
+  const bh=story?320:230;x.fillStyle=P.INK2;x.fillRect(80,y,W-160,bh);x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(80,y,W-160,bh);
+  fit(x,big,80+bh/2+10,y+bh/2,bh-20,true);const tx=80+bh+30,ow=OWNER[top.n];
+  txt(x,"#1 · MVP DE LA TEMPORADA",`700 ${story?28:22}px ${FL}`,P.VO,"left",tx,y+bh*.28);
+  txt(x,top.n.toUpperCase(),`900 ${story?84:62}px ${FD}`,P.CH,"left",tx,y+bh*.56);
+  txt(x,`${top.k} KOs · ${(top.k/top.d).toFixed(2)} K/D${ow!=null?" · #"+TEAMS[ow].ab:""}`,`600 ${story?32:26}px ${FB}`,P.MU,"left",tx,y+bh*.8);
+  y+=bh+(story?30:20);
+  const rh=story?104:86,mx=list[0].k;
+  list.slice(1).forEach((m,k)=>{x.fillStyle=k%2?P.INK2:P.INK3;x.fillRect(80,y,W-160,rh-8);const cy=y+(rh-8)/2;
+    txt(x,String(k+2),`900 ${story?40:34}px ${FD}`,P.MU,"left",104,cy+13);fit(x,bx[k],190,cy,rh-20,true);
+    const o=OWNER[m.n];txt(x,m.n.toUpperCase(),`800 ${story?38:32}px ${FD}`,P.CH,"left",250,cy+(o!=null?2:12));if(o!=null)txt(x,"#"+TEAMS[o].ab,`700 ${story?24:20}px ${FL}`,P.MU,"left",250,cy+(story?32:28));
+    const bx0=story?620:600,bw=(story?280:290)*m.k/mx;const gr=x.createLinearGradient(bx0,0,bx0+bw,0);gr.addColorStop(0,P.RO);gr.addColorStop(1,P.VE);x.fillStyle=gr;x.fillRect(bx0,cy-8,bw,16);
+    txt(x,String(m.k),`900 ${story?44:36}px ${FD}`,P.CH,"right",W-104,cy+15);y+=rh;});
+  return f.cv;
+}
+/* 5. bracket */
+async function drawBracket(fmt){
+  const P0=resolvePlayoffs();const f=await shareFrame(fmt,cssVar("--volt")||"#FFB62E","PLAYOFFS");const {x,W,story,P}=f;let y=f.y0;
+  const imgs=await Promise.all(TEAMS.map(teamImg));
+  txt(x,"FORMATO ESCALERA · SERIES AL MEJOR DE 3",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:18;
+  const rh=story?140:104,hh=story?54:40;
+  const match=(lab,m,isFinal)=>{const w=winnerOf(m);x.fillStyle=isFinal?P.VO+"22":P.INK2;x.fillRect(80,y,W-160,rh-12);if(isFinal){x.strokeStyle=P.VO;x.lineWidth=3;x.strokeRect(80,y,W-160,rh-12);}
+    const cy=y+(rh-12)/2;txt(x,lab.toUpperCase(),`700 ${story?22:18}px ${FL}`,P.MU,"center",W/2,y+(story?30:24));
+    const side=(ti,cx,align)=>{if(ti==null){txt(x,"POR DEFINIR",`700 ${story?28:22}px ${FL}`,P.MU,align,cx,cy+10);return;}const t=TEAMS[ti],won=w===ti;x.save();if(w!=null&&!won)x.globalAlpha=.45;
+      const ls=rh-(story?46:34),lx=align==="left"?cx+ls/2:cx-ls/2;fit(x,imgs[ti],lx,cy+(story?8:6),ls);
+      txt(x,"#"+t.ab,`900 ${story?46:36}px ${FD}`,won?P.CH:P.MU,align,align==="left"?cx+ls+16:cx-ls-16,cy+(story?22:16));x.restore();};
+    side(m.a,110,"left");side(m.b,W-110,"right");
+    txt(x,w==null?"VS":(w===m.a?"W  ·  ":"")+"VS"+(w===m.b?"  ·  W":""),`900 ${story?36:28}px ${FD}`,w==null?P.MU:P.VO,"center",W/2,cy+(story?24:18));y+=rh;};
+  [["A","LADO A"],["B","LADO B"]].forEach(([k,lab])=>{txt(x,lab,`900 ${story?36:28}px ${FD}`,P.CH,"left",84,y+hh*.7);y+=hh;match("Wild Card",P0[k].wc);match("Cuartos de final",P0[k].qf);match("Semifinal",P0[k].sf);});
+  y+=story?10:4;match("Gran Final",P0.final,true);
+  return f.cv;
+}
+/* 6. mi draft */
+async function drawMyDraft(fmt){
+  const t=TEAMS[ME],C=confHex(t.c),col=DRAFT_ORDER.indexOf(ME),N=DRAFT_ORDER.length,roster=ROSTER(ME).map(r=>r[0]);
+  const picks=DRAFT_ROUNDS.map((row,ri)=>({r:ri+1,k:pickNo(ri,col),n:row[col]}));
+  const f=await shareFrame(fmt,C,"MI DRAFT");const {x,W,story,P}=f;let y=f.y0;
+  const [lo,...sp]=await Promise.all([teamImg(t),...picks.map(p=>p.n?sprImg(p.n):Promise.resolve(null))]);
+  const th=story?150:100;fit(x,lo,80+th/2,y+th/2,th);txt(x,t.n.toUpperCase(),`900 ${story?64:50}px ${FD}`,P.CH,"left",80+th+24,y+th*.52);
+  const spent=picks.reduce((s,p)=>s+(p.n?PTS[p.n]||0:0),0);
+  txt(x,`#${t.ab} · COACH ${PROFILES[ME][0].toUpperCase()} · ${spent} PTS`,`700 ${story?28:22}px ${FL}`,C,"left",80+th+26,y+th*.84);y+=th+(story?36:22);
+  const cw=(W-160-20)/2,ch=story?250:180;
+  picks.forEach((p,k)=>{const cx=80+(k%2)*(cw+20),cy=y+Math.floor(k/2)*(ch+14);const gone=p.n&&!roster.includes(p.n);
+    x.fillStyle=P.INK2;x.fillRect(cx,cy,cw,ch);x.fillStyle=gone?P.LINE:C;x.fillRect(cx,cy,cw,5);
+    txt(x,`RONDA ${p.r} · PICK ${p.r}.${p.k}`,`700 ${story?24:20}px ${FL}`,P.MU,"left",cx+18,cy+(story?40:32));
+    if(!p.n){txt(x,"SIN PICK",`800 ${story?40:32}px ${FD}`,P.MU,"left",cx+18,cy+ch*.6);return;}
+    const s=story?170:120;x.save();if(gone)x.globalAlpha=.5;fit(x,sp[k],cx+cw-s/2-6,cy+ch*.56,s,true);x.restore();
+    x.font=`900 ${story?44:34}px ${FD}`;txt(x,ell(x,p.n.toUpperCase(),cw-s-30),`900 ${story?44:34}px ${FD}`,gone?P.MU:P.CH,"left",cx+18,cy+ch*.58);
+    txt(x,`${PTS[p.n]} pts${gone?" · ya no está":""}`,`700 ${story?28:22}px ${FL}`,gone?P.MU:P.VO,"left",cx+18,cy+ch*.8);});
+  return f.cv;
+}
+
+/* botones */
+const SHARE_KINDS={
+  profile:a=>{const t=TEAMS[a];return {kind:"Perfil",title:t.n,file:slug(t),accent:CONF[t.c].v,text:`${t.n} en la PPV Draft League`,draw:f=>makeShareImage(a,f)};},
+  series:a=>{const m=MATCHES[a],A=TEAMS[m.a],B=TEAMS[m.b];return {kind:"Resultado",title:`${A.ab} ${m.ga}-${m.gb} ${B.ab}`,file:`serie-s${m.w}-${A.ab}-${B.ab}`.toLowerCase(),accent:CONF[m.c].v,text:`${A.n} ${m.ga}-${m.gb} ${B.n} · Semana ${m.w}`,draw:f=>drawSeries(a,f)};},
+  champ:()=>{const c=winnerOf(resolvePlayoffs().final);return {kind:"Campeón",title:c!=null?TEAMS[c].n:"Campeón",file:"campeon",accent:"var(--volt)",text:c!=null?`${TEAMS[c].n}, campeón de la PPV Draft League`:"Campeón de la PPV Draft League",draw:drawChampion};},
+  table:()=>({kind:"Tabla",title:"Tabla de posiciones",file:"tabla",accent:"var(--volt)",text:"Tabla de posiciones de la PPV Draft League",draw:drawTable}),
+  leaders:()=>({kind:"Leaderboard",title:"Los más letales",file:"leaderboard",accent:"var(--volt)",text:"Los Pokémon más letales de la PPV Draft League",draw:drawLeaders}),
+  bracket:()=>({kind:"Bracket",title:"Playoffs",file:"bracket",accent:"var(--volt)",text:"Bracket de playoffs de la PPV Draft League",draw:drawBracket}),
+  draft:()=>{const t=TEAMS[ME];return {kind:"Mi draft",title:`Draft de ${t.n}`,file:`draft-${slug(t)}`,accent:CONF[t.c].v,text:`Así quedó el draft de ${t.n}`,draw:drawMyDraft};}
+};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-sharek],[data-share]");if(!b)return;e.stopPropagation();
+  if(b.dataset.share!=null)return openShareWith(SHARE_KINDS.profile(+b.dataset.share));
+  const k=b.dataset.sharek;if(SHARE_KINDS[k])openShareWith(SHARE_KINDS[k](b.dataset.arg!=null?+b.dataset.arg:undefined));});
+
 
 /* routing */
 function route(){
