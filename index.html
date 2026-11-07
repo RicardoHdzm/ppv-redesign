@@ -26,7 +26,7 @@
 html,body{margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
-/* Layout: broadcast-style — skewed bands, live ticker, conference split (RojoFuego / VerdeHoja) on a carbon-black ground */
+/* Layout: broadcast-style — skewed bands, live ticker, conference split (FireRed / LeafGreen) on a carbon-black ground */
 :root{
   --ink:#0B0B0C;        /* carbon */
   --ink-2:#151517;      /* panel */
@@ -34,9 +34,9 @@ img{max-width:100%}
   --line:#2F2F35;
   --chalk:#F2F2F0;      /* text */
   --mute:#9C9CA4;
-  --rojo:#FF4B2B;      /* RojoFuego conference */
+  --rojo:#FF4B2B;      /* FireRed conference */
   --azul:#3B8CFF;      /* blue: only for "immune" type cells */
-  --verde:#7ED13A;     /* VerdeHoja conference */
+  --verde:#7ED13A;     /* LeafGreen conference */
   --volt:#FFB62E;       /* highlight / live */
   --good:#36E3A0;
   --bad:#6E6E76;
@@ -1030,7 +1030,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   <div class="strip">
     <div class="wrap">
       <div class="stat"><b>18</b><span>Equipos en liga</span></div>
-      <div class="stat"><b>2</b><span>Conferencias RojoFuego · VerdeHoja</span></div>
+      <div class="stat"><b>2</b><span>Conferencias FireRed · LeafGreen</span></div>
       <div class="stat"><b>8</b><span>Semanas de fase regular</span></div>
       <div class="stat"><b>8</b><span>Boletos a playoffs</span></div>
     </div>
@@ -1096,8 +1096,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="wrap">
       <div class="seg" role="group" aria-label="Filtrar por conferencia">
         <button type="button" data-f="all" aria-pressed="true">Todos</button>
-        <button type="button" data-f="rojo" aria-pressed="false">RojoFuego</button>
-        <button type="button" data-f="azul" aria-pressed="false">VerdeHoja</button>
+        <button type="button" data-f="rojo" aria-pressed="false">FireRed</button>
+        <button type="button" data-f="azul" aria-pressed="false">LeafGreen</button>
       </div>
       <label class="search" for="q">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -1155,8 +1155,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="wrap">
       <div class="seg" role="group" aria-label="Filtrar por conferencia" id="mconf">
         <button type="button" data-mc="all" aria-pressed="true">Todas</button>
-        <button type="button" data-mc="rojo" aria-pressed="false">RojoFuego</button>
-        <button type="button" data-mc="azul" aria-pressed="false">VerdeHoja</button>
+        <button type="button" data-mc="rojo" aria-pressed="false">FireRed</button>
+        <button type="button" data-mc="azul" aria-pressed="false">LeafGreen</button>
       </div>
       <select id="mteam" aria-label="Ver las series de un equipo"><option value="">Todos los equipos</option></select>
       <span class="label count" id="mcount"></span>
@@ -1301,8 +1301,8 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
     <div class="f-col">
       <h4>La liga</h4>
       <ul>
-        <li><a href="#teams"><span class="dot-r" aria-hidden="true"></span>Conferencia RojoFuego</a></li>
-        <li><a href="#teams"><span class="dot-a" aria-hidden="true"></span>Conferencia VerdeHoja</a></li>
+        <li><a href="#teams"><span class="dot-r" aria-hidden="true"></span>Conferencia FireRed</a></li>
+        <li><a href="#teams"><span class="dot-a" aria-hidden="true"></span>Conferencia LeafGreen</a></li>
         <li><a href="#draft">Draft</a></li>
         <li><a href="#pokedex">Pokedex</a></li>
         <li><a href="#salon">Hall of Fame</a></li>
@@ -1361,7 +1361,7 @@ const BOX={"Charizard":"charizard","Floette":"floette","Gengar":"gengar","Incine
 const BOX_DATA={};
 const box=(n,cls="")=>BOX[n]?`<img class="${cls} boxi" src="${BOX_DATA[BOX[n]]||BOX_BASE+BOX[n]+".png"}" alt="" loading="lazy" decoding="async">`:spr(n,cls);
 document.addEventListener("error",e=>{const t=e.target;if(t&&t.tagName==="IMG"&&/spr|mvp-art|boxi/.test(t.className))t.remove();},true);
-const CONF={rojo:{name:"RojoFuego",v:"var(--rojo)"},azul:{name:"VerdeHoja",v:"var(--verde)"}};
+const CONF={rojo:{name:"FireRed",v:"var(--rojo)"},azul:{name:"LeafGreen",v:"var(--verde)"}};
 
 const ME=12; // sesion simulada: Richampions VGC
 // abreviaciones: primeras 3 consonantes; si el nombre empieza con vocal, esa vocal es la inicial (de palabras cortas como Los/La/Di solo la inicial; si se repite, se usa la siguiente consonante)
@@ -1496,8 +1496,8 @@ document.getElementById("toMons").addEventListener("click",()=>document.getEleme
 
 const bestDiff=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
 document.getElementById("leaders").innerHTML=[
-  ["Lider RojoFuego",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
-  ["Lider VerdeHoja",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
+  ["Lider FireRed",by("rojo")[0],`${by("rojo")[0].pts}`,CONF.rojo.v],
+  ["Lider LeafGreen",by("azul")[0],`${by("azul")[0].pts}`,CONF.azul.v],
   ["Mejor diff",bestDiff,sign(bestDiff.d),"var(--good)"]
 ].map(([lab,t,val,c])=>`<div class="ld" style="--c:${c}">${crest(t)}<div><span class="label">${lab}</span><strong>${esc(t.n)}</strong></div><b class="num">${val}</b></div>`).join("");
 
