@@ -1805,7 +1805,7 @@ function renderPlayoffs(){
     ${pmatch(B.qf,"Cuartos · Lado B","","Ganador Wild Card 2","to-r","grid-column:2;grid-row:3;--o:6")}
     ${pmatch(B.sf,"Semifinal · Lado B","","Ganador Cuartos B","to-fu","grid-column:3;grid-row:3;--o:7")}
     <div class="fin" style="--o:98">${pmatch(P.final,"Gran Final","Ganador Semifinal A","Ganador Semifinal B","final","",
-      `<div class="champ ${champ!=null?"":"tbd"}">${TROPHY}${champ!=null?crest(TEAMS[champ]):""}<div><span class="label">Campeon Temporada 5</span><strong>${champ!=null?esc(TEAMS[champ].n):"Por definir"}</strong></div></div>`)}</div>
+      `<div class="champ ${champ!=null?"":"tbd"}">${champ!=null?crest(TEAMS[champ]):""}<div><span class="label">Campeon Temporada 5</span><strong>${champ!=null?esc(TEAMS[champ].n):"Por definir"}</strong></div></div>`)}</div>
   </div>`;
   const entry=t=>t.rank===1?["Semifinal","doble bye"]:t.rank===2?["Cuartos de final","bye en Wild Card"]:["Wild Card","juega desde la primera ronda"];
   const seeds=[0,9,10,1,2,12,11,3];
@@ -2240,8 +2240,8 @@ async function drawChampion(fmt){
   const svg=TROPHY.replace(/var\(--volt\)/g,P.VO).replace(/var\(--chalk\)/g,P.CH).replace(/var\(--ink\)/g,P.INK).replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" width="128" height="144" ');
   const [tr,lo]=await Promise.all([loadImg("data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)),teamImg(t)]);
   txt(x,"PLAYOFFS · TEMPORADA 4",`700 ${story?32:26}px ${FL}`,P.VO,"center",W/2,y);y+=story?30:20;
-  const ts=story?170:110;if(tr)x.drawImage(tr,W/2-ts*.45,y,ts*.9,ts);y+=ts+(story?20:12);
-  const ls=story?400:260;x.save();x.shadowColor=P.VO+"88";x.shadowBlur=60;fit(x,lo,W/2,y+ls/2,ls);x.restore();y+=ls+(story?120:90);
+  y+=story?50:30;
+  const ls=story?480:320;x.save();x.shadowColor=P.VO+"88";x.shadowBlur=60;fit(x,lo,W/2,y+ls/2,ls);x.restore();y+=ls+(story?120:90);
   let fs=story?120:92;x.font=`900 ${fs}px ${FD}`;let lines=wrapLines(x,t.n.toUpperCase(),940);
   lines.forEach(l=>{txt(x,l,`900 ${fs}px ${FD}`,P.VO,"center",W/2,y);y+=fs*.9;});
   txt(x,"COACH "+coach.toUpperCase(),`800 ${story?44:36}px ${FD}`,P.CH,"center",W/2,y+(story?20:10));y+=story?90:64;
