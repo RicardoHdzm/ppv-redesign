@@ -2960,7 +2960,6 @@ async function drawOverlay(mi){
   x.fillStyle=P.INK;x.fillRect(0,0,W,H);
   // columnas laterales: degradado + lineas diagonales del color de cada conferencia
   let g;x.fillStyle=P.INK2;x.fillRect(0,G.y,G.x,G.h);x.fillRect(W-G.x,G.y,G.x,G.h);lines(0,G.y,G.x,G.h,CA);lines(W-G.x,G.y,G.x,G.h,CB);
-  x.fillStyle=CA;x.fillRect(0,G.y,5,G.h);x.fillStyle=CB;x.fillRect(W-5,G.y,5,G.h);
   // roster: sprite HOME + costo de draft, ordenado por costo
   const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-30,112);
     const q=Math.min(G.x-28,sh-10);
@@ -2970,8 +2969,6 @@ async function drawOverlay(mi){
   // barra superior con entradas diagonales detras de cada equipo
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
   poly([[700,0],[712,0],[666,G.y],[654,G.y]],CA);poly([[W-700,0],[W-712,0],[W-666,G.y],[W-654,G.y]],CB);
-  poly([[722,0],[728,0],[682,G.y],[676,G.y]],CA+"88");poly([[W-722,0],[W-728,0],[W-682,G.y],[W-676,G.y]],CB+"88");
-  poly([[0,G.y-6],[W/2,G.y-6],[W/2,G.y],[0,G.y]],CA);poly([[W/2,G.y-6],[W,G.y-6],[W,G.y],[W/2,G.y]],CB);
   const side=(t,lo,C,left)=>{const ti=TEAMS.indexOf(t),ls=96;fit(x,lo,left?16+ls/2:W-16-ls/2,G.y/2-3,ls);const tx=left?16+ls+22:W-16-ls-22,al=left?"left":"right",nf=`900 42px ${FD}`;
     x.font=nf;txt(x,ell(x,t.n.toUpperCase(),540),nf,P.CH,al,tx,46);
     const tf=`900 30px ${FD}`,tn=PROFILES[ti][0].toUpperCase();x.font=tf;const tw=x.measureText(tn).width;
@@ -2980,11 +2977,11 @@ async function drawOverlay(mi){
   side(A,la,CA,true);side(B,lb,CB,false);
   // marcador al centro sobre una placa inclinada
   const cx=W/2,bs=64;poly([[cx-206,10],[cx+206,10],[cx+184,G.y-14],[cx-184,G.y-14]],P.INK);
-  x.fillStyle=P.INK3;x.fillRect(cx-150,20,bs,bs);x.fillRect(cx+150-bs,20,bs,bs);x.lineWidth=3;
-  x.strokeStyle=CA;x.strokeRect(cx-150+1.5,21.5,bs-3,bs-3);x.strokeStyle=CB;x.strokeRect(cx+150-bs+1.5,21.5,bs-3,bs-3);
+  x.fillStyle=P.INK3;x.fillRect(cx-150,20,bs,bs);x.fillRect(cx+150-bs,20,bs,bs);
+  x.fillStyle=CA;x.fillRect(cx-150,20+bs-6,bs,6);x.fillStyle=CB;x.fillRect(cx+150-bs,20+bs-6,bs,6);
   txt(x,"VS",`900 44px ${FD}`,P.VO,"center",cx,68);txt(x,`SEMANA ${m.w} · AL MEJOR DE 3`,`700 17px ${FL}`,P.MU,"center",cx,100);
   // barra inferior
-  x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);poly([[0,fy],[W/2,fy],[W/2,fy+4],[0,fy+4]],CA);poly([[W/2,fy],[W,fy],[W,fy+4],[W/2,fy+4]],CB);
+  x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
   poly([[0,fy],[420,fy],[392,H],[0,H]],P.INK3);
   if(lg){const h=38,w=lg.width*h/lg.height;x.drawImage(lg,24,fy+(fh-h)/2+2,w,h);}
   txt(x,"PPV DRAFT LEAGUE",`900 28px ${FD}`,P.CH,"left",92,fy+41);
