@@ -80,8 +80,8 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .brand .mark{width:46px;height:46px;flex:none;display:grid;place-items:center}
-.brand .mark img{width:100%;height:100%;object-fit:contain;filter:invert(1) drop-shadow(0 0 8px color-mix(in srgb,var(--rojo) 55%,transparent))}
-.flogo{height:36px;width:auto;object-fit:contain;filter:invert(1);vertical-align:middle;margin-right:10px}
+.brand .mark img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--rojo) 55%,transparent))}
+.flogo{height:36px;width:auto;object-fit:contain;vertical-align:middle;margin-right:10px}
 .brand .name{font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;line-height:1}
 .brand .name small{display:block;font-family:var(--f-label);font-size:.66rem;letter-spacing:.3em;color:var(--verde);font-weight:600}
 .brand{flex:none}
@@ -261,7 +261,7 @@ footer.site::before{content:"";display:block;height:4px;background:linear-gradie
 .f-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:36px;padding-block:52px 40px}
 .f-brand{display:grid;gap:14px;align-content:start;max-width:36ch}
 .f-brand .f-id{display:flex;align-items:center;gap:12px}
-.f-brand .flogo{height:46px;width:auto;margin:0;filter:invert(1)}
+.f-brand .flogo{height:46px;width:auto;margin:0}
 .f-brand strong{font-family:var(--f-display);font-weight:900;font-size:1.5rem;letter-spacing:.03em;color:var(--chalk);line-height:1}
 .f-brand strong small{display:block;font-family:var(--f-label);font-size:.66rem;letter-spacing:.28em;color:var(--volt);font-weight:600;margin-top:4px}
 .f-brand p{margin:0;line-height:1.55}
@@ -939,7 +939,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#home" aria-label="PPV Draft League, inicio">
-      <span class="mark"><img src="logos/logo-ppv.png" alt=""></span>
+      <span class="mark"><img src="logos/logo-ppv-white.png" alt=""></span>
       <span class="name">PPV DRAFT LEAGUE<small>Evolution · S5</small></span>
     </a>
     <nav aria-label="Principal" id="mainNav">
@@ -1233,7 +1233,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <footer class="site">
   <div class="wrap f-top">
     <div class="f-brand">
-      <div class="f-id"><img class="flogo" src="logos/logo-ppv.png" alt=""><strong>PPV DRAFT LEAGUE<small>Temporada 5 · Evolution</small></strong></div>
+      <div class="f-id"><img class="flogo" src="logos/logo-ppv-white.png" alt=""><strong>PPV DRAFT LEAGUE<small>Temporada 5 · Evolution</small></strong></div>
       <p>Una comunidad de coaches que arma su equipo pick por pick, negocia trades y se juega cada semana en series al mejor de 3.</p>
       <div class="f-social">
         <a href="https://www.youtube.com/@PPVDRAFTLEAGUE-f5z" target="_blank" rel="noopener" aria-label="YouTube de PPV Draft League"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9L15.5 12z"/></svg><span>YouTube</span></a>
@@ -2008,10 +2008,9 @@ function chip(x,cx,y,h,text,bg,fg,stroke){x.font=`700 ${Math.round(h*.5)}px "Bar
   x.beginPath();x.moveTo(cx+sk,y);x.lineTo(cx+w+sk,y);x.lineTo(cx+w-sk,y+h);x.lineTo(cx-sk,y+h);x.closePath();
   if(bg){x.fillStyle=bg;x.fill();}if(stroke){x.strokeStyle=stroke;x.lineWidth=3;x.stroke();}
   x.fillStyle=fg;x.textAlign="left";x.textBaseline="middle";x.fillText(text,cx+h*.45,y+h/2+2);return w;}
-async function shareLogo(){ // logo de la liga en blanco (el PNG es negro)
+async function shareLogo(){ // logo de la liga (archivo en blanco)
   const img=await loadImg(document.querySelector(".brand .mark img")?.src);if(!img)return null;
   const c=document.createElement("canvas");c.width=img.naturalWidth;c.height=img.naturalHeight;const g=c.getContext("2d");g.drawImage(img,0,0);
-  try{const d=g.getImageData(0,0,c.width,c.height),p=d.data;for(let i=0;i<p.length;i+=4){p[i]=255-p[i];p[i+1]=255-p[i+1];p[i+2]=255-p[i+2];}g.putImageData(d,0,0);}catch(e){}
   return c;
 }
 async function makeShareImage(ti,fmt){
@@ -2103,10 +2102,17 @@ async function doShare(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
   const file=new File([b],shareName(),{type:"image/png"});
   if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${TEAMS[shareState.ti].n} · PPV Draft League`,text:`${TEAMS[shareState.ti].n} en la PPV Draft League · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menú para compartir. Usa “Descargar”.";}}
-  else{msg.textContent="Este navegador no permite compartir archivos directamente. Descargué la imagen para que la subas desde Instagram.";doDownload();}
+  else{await doDownload();if(!/cancelada|pendiente|No se pudo/.test(msg.textContent))msg.textContent="Este navegador no permite compartir archivos directamente: descarga la imagen y súbela desde Instagram.";}
 }
-function doDownload(){
+let dlCap;const getDl=async()=>{if(dlCap!==undefined)return dlCap;try{dlCap=(window.claude&&window.claude.use)?await window.claude.use("downloads"):null;}catch(e){dlCap=null;}return dlCap;};
+async function doDownload(){
   const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
+  const dl=await getDl();
+  if(dl){ // dentro del visor de artifacts: guardar con confirmación del visor
+    try{await dl.save({filename:shareName(),data:b});msg.textContent="Imagen guardada.";}
+    catch(e){msg.textContent=e&&e.code==="declined"?"Descarga cancelada.":e&&e.code==="rate_limited"?"Ya hay una descarga pendiente; espera un momento.":"No se pudo guardar aquí. Abre el sitio en "+SHARE_URL+" para descargarla.";}
+    return;
+  }
   const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=shareName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
   msg.textContent=`Si la descarga no empezó, abre el sitio en ${SHARE_URL} o mantén presionada la imagen para guardarla.`;
 }
