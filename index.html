@@ -2969,7 +2969,6 @@ async function drawOverlay(mi){
   await col(m.a,G.x/2,CA);await col(m.b,W-G.x/2,CB);
   // barra superior con entradas diagonales detras de cada equipo
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
-  poly([[0,0],[14,0],[0,G.y]],CA);poly([[W,0],[W-14,0],[W,G.y]],CB);
   poly([[700,0],[712,0],[666,G.y],[654,G.y]],CA);poly([[W-700,0],[W-712,0],[W-666,G.y],[W-654,G.y]],CB);
   poly([[722,0],[728,0],[682,G.y],[676,G.y]],CA+"88");poly([[W-722,0],[W-728,0],[W-682,G.y],[W-676,G.y]],CB+"88");
   poly([[0,G.y-6],[W/2,G.y-6],[W/2,G.y],[0,G.y]],CA);poly([[W/2,G.y-6],[W,G.y-6],[W,G.y],[W/2,G.y]],CB);
