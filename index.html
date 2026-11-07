@@ -2961,7 +2961,7 @@ async function drawOverlay(mi){
   const poly=(pts,fill)=>{x.beginPath();pts.forEach(([px,py],k)=>k?x.lineTo(px,py):x.moveTo(px,py));x.closePath();x.fillStyle=fill;x.fill();};
   const cap=f=>{x.font=f;return x.measureText("H").actualBoundingBoxAscent;}; // altura real de las mayusculas
   // degradado suave para dar volumen a las barras
-  const shade=(x0,y0,w,h,down)=>{const g=x.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,down?"rgba(255,255,255,.05)":"rgba(0,0,0,.28)");g.addColorStop(1,down?"rgba(0,0,0,.28)":"rgba(255,255,255,.05)");x.fillStyle=g;x.fillRect(x0,y0,w,h);};
+  const shade=(x0,y0,w,h,down)=>{const g=x.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,down?"rgba(255,255,255,.07)":"rgba(255,255,255,0)");g.addColorStop(1,down?"rgba(255,255,255,0)":"rgba(255,255,255,.07)"); /* termina en el mismo tono de las columnas */x.fillStyle=g;x.fillRect(x0,y0,w,h);};
   // medidas de referencia: margen exterior unico y zonas visibles (sin la linea del borde del juego, 4px)
   const M=26,BW=4,topH=G.y-BW,topC=topH/2,footY=G.y+G.h+BW,footC=footY+(H-footY)/2,colW=G.x-BW,colLC=colW/2,colRC=W-colW/2;
   x.fillStyle=P.INK;x.fillRect(0,0,W,H);
