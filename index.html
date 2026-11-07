@@ -436,7 +436,7 @@ table.st.m{min-width:560px}
 .side .sc{font-family:var(--f-display);font-weight:900;font-size:2.2rem;line-height:1;text-align:right}
 .side.win .sc{color:var(--c)}
 .side.lose{color:color-mix(in srgb,var(--chalk) 48%,var(--ink))}
-.side.lose .logo{filter:grayscale(.75) opacity(.65)}
+.side.lose .logo img{filter:grayscale(.75) opacity(.65)}
 .mc .meta{border-left:1px solid var(--line);display:grid;align-content:center;justify-items:center;gap:8px;padding:10px 14px;min-width:104px;background:color-mix(in srgb,var(--ink-3) 60%,var(--ink-2))}
 .mc .meta .label{font-size:.68rem;text-align:center}
 .rps{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
@@ -799,6 +799,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   table.db.v{min-width:1000px}
   .db.v th.tm .tn small,.db.v th.tm .dpos,.db.v th.tm .you{display:none}
   .db.v th.tm a{gap:6px;padding:8px}
+}
+/* pantallas táctiles: sin efectos hover (en móvil se quedan pegados tras un toque y mueven logos y tarjetas) */
+@media (hover:none){
+  .card:hover,.mc:hover,.pk:hover,.dx:hover,.sd:hover{transform:none}
+  .logo,.crest,img.spr,.dx-spr,.db-spr,.boxi,.spr-s,.mp img{transition:none;transform:none!important}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
