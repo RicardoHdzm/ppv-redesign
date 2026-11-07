@@ -3016,6 +3016,10 @@ document.addEventListener("keydown",e=>{
 function renderHomeExtras(){document.getElementById("homePower").innerHTML=powerTable(WEEKS).slice(0,5).map(pwRow).join("");
   document.getElementById("hpLabel").textContent=`Semana ${WEEKS} de ${WEEKS} · top 5 de 18`;document.getElementById("homePotw").innerHTML=potwCard(WEEKS);}
 renderHomeExtras();
+/* mejor K/D del leaderboard: color de la conferencia del equipo dueño del Pokemon */
+(()=>{const n=MONS_FULL.slice().sort((a,b)=>b.kd-a.kd)[0].n,o=OWNER[n];if(o==null)return;const C=CONF[TEAMS[o].c].v;
+  const st=document.querySelector("#bars .note strong");if(st)st.style.color=C;
+  const tl=[...document.querySelectorAll("#mtiles .mt")].find(t=>t.textContent.includes("Mejor K/D"));if(tl)tl.style.setProperty("--c",C);})();
 renderMatches(); // vuelve a pintar Matches ahora que el Pokemon de la semana ya se puede calcular
 
 refreshLeaderNicks();
