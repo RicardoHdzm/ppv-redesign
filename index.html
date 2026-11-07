@@ -945,7 +945,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <a href="#teams" data-page="teams">Conferencias</a>
       <a href="#draft" data-page="draft">Draft</a>
       <a href="#pokedex" data-page="pokedex">Pokedex</a>
-      <a href="#salon" data-page="salon">Salón</a>
+      <a href="#salon" data-page="salon">HOF</a>
     </nav>
     <a class="me-chip" id="meChip" href="#"></a>
     <button type="button" class="me-out" id="meOut">Salir</button>
@@ -1205,7 +1205,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 <main id="page-salon" hidden>
   <section class="t-hero hof-hero">
     <div class="wrap">
-      <div><div class="label">Historia de la PPV Draft League</div><h1>Salón de la Fama</h1></div>
+      <div><div class="label">Historia de la PPV Draft League</div><h1>Hall of Fame</h1></div>
     </div>
   </section>
   <div class="wrap s-body">
@@ -1251,7 +1251,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <li><a href="#teams"><span class="dot-a" aria-hidden="true"></span>Conferencia VerdeHoja</a></li>
         <li><a href="#draft">Draft</a></li>
         <li><a href="#pokedex">Pokedex</a></li>
-        <li><a href="#salon">Salón de la Fama</a></li>
+        <li><a href="#salon">Hall of Fame</a></li>
         <li><a href="#" id="fMine">Mi equipo</a></li>
       </ul>
     </div>
@@ -1952,7 +1952,7 @@ function renderHof(){
   const champ4=winnerOf(resolvePlayoffs().final);
   const C=[[1,0,"Season 1 y 3 Champ"],[2,10,"Season 2 Champ"],[3,0,"Season 1 y 3 Champ"],[4,champ4,"Campeón de los playoffs"]];
   document.getElementById("hofChamps").innerHTML=C.map(([s,ti,src])=>{const t=TEAMS[ti];return `<a class="champ-c" data-s="${s}" href="#team-${slug(t)}" style="--c:${CONF[t.c].v}"><span class="label">Temporada ${s}</span>${crest(t)}<strong>${esc(PROFILES[ti][0])}</strong><p>${esc(t.n)}</p></a>`;}).join("")+
-    `<div class="champ-c now" data-s="5"><span class="label">Temporada 5 · Evolution</span><span class="crest" style="--sz:84px;--h1:hsl(40 10% 40%);--h2:hsl(40 10% 25%)">?</span><strong>En juego</strong><p>El próximo nombre del salón</p></div>`;
+    `<div class="champ-c now" data-s="5"><span class="label">Temporada 5 · Evolution</span><span class="crest" style="--sz:84px;--h1:hsl(40 10% 40%);--h2:hsl(40 10% 25%)">?</span><strong>En juego</strong><p>El próximo nombre del Hall of Fame</p></div>`;
   const best=TEAMS.slice().sort((a,b)=>b.w-a.w||b.d-a.d)[0],bestD=TEAMS.slice().sort((a,b)=>b.d-a.d)[0];
   const all=PROFILES.flatMap((p,i)=>p[5].map(r=>[r,i]));
   const mk=all.slice().sort((a,b)=>b[0][6]-a[0][6])[0],kd=all.filter(x=>x[0][6]>=8).sort((a,b)=>(b[0][6]/(b[0][7]||1))-(a[0][6]/(a[0][7]||1)))[0];
