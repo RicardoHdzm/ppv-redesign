@@ -2984,8 +2984,8 @@ async function drawOverlay(mi){
   x.fillStyle=P.INK2;x.fillRect(0,fy,W,fh);
   poly([[0,fy],[420,fy],[392,H],[0,H]],P.INK3);
   if(lg){const h=38,w=lg.width*h/lg.height;x.drawImage(lg,24,fy+(fh-h)/2+2,w,h);}
-  txt(x,"PPV DRAFT LEAGUE",`900 28px ${FD}`,P.CH,"left",92,fy+41);
-  txt(x,"TEMPORADA 5 · EVOLUTION",`700 20px ${FL}`,P.VO,"left",440,fy+39);
+  txt(x,"TEMPORADA 5 · EVOLUTION",`700 20px ${FL}`,P.VO,"left",92,fy+39);
+  txt(x,"PPV DRAFT LEAGUE",`900 28px ${FD}`,P.CH,"left",440,fy+41);
   poly([[W-430,fy],[W,fy],[W,H],[W-402,H]],P.INK3);txt(x,SHARE_URL,`600 24px ${FB}`,P.CH,"right",W-24,fy+39);
   // ventana del juego: transparente con borde
   x.clearRect(G.x,G.y,G.w,G.h);x.lineWidth=4;
