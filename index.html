@@ -509,7 +509,7 @@ table.st.m{min-width:560px}
 .wk.l{border-top:4px solid color-mix(in srgb,var(--mute) 55%,var(--ink))}
 .wk.l .r{color:var(--mute)}
 .wk.b{border-style:dashed;align-content:center}
-.wk.b .r{color:var(--mute);font-size:.95rem;letter-spacing:.06em}
+.wk.b .r{color:var(--mute)}
 .roster-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .pk{position:relative;overflow:hidden;background:var(--ink-2);border:1px solid var(--line);padding:16px 16px 14px;display:grid;gap:10px;align-content:start;min-width:0;transition:transform .2s,border-color .2s}
 .pk:hover{transform:translateY(-3px);border-color:var(--t1)}
@@ -971,6 +971,11 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   #mtable th:nth-child(5),#mtable td:nth-child(5){display:none}
   .fa{min-width:0}.fa td,.fa th{padding:8px 8px}.fa th:nth-child(2),.fa td:nth-child(2){display:none}
 }
+/* trayectoria: siglas en móvil y casilla de descanso con la misma estructura */
+.wk .op .short{display:none}
+.wk.b .op{color:var(--mute)}
+.wk{min-width:0}
+@media (max-width:600px){.wk .op .full{display:none}.wk .op .short{display:inline;letter-spacing:.04em}.wk.b .op{font-size:.68rem}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1690,9 +1695,9 @@ function renderProfile(ti){
   const prev=TEAMS[PROFILE_ORDER[(pos-1+L)%L]],next=TEAMS[PROFILE_ORDER[(pos+1)%L]];
   const path=Array.from({length:WEEKS},(_,i)=>{
     const w=i+1,m=ms.find(x=>x.w===w);
-    if(!m)return `<div class="wk b"><span class="label">Sem ${w}</span><span class="r">DESCANSO</span></div>`;
+    if(!m)return `<div class="wk b"><span class="label">Sem ${w}</span><span class="r">—</span><span class="op">Descanso</span></div>`;
     const won=m.ga>m.gb,o=TEAMS[m.b];
-    return `<div class="wk ${won?"w":"l"}" title="vs ${esc(o.n)}"><span class="label">Sem ${w}</span><span class="r">${won?"W":"L"}</span><a class="op" href="#team-${slug(o)}">${esc(o.n)}</a><span class="s num">${m.ga}-${m.gb}</span></div>`;
+    return `<div class="wk ${won?"w":"l"}" title="vs ${esc(o.n)}"><span class="label">Sem ${w}</span><span class="r">${won?"W":"L"}</span><a class="op" href="#team-${slug(o)}"><span class="full">${esc(o.n)}</span><span class="short">#${o.ab}</span></a><span class="s num">${m.ga}-${m.gb}</span></div>`;
   }).join("");
   const pk=r=>{
     const [n,cost,types,ab,obt,g,k,d]=r,ts=types.split("/"),c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
