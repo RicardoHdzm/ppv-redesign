@@ -922,6 +922,12 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .mv-row.out i{color:#FF5A5F}
 .mv-row small{display:block;color:var(--mute);font-size:.78rem}
 .mv-note{color:var(--mute);font-size:.85rem;margin:-10px 0 16px}
+/* ---------- compartir perfil ---------- */
+.p-share{margin-top:16px}
+.sh-panel{gap:14px}
+.sh-prev{display:grid;place-items:center;background:var(--ink);border:1px solid var(--line);min-height:220px;padding:12px}
+.sh-cv{display:block;max-width:100%;max-height:56vh;width:auto;height:auto;box-shadow:0 12px 30px #000a}
+.sh-actions{display:flex;gap:10px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1640,6 +1646,7 @@ function renderProfile(ti){
           <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
           <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
           <div class="p-cid"><span class="label">Pokémon favorito</span><span class="cid">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
+          <div class="p-share"><button type="button" class="btn" data-share="${ti}">⤴ Compartir perfil</button></div>
         </div>
       </div>
     </div>
@@ -1991,6 +1998,119 @@ function renderMoves(){
   document.getElementById("drMovesCount").textContent=`${cards.length} equipos con cambios`;
 }
 renderMoves();
+
+/* ---------- compartir perfil: imagen para Instagram (historia 1080x1920 o post 1080x1350) ---------- */
+const SHARE_URL="ricardohdzm.github.io/ppv-redesign";
+const loadImg=(src,cors)=>new Promise(res=>{if(!src)return res(null);const i=new Image();if(cors)i.crossOrigin="anonymous";i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
+const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function wrapLines(x,text,maxW){const words=text.split(" "),lines=[];let cur="";words.forEach(w=>{const t=cur?cur+" "+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);return lines;}
+function chip(x,cx,y,h,text,bg,fg,stroke){x.font=`700 ${Math.round(h*.5)}px "Barlow Condensed", sans-serif`;const w=x.measureText(text).width+h*.9,sk=h*.22;
+  x.beginPath();x.moveTo(cx+sk,y);x.lineTo(cx+w+sk,y);x.lineTo(cx+w-sk,y+h);x.lineTo(cx-sk,y+h);x.closePath();
+  if(bg){x.fillStyle=bg;x.fill();}if(stroke){x.strokeStyle=stroke;x.lineWidth=3;x.stroke();}
+  x.fillStyle=fg;x.textAlign="left";x.textBaseline="middle";x.fillText(text,cx+h*.45,y+h/2+2);return w;}
+async function shareLogo(){ // logo de la liga en blanco (el PNG es negro)
+  const img=await loadImg(document.querySelector(".brand .mark img")?.src);if(!img)return null;
+  const c=document.createElement("canvas");c.width=img.naturalWidth;c.height=img.naturalHeight;const g=c.getContext("2d");g.drawImage(img,0,0);
+  try{const d=g.getImageData(0,0,c.width,c.height),p=d.data;for(let i=0;i<p.length;i+=4){p[i]=255-p[i];p[i+1]=255-p[i+1];p[i+2]=255-p[i+2];}g.putImageData(d,0,0);}catch(e){}
+  return c;
+}
+async function makeShareImage(ti,fmt){
+  const story=fmt==="story",W=1080,H=story?1920:1350;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");
+  if(document.fonts)await document.fonts.ready;
+  const t=TEAMS[ti],[coach,title]=PROFILES[ti],roster=PROFILES[ti][5];
+  const C=cssVar(t.c==="rojo"?"--rojo":"--verde")||"#FF4B2B",INK=cssVar("--ink")||"#0B0B0C",INK2=cssVar("--ink-2")||"#151517",LINE=cssVar("--line")||"#2F2F35",CH=cssVar("--chalk")||"#F2F2F0",MU=cssVar("--mute")||"#9C9CA4",VO=cssVar("--volt")||"#FFB62E";
+  const mvp=roster.reduce((a,b)=>b[6]>a[6]?b:a);
+  const [logo,lg,spr]=await Promise.all([loadImg(document.querySelector(`.lg-${slug(t)} img`)?.src||(typeof LOGOS!=="undefined"?LOGOS[slug(t)]:`logos/${(typeof LOGO_FILE!=="undefined"&&LOGO_FILE[slug(t)])||slug(t)+".webp"}`)),shareLogo(),
+    loadImg((typeof SPR_DATA!=="undefined"&&SPR_DATA[SPR_IDS[mvp[0]]])||SPR_BASE+SPR_IDS[mvp[0]]+".png",true)]);
+  // fondo
+  x.fillStyle=INK;x.fillRect(0,0,W,H);
+  const bandH=story?1150:760;
+  x.save();x.beginPath();x.moveTo(0,0);x.lineTo(W,0);x.lineTo(W,bandH*.72);x.lineTo(0,bandH);x.closePath();x.clip();
+  const gr=x.createLinearGradient(0,0,W,bandH);gr.addColorStop(0,C+"66");gr.addColorStop(1,C+"14");x.fillStyle=gr;x.fillRect(0,0,W,bandH);
+  x.globalAlpha=.08;x.strokeStyle=CH;x.lineWidth=2;for(let i=-H;i<W;i+=70){x.beginPath();x.moveTo(i,0);x.lineTo(i+bandH,bandH);x.stroke();}x.globalAlpha=1;
+  x.font=`900 ${story?620:460}px "Big Shoulders Display", Impact, sans-serif`;x.textAlign="right";x.textBaseline="alphabetic";x.strokeStyle=C+"55";x.lineWidth=5;x.strokeText("#"+t.rank,W+30,bandH*.86);
+  x.restore();
+  // cabecera
+  const top=story?90:60;
+  if(lg){const h=story?96:80,w=lg.width*h/lg.height;x.drawImage(lg,70,top,w,h);}
+  x.textAlign="left";x.textBaseline="alphabetic";x.fillStyle=CH;x.font=`900 ${story?48:42}px "Big Shoulders Display", Impact, sans-serif`;x.fillText("PPV DRAFT LEAGUE",story?260:230,top+(story?48:40));
+  x.fillStyle=VO;x.font=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("TEMPORADA 5 · EVOLUTION",story?262:232,top+(story?88:74));
+  // logo del equipo
+  const ls=story?440:300,ly=story?260:190;
+  if(logo){const r=Math.min(ls/logo.naturalWidth,ls/logo.naturalHeight),w=logo.naturalWidth*r,h=logo.naturalHeight*r;x.save();x.shadowColor="#000c";x.shadowBlur=40;x.shadowOffsetY=16;x.drawImage(logo,(W-w)/2,ly+(ls-h)/2,w,h);x.restore();}
+  // nombre
+  let y=ly+ls+(story?130:100);
+  x.textAlign="center";x.fillStyle=CH;let fs=story?132:104;x.font=`900 ${fs}px "Big Shoulders Display", Impact, sans-serif`;
+  let lines=wrapLines(x,t.n.toUpperCase(),920);if(lines.length>2){fs=Math.round(fs*.78);x.font=`900 ${fs}px "Big Shoulders Display", Impact, sans-serif`;lines=wrapLines(x,t.n.toUpperCase(),940);}
+  lines.forEach(l=>{x.fillText(l,W/2,y);y+=fs*.92;});
+  // etiquetas
+  const ch=story?58:50;y+=story?10:0;
+  const labels=[["#"+t.ab,null,CH,CH+"88"],[CONF[t.c].name.toUpperCase()+" #"+t.rank,C,"#16161a",null],[t.q?"PLAYOFFS":"ELIMINADO",t.q?VO:"#2a2a30",t.q?"#16161a":MU,null]];
+  x.font=`700 ${Math.round(ch*.5)}px "Barlow Condensed", sans-serif`;
+  const tw=labels.reduce((s,l)=>s+x.measureText(l[0]).width+ch*.9+16,-16);let cx=(W-tw)/2;
+  labels.forEach(l=>{cx+=chip(x,cx,y,ch,l[0],l[1],l[2],l[3])+16;});
+  y+=ch+(story?70:52);
+  // coach
+  x.textAlign="center";x.textBaseline="alphabetic";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("COACH",W/2,y);
+  y+=story?52:44;x.fillStyle=CH;x.font=`800 ${story?52:44}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((coach+(title&&title!=="-"?`  ·  “${title}”`:"")).toUpperCase(),W/2,y);
+  y+=story?70:50;
+  // cifras
+  let gw=0,gl=0;seriesFor(ti).forEach(m=>{gw+=m.ga;gl+=m.gb;});
+  const stats=[[`${t.w}-${t.l}`,"RÉCORD"],[`${gw}-${gl}`,"JUEGOS"],[sign(t.d),"DIFF"],[String(t.pts),"PUNTOS"]];
+  const bw=(W-160-3*16)/4,bh=story?190:160;
+  stats.forEach(([v,l],i)=>{const bx=80+i*(bw+16);x.fillStyle=INK2;x.fillRect(bx,y,bw,bh);x.fillStyle=C;x.fillRect(bx,y,bw,6);
+    x.fillStyle=CH;x.font=`900 ${story?84:70}px "Big Shoulders Display", Impact, sans-serif`;x.textAlign="center";x.fillText(v,bx+bw/2,y+bh*.62);
+    x.fillStyle=MU;x.font=`700 ${story?26:22}px "Barlow Condensed", sans-serif`;x.fillText(l,bx+bw/2,y+bh*.86);});
+  y+=bh+(story?40:28);
+  // MVP
+  const mh=story?240:180;x.fillStyle=INK2;x.fillRect(80,y,W-160,mh);x.strokeStyle=VO;x.lineWidth=4;x.strokeRect(80,y,W-160,mh);
+  if(spr){x.imageSmoothingEnabled=false;const s=story?230:180;x.drawImage(spr,100,y+(mh-s)/2,s,s);x.imageSmoothingEnabled=true;}
+  const tx=story?360:310;x.textAlign="left";x.fillStyle=VO;x.font=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("MVP DEL EQUIPO",tx,y+mh*.3);
+  x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText(mvp[0].toUpperCase(),tx,y+mh*.62);
+  x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
+  // pie
+  x.textAlign="center";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow", sans-serif`;x.fillText(SHARE_URL,W/2,H-(story?70:50));
+  const rojo=cssVar("--rojo")||"#FF4B2B",verde=cssVar("--verde")||"#7ED13A";x.fillStyle=rojo;x.fillRect(0,H-14,W/2,14);x.fillStyle=verde;x.fillRect(W/2,H-14,W/2,14);
+  return cv;
+}
+let shareState={ti:null,fmt:"story",blob:null};
+async function openShare(ti){
+  shareState={ti,fmt:shareState.fmt||"story",blob:null};const t=TEAMS[ti];
+  drawer.innerHTML=`<div class="panel sh-panel" role="dialog" aria-modal="true" aria-label="Compartir perfil de ${esc(t.n)}" style="--cc:${CONF[t.c].v}">
+    <button type="button" class="close" id="closeD">Cerrar</button>
+    <div><span class="label">Compartir en Instagram</span><h2 style="font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2rem;line-height:1;margin:6px 0 0">${esc(t.n)}</h2></div>
+    <div class="seg" role="group" aria-label="Formato" id="shFmt"><button type="button" data-f="story" aria-pressed="${shareState.fmt==="story"}">Historia 9:16</button><button type="button" data-f="post" aria-pressed="${shareState.fmt==="post"}">Post 4:5</button></div>
+    <div class="sh-prev" id="shPrev"><span class="label">Generando imagen…</span></div>
+    <div class="sh-actions"><button type="button" class="btn" id="shGo">Compartir</button><button type="button" class="btn ghost" id="shDl">Descargar</button></div>
+    <p class="sc-note" id="shMsg">En el teléfono, “Compartir” abre las apps instaladas (Instagram, WhatsApp…). En computadora, descarga la imagen y súbela desde la app.</p>
+  </div>`;
+  drawer.hidden=false;
+  document.querySelectorAll("#shFmt button").forEach(b=>b.addEventListener("click",()=>{shareState.fmt=b.dataset.f;document.querySelectorAll("#shFmt button").forEach(z=>z.setAttribute("aria-pressed",z===b));renderSharePreview();}));
+  document.getElementById("shGo").addEventListener("click",doShare);
+  document.getElementById("shDl").addEventListener("click",()=>doDownload());
+  renderSharePreview();
+}
+async function renderSharePreview(){
+  const box=document.getElementById("shPrev");box.innerHTML='<span class="label">Generando imagen…</span>';
+  const cv=await makeShareImage(shareState.ti,shareState.fmt);
+  shareState.blob=await new Promise(r=>{try{cv.toBlob(b=>r(b),"image/png");}catch(e){r(null);}});
+  box.innerHTML="";cv.className="sh-cv";box.appendChild(cv);
+  if(!shareState.blob)document.getElementById("shMsg").textContent="No se pudo preparar el archivo en este navegador. Puedes tomar una captura de la vista previa.";
+}
+const shareName=()=>`ppv-${slug(TEAMS[shareState.ti])}-${shareState.fmt==="story"?"historia":"post"}.png`;
+async function doShare(){
+  const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
+  const file=new File([b],shareName(),{type:"image/png"});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:`${TEAMS[shareState.ti].n} · PPV Draft League`,text:`${TEAMS[shareState.ti].n} en la PPV Draft League · ${SHARE_URL}`});}catch(e){if(e.name!=="AbortError")msg.textContent="No se pudo abrir el menú para compartir. Usa “Descargar”.";}}
+  else{msg.textContent="Este navegador no permite compartir archivos directamente. Descargué la imagen para que la subas desde Instagram.";doDownload();}
+}
+function doDownload(){
+  const b=shareState.blob,msg=document.getElementById("shMsg");if(!b)return;
+  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=shareName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  msg.textContent=`Si la descarga no empezó, abre el sitio en ${SHARE_URL} o mantén presionada la imagen para guardarla.`;
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;openShare(+b.dataset.share);});
 
 /* routing */
 function route(){
