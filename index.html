@@ -2981,7 +2981,7 @@ renderPicks();
 /* ---------- buscador global ---------- */
 const srch=document.getElementById("srch"),srchQ=document.getElementById("srchQ"),srchRes=document.getElementById("srchRes");
 let srchList=[],srchAct=0,srchBack=null;
-const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 function searchIndex(){const out=[],ic=s=>`<span class="srch-ic" aria-hidden="true">${s}</span>`;
   [["Home","home","Inicio"],["Standings","standings","Tabla de posiciones"],["Power ranking","standings","Ranking semanal"],["Matches","matches","Resultados por semana"],["Cara a cara","h2h","H2H, comparar equipos"],["Pronosticos","pronosticos","Quiniela de la semana"],["Playoffs","playoffs","Bracket"],["Teams","teams","Equipos"],["Draft","draft","Tablero, trades y fichajes"],["Pokedex","pokedex","Pool del draft"],["Hall of Fame","salon","H.O.F., campeones y records"],["Mi equipo","mi-equipo","Panel del trainer"]]
     .forEach(([n,h,sub])=>out.push({k:"Seccion",n,sub,h:"#"+h,s:n+" "+sub,ico:ic("#"),view:n==="Power ranking"?"power":null}));
