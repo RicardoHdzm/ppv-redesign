@@ -930,6 +930,16 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .sh-prev{display:grid;place-items:center;background:var(--ink);border:1px solid var(--line);min-height:220px;padding:12px}
 .sh-cv{display:block;max-width:100%;max-height:56vh;width:auto;height:auto;box-shadow:0 12px 30px #000a}
 .sh-actions{display:flex;gap:10px;flex-wrap:wrap}
+/* apodos */
+.pk .species{display:block;font-family:var(--f-label);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;color:var(--mute);margin-top:3px}
+.pk .nick-btn{justify-self:start;background:none;border:1px dashed var(--line);color:var(--mute);font-family:var(--f-label);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.7rem;padding:5px 10px;cursor:pointer}
+.pk .nick-btn:hover{color:var(--chalk);border-color:var(--chalk)}
+.nk-head{display:flex;align-items:center;gap:14px}
+.nk-head h2{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:2rem;line-height:1;margin:4px 0 0}
+.nk-spr{width:96px;height:96px;object-fit:contain;image-rendering:pixelated}
+.nk-form{display:grid;gap:10px}
+#nkIn{background:var(--ink);border:1px solid var(--line);color:var(--chalk);font:inherit;font-size:1.1rem;padding:12px 14px}
+#nkIn:focus{outline:none;border-color:var(--volt)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1613,6 +1623,28 @@ function wireRosterAnim(root){
     card.addEventListener("mouseleave",()=>{img.src=still;img.classList.remove("anim");});
   });
 }
+/* apodos de Pokémon (demo: se guardan en este navegador; en el sitio real irían a la base de datos) */
+const NICK_KEY="ppv-apodos-v1";
+let NICKS={};try{NICKS=JSON.parse(localStorage.getItem(NICK_KEY)||"{}")||{};}catch(e){NICKS={};}
+const getNick=(ti,n)=>(NICKS[ti]&&NICKS[ti][n])||"";
+function setNick(ti,n,v){v=(v||"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,16);NICKS[ti]=NICKS[ti]||{};if(v)NICKS[ti][n]=v;else delete NICKS[ti][n];try{localStorage.setItem(NICK_KEY,JSON.stringify(NICKS));}catch(e){}return v;}
+function openNick(n){
+  const cur=getNick(ME,n);
+  drawer.innerHTML=`<div class="panel nk-panel" role="dialog" aria-modal="true" aria-label="Apodo para ${esc(n)}" style="--cc:${CONF[TEAMS[ME].c].v}">
+    <button type="button" class="close" id="closeD">Cerrar</button>
+    <div class="nk-head">${spr(n,"nk-spr")}<div><span class="label">Apodo para</span><h2>${esc(n)}</h2></div></div>
+    <form class="nk-form" id="nkForm" autocomplete="off">
+      <label class="label" for="nkIn">Apodo (máximo 16 caracteres)</label>
+      <input id="nkIn" type="text" maxlength="16" value="${esc(cur)}" placeholder="Ej. El Tanque">
+      <div class="sh-actions"><button type="submit" class="btn">Guardar apodo</button>${cur?'<button type="button" class="btn ghost" id="nkDel">Quitar apodo</button>':""}</div>
+      <p class="sc-note">Demo: el apodo se guarda en este navegador. En el sitio real lo verían todos los visitantes.</p>
+    </form></div>`;
+  drawer.hidden=false;const inp=document.getElementById("nkIn");inp.focus();inp.select();
+  const done=v=>{setNick(ME,n,v);closeD();if(location.hash==="#team-"+slug(TEAMS[ME]))renderProfile(ME);toastMsg(v?`${n} ahora se llama “${getNick(ME,n)}”.`:`Quitaste el apodo de ${n}.`);};
+  document.getElementById("nkForm").addEventListener("submit",e=>{e.preventDefault();done(inp.value);});
+  const del=document.getElementById("nkDel");if(del)del.addEventListener("click",()=>done(""));
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-nick]");if(!b)return;e.stopPropagation();openNick(b.dataset.nick);});
 function renderProfile(ti){
   const t=TEAMS[ti],[coach,title,draftPts,fa,fav,roster]=PROFILES[ti],C=CONF[t.c].v;
   const ms=seriesFor(ti);
@@ -1630,9 +1662,9 @@ function renderProfile(ti){
   const pk=r=>{
     const [n,cost,types,ab,obt,g,k,d]=r,ts=types.split("/"),c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
     return `<article class="pk ${r===mvp?"star":""}" data-mon="${esc(n)}" style="--t1:${c1};--t2:${c2}">${r===mvp?`<span class="tag">MVP del equipo</span>`:""}
-      <div class="hd"><div><h3>${esc(n)}</h3><div class="cost num">${cost}<small>pts de draft</small></div></div>${spr(n)}</div>
+      <div class="hd"><div><h3>${getNick(ti,n)?esc(getNick(ti,n)):esc(n)}</h3>${getNick(ti,n)?`<span class="species">${esc(n)}</span>`:""}<div class="cost num">${cost}<small>pts de draft</small></div></div>${spr(n)}</div>
       <div class="types">${ts.map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div>
-      <p class="ab">${esc(ab)}</p>
+      <p class="ab">${esc(ab)}</p>${ti===ME?`<button type="button" class="nick-btn" data-nick="${esc(n)}">✎ ${getNick(ti,n)?"Editar apodo":"Poner apodo"}</button>`:""}
       <div class="gkd"><div><b class="num">${g}</b><span>Partidas</span></div><div><b class="num">${k}</b><span>Kills</span></div><div><b class="num">${d}</b><span>Deaths</span></div><div><b class="num">${d?(k/d).toFixed(2):k?"∞":"—"}</b><span>K/D</span></div></div>
     </article>`;
   };
@@ -2071,8 +2103,8 @@ async function makeShareImage(ti,fmt){
   const mh=story?240:180;x.fillStyle=INK2;x.fillRect(80,y,W-160,mh);x.strokeStyle=VO;x.lineWidth=4;x.strokeRect(80,y,W-160,mh);
   if(spr){x.imageSmoothingEnabled=false;const s=story?230:180;x.drawImage(spr,100,y+(mh-s)/2,s,s);x.imageSmoothingEnabled=true;}
   const tx=story?360:310;x.textAlign="left";x.fillStyle=VO;x.font=`700 ${story?30:26}px "Barlow Condensed", sans-serif`;x.fillText("MVP DEL EQUIPO",tx,y+mh*.3);
-  x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText(mvp[0].toUpperCase(),tx,y+mh*.62);
-  x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
+  x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText((getNick(ti,mvp[0])||mvp[0]).toUpperCase(),tx,y+mh*.62);
+  x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${getNick(ti,mvp[0])?mvp[0]+" · ":""}${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
   // pie
   if(lg){const h=story?100:56,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?50:34)-h,w,h);}
   x.textAlign="center";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow", sans-serif`;x.fillText(SHARE_URL,W/2,H-(story?70:50));
@@ -2290,10 +2322,10 @@ async function drawRoster(ti,fmt){
     const g2=x.createLinearGradient(cx,cy,cx+cw,cy);g2.addColorStop(0,TYPE[ts[0]][1]+"40");g2.addColorStop(1,TYPE[ts[1]||ts[0]][1]+"18");x.fillStyle=g2;x.fillRect(cx,cy,cw,ch*.42);
     if(r===mvp){x.strokeStyle=P.VO;x.lineWidth=4;x.strokeRect(cx+2,cy+2,cw-4,ch-4);chip(x,cx+cw-(story?140:118),cy+10,story?34:28,"MVP",P.VO,"#16161a",null);}
     const s=story?170:120;fit(x,sp[k],cx+cw-s/2-6,cy+ch*.58,s,true);
-    x.font=`900 ${story?40:30}px ${FD}`;txt(x,ell(x,n.toUpperCase(),cw-s-24),`900 ${story?40:30}px ${FD}`,P.CH,"left",cx+18,cy+(story?56:44));
+    x.font=`900 ${story?40:30}px ${FD}`;txt(x,ell(x,(getNick(ti,n)||n).toUpperCase(),cw-s-24),`900 ${story?40:30}px ${FD}`,P.CH,"left",cx+18,cy+(story?56:44));
     let tx=cx+18;const chh=story?32:26;ts.forEach(ty=>{tx+=chip(x,tx,cy+(story?76:58),chh,TYPE[ty][0].toUpperCase(),TYPE[ty][1],"#16161a",null)+8;});
     txt(x,`${cost} PTS`,`900 ${story?44:34}px ${FD}`,P.VO,"left",cx+18,cy+ch*(story?.74:.76));
-    txt(x,`${kk} KOs · ${d} caídas · ${g} partidas`,`600 ${story?24:19}px ${FB}`,P.MU,"left",cx+18,cy+ch*.9);});
+    txt(x,`${getNick(ti,n)?n+" · ":""}${kk} KOs · ${d} caídas · ${g} partidas`,`600 ${story?24:19}px ${FB}`,P.MU,"left",cx+18,cy+ch*.9);});
   return f.cv;
 }
 /* 8. juegos de la semana */
