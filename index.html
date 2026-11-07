@@ -156,9 +156,6 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
   linear-gradient(0deg,var(--ink) 0%,transparent 35%)}
 .hero::before,.hero::after{z-index:1}
 .hero>.wrap{z-index:2}
-.video-toggle{position:absolute;z-index:3;right:max(16px,env(safe-area-inset-right,0px));top:16px;display:none;align-items:center;gap:8px;background:color-mix(in srgb,var(--ink) 70%,transparent);border:1px solid var(--line);color:var(--chalk);font-family:var(--f-label);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;padding:7px 12px;cursor:pointer;backdrop-filter:blur(6px)}
-.hero-media.is-ready~.video-toggle{display:inline-flex}
-.video-toggle:hover{border-color:var(--volt)}
 /* ---------- Stat strip ---------- */
 .strip{background:var(--chalk);color:var(--ink);overflow:hidden}
 .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
@@ -987,11 +984,10 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <source src="media/hero-web.mp4" type="video/mp4">
       </video>
     </div>
-    <button type="button" class="video-toggle" id="videoToggle" aria-pressed="false">❚❚ Pausar video</button>
     <div class="wrap">
       <div>
         <div class="season"><span class="a"><i>Temporada 5</i></span><span class="b"><i>Playoffs</i></span></div>
-        <h1><span class="ln k">Vive cada pick.</span><span class="ln j">Gana cada</span><span class="ln j">semana.</span></h1>
+        <h1><span class="ln k">Arma tu equipo.</span><span class="ln j">Gana tu liga.</span></h1>
         <p class="lede">18 coaches, dos conferencias y un solo campeon. Cada draft construye historias, cada trade redefine destinos y cada batalla acerca al titulo.</p>
         <div class="cta">
           <a class="btn" href="#playoffs">Ver playoffs</a>
@@ -1733,13 +1729,10 @@ function renderProfile(ti){
 
 /* hero video: se muestra solo cuando el archivo existe y empieza a reproducirse */
 (()=>{
-  const v=document.getElementById("heroVideo"),box=document.getElementById("heroMedia"),btn=document.getElementById("videoToggle");
+  const v=document.getElementById("heroVideo"),box=document.getElementById("heroMedia");
   if(!v)return;
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   v.addEventListener("playing",()=>box.classList.add("is-ready"));
-  const setBtn=()=>{const p=v.paused;btn.textContent=p?"▶ Reproducir video":"❚❚ Pausar video";btn.setAttribute("aria-pressed",p);};
-  btn.addEventListener("click",()=>{v.paused?v.play().catch(()=>{}):v.pause();setBtn();});
-  v.addEventListener("pause",setBtn);v.addEventListener("play",setBtn);
   if(reduce){v.addEventListener("loadeddata",()=>box.classList.add("is-ready"),{once:true});v.load();}
   else v.play().catch(()=>{});
 })();
