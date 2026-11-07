@@ -2959,18 +2959,18 @@ async function drawOverlay(mi){
   const lines=(x0,y0,w,h,col)=>{x.save();x.beginPath();x.rect(x0,y0,w,h);x.clip();x.globalAlpha=.08;x.strokeStyle=col;x.lineWidth=2;for(let i=-h;i<w+h;i+=26){x.beginPath();x.moveTo(x0+i,y0+h);x.lineTo(x0+i+h*.45,y0);x.stroke();}x.restore();};
   x.fillStyle=P.INK;x.fillRect(0,0,W,H);
   // columnas laterales: degradado + lineas diagonales del color de cada conferencia
-  let g=x.createLinearGradient(0,0,G.x,0);g.addColorStop(0,CA+"66");g.addColorStop(1,CA+"14");x.fillStyle=g;x.fillRect(0,G.y,G.x,G.h);lines(0,G.y,G.x,G.h,CA);
-  g=x.createLinearGradient(W,0,W-G.x,0);g.addColorStop(0,CB+"66");g.addColorStop(1,CB+"14");x.fillStyle=g;x.fillRect(W-G.x,G.y,G.x,G.h);lines(W-G.x,G.y,G.x,G.h,CB);
+  let g;x.fillStyle=P.INK2;x.fillRect(0,G.y,G.x,G.h);x.fillRect(W-G.x,G.y,G.x,G.h);lines(0,G.y,G.x,G.h,CA);lines(W-G.x,G.y,G.x,G.h,CB);
+  x.fillStyle=CA;x.fillRect(0,G.y,5,G.h);x.fillStyle=CB;x.fillRect(W-5,G.y,5,G.h);
   // roster: sprite HOME + costo de draft, ordenado por costo
   const col=async(ti,cx,C)=>{const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),sh=G.h/Math.max(ro.length,6),sz=Math.min(sh-30,112);
-    ro.forEach((r,k)=>{const top=G.y+sh*k,cy=top+(sh-22)/2+2;poly([[cx-G.x/2+18,top+5],[cx+G.x/2-12,top+5],[cx+G.x/2-18,top+sh-5],[cx-G.x/2+12,top+sh-5]],"#00000052");
+    ro.forEach((r,k)=>{const top=G.y+sh*k,cy=top+(sh-22)/2+2;poly([[cx-G.x/2+18,top+5],[cx+G.x/2-12,top+5],[cx+G.x/2-18,top+sh-5],[cx-G.x/2+12,top+sh-5]],P.INK3);poly([[cx-G.x/2+18,top+5],[cx-G.x/2+23,top+5],[cx-G.x/2+17,top+sh-5],[cx-G.x/2+12,top+sh-5]],C);
       fit(x,imgs[k],cx,cy,sz);txt(x,`${r[1]} PTS`,`700 17px ${FL}`,C,"center",cx,top+sh-12);});};
   await col(m.a,G.x/2,CA);await col(m.b,W-G.x/2,CB);
   // barra superior con entradas diagonales detras de cada equipo
   x.fillStyle=P.INK2;x.fillRect(0,0,W,G.y);
-  g=x.createLinearGradient(0,0,760,0);g.addColorStop(0,CA+"70");g.addColorStop(1,CA+"08");poly([[0,0],[760,0],[700,G.y],[0,G.y]],g);
-  g=x.createLinearGradient(W,0,W-760,0);g.addColorStop(0,CB+"70");g.addColorStop(1,CB+"08");poly([[W,0],[W-760,0],[W-700,G.y],[W,G.y]],g);
-  poly([[0,0],[150,0],[124,G.y],[0,G.y]],CA+"55");poly([[W,0],[W-150,0],[W-124,G.y],[W,G.y]],CB+"55");
+  poly([[0,0],[14,0],[0,G.y]],CA);poly([[W,0],[W-14,0],[W,G.y]],CB);
+  poly([[700,0],[712,0],[666,G.y],[654,G.y]],CA);poly([[W-700,0],[W-712,0],[W-666,G.y],[W-654,G.y]],CB);
+  poly([[722,0],[728,0],[682,G.y],[676,G.y]],CA+"88");poly([[W-722,0],[W-728,0],[W-682,G.y],[W-676,G.y]],CB+"88");
   poly([[0,G.y-6],[W/2,G.y-6],[W/2,G.y],[0,G.y]],CA);poly([[W/2,G.y-6],[W,G.y-6],[W,G.y],[W/2,G.y]],CB);
   const side=(t,lo,C,left)=>{const ti=TEAMS.indexOf(t),ls=96;fit(x,lo,left?16+ls/2:W-16-ls/2,G.y/2-3,ls);const tx=left?16+ls+22:W-16-ls-22,al=left?"left":"right",nf=`900 42px ${FD}`;
     x.font=nf;txt(x,ell(x,t.n.toUpperCase(),540),nf,P.CH,al,tx,46);
@@ -2998,8 +2998,11 @@ async function drawIntro(mi){
   const m=MATCHES[mi],A=TEAMS[m.a],B=TEAMS[m.b],{cv,x,W,H,P}=await obsBase(),CA=confHex(A.c),CB=confHex(B.c);
   const [la,lb,lg]=await Promise.all([teamImg(A),teamImg(B),shareLogo()]);
   x.fillStyle=P.INK;x.fillRect(0,0,W,H);
-  x.save();x.beginPath();x.moveTo(0,0);x.lineTo(W*.56,0);x.lineTo(W*.44,H);x.lineTo(0,H);x.closePath();x.clip();let g=x.createLinearGradient(0,0,W*.5,0);g.addColorStop(0,CA+"55");g.addColorStop(1,CA+"14");x.fillStyle=g;x.fillRect(0,0,W,H);x.restore();
-  x.save();x.beginPath();x.moveTo(W*.56,0);x.lineTo(W,0);x.lineTo(W,H);x.lineTo(W*.44,H);x.closePath();x.clip();g=x.createLinearGradient(W,0,W*.5,0);g.addColorStop(0,CB+"55");g.addColorStop(1,CB+"14");x.fillStyle=g;x.fillRect(0,0,W,H);x.restore();
+  const band=(pts,c)=>{x.beginPath();pts.forEach(([px,py],k)=>k?x.lineTo(px,py):x.moveTo(px,py));x.closePath();x.fillStyle=c;x.fill();};
+  x.fillStyle=P.INK2;x.fillRect(0,0,W,H);
+  x.save();x.beginPath();x.rect(0,200,W,720);x.clip();band([[W*.56-26,0],[W*.56-12,0],[W*.44-12,H],[W*.44-26,H]],CA);band([[W*.56+12,0],[W*.56+26,0],[W*.44+26,H],[W*.44+12,H]],CB);x.restore();
+  band([[0,0],[180,0],[0,180]],CA+"cc");band([[W,H],[W-180,H],[W,H-180]],CB+"cc");
+  x.save();x.globalAlpha=.05;x.strokeStyle=P.CH;x.lineWidth=2;for(let i=-H;i<W;i+=60){x.beginPath();x.moveTo(i,H);x.lineTo(i+H*.27,0);x.stroke();}x.restore();
   if(lg){const h=70,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,48,w,h);}
   txt(x,`PPV DRAFT LEAGUE · SEMANA ${m.w} · AL MEJOR DE 3`,`700 30px ${FL}`,P.VO,"center",W/2,160);
   const card=async(t,lo,C,cx)=>{const ti=TEAMS.indexOf(t);fit(x,lo,cx,330,250);const nf=`900 70px ${FD}`;x.font=nf;txt(x,ell(x,t.n.toUpperCase(),780),nf,P.CH,"center",cx,530);
@@ -3008,7 +3011,7 @@ async function drawIntro(mi){
     // roster: 4 columnas x 2 filas, ordenado por costo de draft
     const ro=ROSTER(ti).slice().sort((a,b)=>b[1]-a[1]),imgs=await Promise.all(ro.map(r=>homeImg(r[0]))),cw=196,chh=150,gx=10,cols=4,y0=640;
     ro.forEach((r,k)=>{const rows=Math.ceil(ro.length/cols),row=Math.floor(k/cols),inRow=row<rows-1?cols:ro.length-cols*(rows-1),rw=inRow*cw+(inRow-1)*gx;
-      const bx=cx-rw/2+(k%cols)*(cw+gx),by=y0+row*(chh+gx);x.fillStyle="#0000004d";x.fillRect(bx,by,cw,chh);x.fillStyle=C;x.fillRect(bx,by,cw,4);
+      const bx=cx-rw/2+(k%cols)*(cw+gx),by=y0+row*(chh+gx);x.fillStyle=P.INK3;x.fillRect(bx,by,cw,chh);x.fillStyle=C;x.fillRect(bx,by,cw,4);
       fit(x,imgs[k],bx+cw/2,by+56,104);const nk=getNick(ti,r[0]),lf=`700 22px ${FL}`;x.font=lf;txt(x,ell(x,(nk||r[0]).toUpperCase(),cw-16),lf,P.CH,"center",bx+cw/2,by+chh-32);
       txt(x,nk?r[0].toUpperCase():`${r[1]} PTS`,`600 16px ${FL}`,P.MU,"center",bx+cw/2,by+chh-12);});};
   await card(A,la,CA,W*.25);await card(B,lb,CB,W*.75);
