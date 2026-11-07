@@ -958,6 +958,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .strip.p-strip::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c,var(--volt))}
 .strip.p-strip .stat{border-color:var(--line);padding-top:24px}
 .strip.p-strip .stat span{color:var(--mute)}
+.cid.fav-up{text-transform:uppercase;letter-spacing:.12em}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -1703,7 +1704,7 @@ function renderProfile(ti){
           <h1>${esc(t.n)}</h1>
           <div class="p-coach"><span class="label">Coach</span><strong>${esc(coach)}</strong>${title&&title!=="-"?`<span class="p-title">“${esc(title)}”</span>`:""}</div>
           <div class="p-cid"><span class="label">Champions ID</span>${CHAMPIONS_ID[ti]?`<code class="cid num">${fmtCid(CHAMPIONS_ID[ti])}</code><button type="button" class="cid-copy" data-cid="${CHAMPIONS_ID[ti]}">Copiar</button>`:`<span class="cid none">Por registrar</span>`}</div>
-          <div class="p-cid"><span class="label">Pokemon favorito</span><span class="cid">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
+          <div class="p-cid"><span class="label">Pokemon favorito</span><span class="cid fav-up">${fav&&fav!=="-"?esc(fav):"Sin definir"}</span></div>
           <div class="p-share"><button type="button" class="btn" data-share="${ti}">⤴ Compartir perfil</button></div>
         </div>
       </div>
