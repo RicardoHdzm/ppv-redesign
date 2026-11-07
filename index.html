@@ -1836,7 +1836,7 @@ document.getElementById("dxStats").innerHTML=`
 function dxCard(p){
   const [n,pts,types]=p,ts=types.split("/"),own=OWNER[n];
   const c1=TYPE[ts[0]][1],c2=TYPE[ts[1]||ts[0]][1];
-  const owner=own!=null?`<a href="#team-${slug(TEAMS[own])}" style="--c:${CONF[TEAMS[own].c].v}">${crest(TEAMS[own])}<span>${esc(TEAMS[own].n)}</span></a>`:`<span class="chip lib"><i>Libre</i></span>`;
+  const owner=own!=null?`<a href="#team-${slug(TEAMS[own])}" style="--c:${CONF[TEAMS[own].c].v}">${crest(TEAMS[own])}<span title="${esc(TEAMS[own].n)}">#${TEAMS[own].ab}</span></a>`:`<span class="chip lib"><i>Libre</i></span>`;
   return `<article class="dx ${own==null?"free":""} ${own===ME?"mine":""}" style="--t1:${c1};--t2:${c2}">${own===ME?'<span class="mine-tag">Tu equipo</span>':""}
     ${spr(n,"dx-spr")}<h3>${esc(n)}</h3>
     <div class="types">${ts.map(x=>`<span class="ty" style="--tc:${TYPE[x][1]}"><i>${TYPE[x][0]}</i></span>`).join("")}</div>
