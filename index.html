@@ -2037,7 +2037,7 @@ async function makeShareImage(ti,fmt){
   x.fillStyle=VO;x.font=f2;x.fillText("TEMPORADA 5 · EVOLUTION",W/2,top+(story?92:78));
   // logo del equipo
   x.font=`900 ${story?132:104}px "Big Shoulders Display", Impact, sans-serif`;const preLines=wrapLines(x,t.n.toUpperCase(),920).length;
-  const ls=story?440:(preLines>1?200:270),ly=story?250:150;
+  const ls=story?(preLines>1?300:400):(preLines>1?200:270),ly=story?250:150;
   if(logo){const r=Math.min(ls/logo.naturalWidth,ls/logo.naturalHeight),w=logo.naturalWidth*r,h=logo.naturalHeight*r;x.save();x.shadowColor="#000c";x.shadowBlur=40;x.shadowOffsetY=16;x.drawImage(logo,(W-w)/2,ly+(ls-h)/2,w,h);x.restore();}
   // nombre
   let y=ly+ls+(story?130:100);
@@ -2070,7 +2070,7 @@ async function makeShareImage(ti,fmt){
   x.fillStyle=CH;x.font=`900 ${story?76:60}px "Big Shoulders Display", Impact, sans-serif`;x.fillText(mvp[0].toUpperCase(),tx,y+mh*.62);
   x.fillStyle=MU;x.font=`600 ${story?32:26}px "Barlow", sans-serif`;x.fillText(`${mvp[6]} KOs · ${mvp[7]} caídas · ${mvp[5]} partidas`,tx,y+mh*.86);
   // pie
-  if(lg){const h=story?120:66,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?56:40)-h,w,h);}
+  if(lg){const h=story?100:56,w=lg.width*h/lg.height;x.drawImage(lg,(W-w)/2,H-(story?70:50)-(story?50:34)-h,w,h);}
   x.textAlign="center";x.fillStyle=MU;x.font=`600 ${story?30:26}px "Barlow", sans-serif`;x.fillText(SHARE_URL,W/2,H-(story?70:50));
   const rojo=cssVar("--rojo")||"#FF4B2B",verde=cssVar("--verde")||"#7ED13A";x.fillStyle=rojo;x.fillRect(0,H-14,W/2,14);x.fillStyle=verde;x.fillRect(W/2,H-14,W/2,14);
   return cv;
