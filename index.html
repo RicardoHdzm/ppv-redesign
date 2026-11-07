@@ -2987,7 +2987,7 @@ async function drawOverlay(mi){
   // logo + nombre de la liga, juntos y centrados en la barra
   {const nf=`900 28px ${FD}`,lh=38,lw=lg?lg.width*lh/lg.height:0,gap=lg?12:0;x.font=nf;const nw=x.measureText("PPV DRAFT LEAGUE").width,sx=(W-(lw+gap+nw))/2;
     if(lg)x.drawImage(lg,sx,fy+(fh-lh)/2,lw,lh);txt(x,"PPV DRAFT LEAGUE",nf,P.CH,"left",sx+lw+gap,fy+fh/2+10);}
-txt(x,SHARE_URL,`600 24px ${FB}`,P.VO,"right",W-24,fy+39);
+txt(x,SHARE_URL.toUpperCase(),`700 20px ${FL}`,P.VO,"right",W-24,fy+39);
   // ventana del juego: transparente con borde
   x.clearRect(G.x,G.y,G.w,G.h);x.lineWidth=4;
   x.strokeStyle=CA;x.beginPath();x.moveTo(G.x+G.w/2,G.y-2);x.lineTo(G.x-2,G.y-2);x.lineTo(G.x-2,G.y+G.h+2);x.lineTo(G.x+G.w/2,G.y+G.h+2);x.stroke();
