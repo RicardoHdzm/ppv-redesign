@@ -69,6 +69,7 @@ Todos están cerca del inicio del `<script>`. Al conectar el sitio real, cada co
 | **Pokemon de la semana** | El que estuvo en más juegos ganados de la semana; desempata el total de KOs. | Si la BD guarda **KOs por juego**, conviene usar eso. |
 | **Power ranking** | Se **calcula** en el navegador (`powerAt(w)`): 3 por serie ganada, 0.6 por juego de diferencia, 1.5 por victoria en las últimas 3 semanas y hasta 4 por la fuerza de los rivales. | Puede quedarse calculado o guardarse por semana. |
 | **Récord de temporadas pasadas (H.O.F.)** | Las temporadas 1–3 salen del título de cada trainer; la 4 sale de `PLAYOFFS`. | Tabla de campeones por temporada. |
+| **Cartas de temporada** | Todo simulado con semilla fija (`crSim()`): mazo de 41 sobres (`CARDS`), reparto a quien pierde su serie, tope de mano `CR_HAND = 2` y jugadas al azar sobre las series de la T4, hasta la semana `CR_NOW = 4`. | Tablas de mazo, manos (privadas) y jugadas (públicas). Las cartas jugadas se marcan en las series de Matches (`crChips`). Faltan por cerrar: quién saca sobre, tope de mano y número de copias. Con 8 perdedores por semana el mazo de 41 se acaba en la semana 6 de 9. |
 
 ## 5. Funciones nuevas del rediseño (por página)
 
@@ -80,6 +81,7 @@ Todos están cerca del inicio del `<script>`. Al conectar el sitio real, cada co
 - **Perfil de equipo:** semana a semana, roster (con apodos), análisis de tipos, **cobertura ofensiva**, trades y fichajes, y resultados.
 - **Draft:** mi draft, tablero, **trades y fichajes**, movimientos desde el draft y free agency.
 - **Pokedex, Playoffs y H.O.F.:** rediseñados.
+- **Cartas (propuesta T5):** el mazo con lo que queda de cada carta, tu mano (solo la ve su dueño), el registro público de cartas jugadas por semana, cuántas cartas guarda cada equipo y las reglas. Las series afectadas llevan la carta en Matches.
 - **Media (solo rol CM):** las imágenes de la semana para redes (calendario, resultados, power ranking, Pokemon de la semana, standings, tabla general, líderes, mercado y bracket), con descarga individual o de todas.
 - **En todo el sitio:** buscador global (tecla `/` o Ctrl+K), tooltips que explican cada stat, imágenes para compartir en historia o post y app instalable.
 

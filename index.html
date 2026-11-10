@@ -883,6 +883,77 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 .sc-note{color:var(--mute);font-size:.82rem;margin:0}
 .sc-h2h{display:grid;gap:10px}
 
+/* ---------- CARTAS DE TEMPORADA ---------- */
+.cr-hero::after{content:"41"}
+.cr-hero p{margin:0;max-width:62ch;color:var(--mute)}
+.cr-stats{display:flex;flex-wrap:wrap;gap:10px 28px}
+.cr-stats div{display:grid;gap:2px}
+.cr-stats b{font-family:var(--f-display);font-weight:900;font-size:2.2rem;line-height:1}
+.cr-stats b.v{color:var(--volt)}
+.cr-sim{display:inline-block;font-family:var(--f-label);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--ink);background:var(--volt);padding:3px 8px}
+.cr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.cr-hand{display:flex;flex-wrap:wrap;gap:14px}
+.cr-hand .cr{width:200px}
+.cr{--cc:var(--volt);position:relative;aspect-ratio:5/7;background:var(--ink-2);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.cr .ct{display:flex;justify-content:space-between;gap:6px;align-items:center;padding:7px 10px;background:var(--cc);color:var(--ink);font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.cr .ci{flex:1;display:grid;place-items:center;color:var(--cc);background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--ink-3) 70%,var(--ink-2)) 0 6px,var(--ink-2) 6px 12px)}
+.cr .ci svg{width:42%;height:auto;max-width:72px}
+.cr h3{margin:0;padding:10px 10px 4px;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.3rem;line-height:1}
+.cr p{margin:0;padding:0 10px 10px;color:var(--mute);font-size:.78rem;line-height:1.35;min-height:3.2em}
+.cr .cf{display:flex;justify-content:space-between;gap:6px;padding:6px 10px;border-top:1px solid var(--line);font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.cr .cf b{color:var(--chalk);font-weight:700}
+.cr.blank .ct{color:var(--mute)}
+.cr.blank h3{color:var(--mute)}
+.cr.out{opacity:.38}
+.cr.out .cf b{color:var(--mute)}
+.cr-back{background:var(--ink);align-items:center;justify-content:center;text-align:center;gap:8px}
+.cr-back::before,.cr-back::after{content:"";position:absolute;left:0;right:0;height:10px;background:linear-gradient(90deg,var(--rojo) 50%,var(--verde) 50%)}
+.cr-back::before{top:0}.cr-back::after{bottom:0}
+.cr-back img{width:58%;height:auto}
+.cr-back .label{color:var(--volt)}
+.cr-empty{background:var(--ink-2);border:1px dashed var(--line);padding:22px;color:var(--mute);max-width:520px}
+.cr-empty strong{display:block;color:var(--chalk);font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.3rem;margin-bottom:4px}
+.cr-mine-note{margin:12px 0 0;color:var(--mute);font-size:.85rem}
+.cr-cats{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:18px}
+.cr-cats span{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem;color:var(--mute)}
+.cr-cats i{width:10px;height:10px;background:var(--cc)}
+.cr-cats b{color:var(--chalk)}
+.cr-log{display:grid;gap:22px}
+.cr-wk h3{margin:0 0 10px;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.4rem;display:flex;align-items:baseline;gap:12px}
+.cr-wk h3 .label{font-size:.72rem}
+.cr-rows{display:grid;gap:6px}
+.cr-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr) auto;gap:12px;align-items:center;background:var(--ink-2);border:1px solid var(--line);padding:8px 12px;min-width:0}
+.cr-who{display:flex;align-items:center;gap:10px;min-width:0}
+.cr-who .logo,.cr-who .crest{--sz:30px;flex:none}
+.cr-who strong{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.02rem;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-who small{display:block;color:var(--mute);font-size:.72rem;font-family:var(--f-label);letter-spacing:.1em;text-transform:uppercase}
+.cr-chip{--cc:var(--volt);display:inline-flex;align-items:center;gap:6px;font-family:var(--f-label);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cc);border:1px solid color-mix(in srgb,var(--cc) 55%,transparent);background:color-mix(in srgb,var(--cc) 10%,transparent);padding:3px 8px;white-space:nowrap}
+.cr-chip svg{width:14px;height:14px;flex:none}
+.cr-what{color:var(--mute);font-size:.86rem;min-width:0}
+.cr-what b{color:var(--chalk);font-weight:600}
+.cr-res{font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.cr-res.ok{color:var(--volt)}
+.cr-res.no{color:var(--rojo)}
+.cr-res.mir{color:#B58CFF}
+.cr-deal{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.cr-deal .label{font-size:.68rem;margin-right:4px}
+.cr-deal span.d{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--mute);background:var(--ink-2);border:1px solid var(--line);padding:3px 8px}
+.cr-deal span.d .logo,.cr-deal span.d .crest{--sz:18px}
+.cr-hands{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.cr-h{display:flex;align-items:center;gap:10px;background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--c);padding:8px 12px;text-decoration:none;color:inherit;min-width:0}
+.cr-h .logo,.cr-h .crest{--sz:28px;flex:none}
+.cr-h strong{flex:1;min-width:0;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:.98rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-h .cr-bk{display:flex;gap:4px;flex:none}
+.cr-h .cr-bk i{width:14px;height:20px;border:1px solid var(--line);background:var(--ink-3)}
+.cr-h .cr-bk i.on{background:linear-gradient(180deg,var(--rojo) 0 3px,var(--ink) 3px calc(100% - 3px),var(--verde) calc(100% - 3px))}
+.cr-h.me{border-color:var(--volt)}
+.cr-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.cr-rules li{background:var(--ink-2);border:1px solid var(--line);padding:14px 16px;color:var(--mute);font-size:.9rem;line-height:1.45}
+.cr-rules li b{display:block;color:var(--chalk);font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:1.1rem;margin-bottom:4px}
+.mcx{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.mcx .cr-chip{font-size:.62rem;padding:2px 5px;gap:4px}
+.mcx .cr-chip svg{width:11px;height:11px}
+@media (max-width:640px){.cr-row{grid-template-columns:minmax(0,1fr) auto;}.cr-what{grid-column:1/-1}.cr-res{grid-column:1/-1}.cr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cr-hand .cr{width:calc(50% - 7px)}}
 /* ---------- SALON DE LA FAMA ---------- */
 .hof-hero::after{content:"HOF"}
 .champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
@@ -1215,6 +1286,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
 @media (max-width:860px){.cm-btn{display:none}}
 @media (min-width:861px) and (max-width:1240px){.brand .name{display:none}}
 @media (min-width:861px){.nav .wrap{gap:14px}.nav nav a{padding:8px 9px}.nav nav a.on::after{left:9px;right:9px}}
+@media (min-width:861px){.nav nav a{padding:8px 6px;letter-spacing:.05em;font-size:.86rem}.nav nav a.on::after{left:6px;right:6px}.nav-sep{margin:0 3px}.nav .wrap{gap:10px}}
 @media (min-width:861px){#navMedia{display:none!important}}
 .nav nav a.cm-link small{font-size:.62rem;letter-spacing:.12em;margin-left:5px;padding:1px 5px;border:1px solid currentColor;vertical-align:2px}
 .md-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px}
@@ -1270,6 +1342,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
       <a href="#draft" data-page="draft">Draft</a>
       <a href="#pokedex" data-page="pokedex">Pokedex</a>
       <a href="#salon" data-page="salon">H.O.F.</a>
+      <a href="#cartas" data-page="cartas">Cartas</a>
       <a href="#media" data-page="media" class="cm-link" id="navMedia" hidden>Media<small>CM</small></a>
     </nav>
     <button type="button" class="nav-search" id="searchBtn" aria-label="Buscar (atajo: tecla /)" title="Buscar (/)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
@@ -1624,6 +1697,9 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
   </div>
 </main>
 
+<!-- ================= CARTAS ================= -->
+<main id="page-cartas" hidden></main>
+
 <!-- ================= TEAM PROFILE ================= -->
 <main id="page-profile" hidden></main>
 
@@ -1657,6 +1733,7 @@ table.db.v{width:100%;min-width:1080px;table-layout:fixed}
         <li><a href="#draft">Draft</a></li>
         <li><a href="#pokedex">Pokedex</a></li>
         <li><a href="#salon">Hall of Fame</a></li>
+        <li><a href="#cartas">Cartas</a></li>
         <li><a href="#" id="fMine">Mi equipo</a></li>
       </ul>
     </div>
@@ -1942,7 +2019,7 @@ function mcard(m,top){
   let res="";
   if(top!==undefined){const mine=m.a===top?"a":"b";const won=(mine==="a"?m.ga:m.gb)===2;res=`<span class="res ${won?"w":"l"}">${won?"W":"L"}</span>`;}
   const lab=top!==undefined?`Semana ${m.w}`:(m.seq.length===3?"Final · 3 juegos":"Final · 2-0");
-  return `<article class="mc ${top===undefined&&(m.a===ME||m.b===ME)?"mine":""}" data-mi="${m.i}" tabindex="0" style="--c:${CONF[m.c].v}" aria-label="Ver detalle de la serie: ${esc(TEAMS[m.a].n)} ${m.ga}, ${esc(TEAMS[m.b].n)} ${m.gb}"><div class="sides">${mside(m,"a")}${mside(m,"b")}</div><div class="meta">${res}<span class="label">${lab}</span><div class="rps">${reps}</div></div></article>`;
+  return `<article class="mc ${top===undefined&&(m.a===ME||m.b===ME)?"mine":""}" data-mi="${m.i}" tabindex="0" style="--c:${CONF[m.c].v}" aria-label="Ver detalle de la serie: ${esc(TEAMS[m.a].n)} ${m.ga}, ${esc(TEAMS[m.b].n)} ${m.gb}"><div class="sides">${mside(m,"a")}${mside(m,"b")}</div><div class="meta">${res}<span class="label">${lab}</span>${crChips(m.i)}<div class="rps">${reps}</div></div></article>`;
 }
 document.getElementById("weeks").innerHTML=Array.from({length:WEEKS},(_,i)=>`<button type="button" data-w="${i+1}"><small>Semana</small>${i+1}</button>`).join("");
 const mteam=document.getElementById("mteam");
@@ -3328,11 +3405,151 @@ document.getElementById("mdAll").addEventListener("click",async()=>{const btn=do
     if(r==="declined")break;if(r==="ok")ok++;await new Promise(z=>setTimeout(z,350));}
   btn.textContent="⤓ Descargar todas";btn.disabled=false;toastMsg(`${ok} de ${files.length} imagenes guardadas.`);});
 
+/* ---------- CARTAS DE TEMPORADA (propuesta T5, simulada sobre los resultados de la T4) ---------- */
+const CR_ICONS={"arrows-exchange":"M7 10h14l-4 -4|M17 14h-14l4 4","arrows-shuffle":"M18 4l3 3l-3 3|M18 20l3 -3l-3 -3|M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5|M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3","ban":"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0|M5.7 5.7l12.6 12.6","bolt":"M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11","cards":"M3.604 7.197l7.138 -3.109a.96 .96 0 0 1 1.27 .527l4.924 11.902a1 1 0 0 1 -.514 1.304l-7.137 3.109a.96 .96 0 0 1 -1.271 -.527l-4.924 -11.903a1 1 0 0 1 .514 -1.304z|M15 4h1a1 1 0 0 1 1 1v3.5|M20 6c.264 .112 .52 .217 .768 .315a1 1 0 0 1 .53 1.311l-2.298 5.374","door-exit":"M13 12v.01|M3 21h18|M5 21v-16a2 2 0 0 1 2 -2h7.5m2.5 10.5v7.5|M14 7h7m-3 -3l3 3l-3 3","eye-off":"M10.585 10.587a2 2 0 0 0 2.829 2.828|M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87|M3 3l18 18","flip-horizontal":"M3 12l18 0|M7 16l10 0l-10 5l0 -5|M7 8l10 0l-10 -5l0 5","gavel":"M13 10l7.383 7.418c.823 .82 .823 2.148 0 2.967a2.11 2.11 0 0 1 -2.976 0l-7.407 -7.385|M6 9l4 4|M13 10l-4 -4|M3 21h7|M6.793 15.793l-3.586 -3.586a1 1 0 0 1 0 -1.414l2.293 -2.293l.5 .5l3 -3l-.5 -.5l2.293 -2.293a1 1 0 0 1 1.414 0l3.586 3.586a1 1 0 0 1 0 1.414l-2.293 2.293l-.5 -.5l-3 3l.5 .5l-2.293 2.293a1 1 0 0 1 -1.414 0z","hand-grab":"M8 11v-3.5a1.5 1.5 0 0 1 3 0v2.5|M11 9.5v-3a1.5 1.5 0 0 1 3 0v3.5|M14 7.5a1.5 1.5 0 0 1 3 0v2.5|M17 9.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47","lock":"M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z|M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0|M8 11v-4a4 4 0 1 1 8 0v4","multiplier-2x":"M14 16l4 -4|M18 16l-4 -4|M6 10a2 2 0 1 1 4 0c0 .591 -.417 1.318 -.816 1.858l-3.184 4.143l4 0","pointer":"M7.904 17.563a1.2 1.2 0 0 0 2.228 .308l2.09 -3.093l4.907 4.907a1.067 1.067 0 0 0 1.509 0l1.047 -1.047a1.067 1.067 0 0 0 0 -1.509l-4.907 -4.907l3.113 -2.09a1.2 1.2 0 0 0 -.309 -2.228l-13.582 -3.904l3.904 13.563z","refresh":"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4|M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4","seedling":"M2 9a10 10 0 1 0 20 0|M12 19a10 10 0 0 1 10 -10|M2 9a10 10 0 0 1 10 10|M12 4a9.7 9.7 0 0 1 2.99 7.5|M9.01 11.5a9.7 9.7 0 0 1 2.99 -7.5","shield":"M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3","square-off":"M8 4h10a2 2 0 0 1 2 2v10m-.584 3.412a2 2 0 0 1 -1.416 .588h-12a2 2 0 0 1 -2 -2v-12c0 -.552 .224 -1.052 .586 -1.414|M3 3l18 18"};
+const CR_HAND=2; // tope de mano
+const CR_NOW=4; // semana simulada: el estado se muestra al cierre de esta semana
+const CR_CAT={res:["Restriccion","#FF5A6E"],obl:["Obligacion","#FF8A3D"],mer:["Mercado","#FFB62E"],for:["Formato","#5CD6F0"],def:["Defensa","#B58CFF"],bla:["Sin efecto","#55555C"]};
+// t: a quien apunta. rival = tu rival de la semana · any = quien elijas · azar = alguien al azar · own = tu serie · past = una serie que perdiste · liga = toda la liga · react = se activa sola
+const CARDS=[
+  {id:"baneo",cat:"res",n:"Baneo",k:2,ic:"ban",t:"rival",tx:"Elige un Pokemon de tu rival. No lo puede usar esta semana."},
+  {id:"destierro",cat:"res",n:"Destierro",k:3,ic:"door-exit",t:"rival",tx:"Se banea el Pokemon que mas ha usado tu rival en la temporada."},
+  {id:"prestamo",cat:"obl",n:"Prestamo forzoso",k:1,ic:"arrows-exchange",t:"any",tx:"Intercambias un Pokemon con quien elijas por una semana. No se puede negar."},
+  {id:"titular",cat:"obl",n:"Titular obligado",k:3,ic:"pointer",t:"rival",tx:"Señalas un Pokemon de tu rival y tiene que sacarlo al campo."},
+  {id:"novato",cat:"obl",n:"El novato",k:3,ic:"seedling",t:"rival",tx:"Tu rival debe incluir un Pokemon que no haya usado en la temporada."},
+  {id:"veto",cat:"mer",n:"Veto de trade",k:3,ic:"gavel",t:"any",tx:"Tumbas un intercambio ya acordado."},
+  {id:"cerrado",cat:"mer",n:"Mercado cerrado",k:1,ic:"lock",t:"liga",tx:"Nadie en la liga puede intercambiar esta semana."},
+  {id:"ciegas",cat:"mer",n:"Trade a ciegas",k:2,ic:"eye-off",t:"azar",tx:"Intercambias un Pokemon al azar con un trainer al azar."},
+  {id:"robo",cat:"mer",n:"Robo de carta",k:2,ic:"hand-grab",t:"any",tx:"Le quitas una carta al azar a quien elijas. Si no tiene, se pierde."},
+  {id:"doble",cat:"for",n:"Doble o nada",k:2,ic:"multiplier-2x",t:"own",tx:"Tu serie vale el doble. Tambien si pierdes."},
+  {id:"subita",cat:"for",n:"Muerte subita",k:3,ic:"bolt",t:"own",tx:"Tu serie se juega al mejor de 1 en lugar de 3."},
+  {id:"revancha",cat:"for",n:"Revancha",k:2,ic:"refresh",t:"past",tx:"Repites una serie que ya perdiste."},
+  {id:"ruleta",cat:"for",n:"Ruleta de rivales",k:1,ic:"arrows-shuffle",t:"liga",tx:"Se re-sortea el calendario de la semana."},
+  {id:"escudo",cat:"def",n:"Escudo",k:4,ic:"shield",t:"react",tx:"Anulas una carta dirigida a ti."},
+  {id:"espejo",cat:"def",n:"Espejo",k:1,ic:"flip-horizontal",t:"react",tx:"La carta que te lanzaron le pega a quien la lanzo."},
+  {id:"blanco",cat:"bla",n:"Sin efecto",k:8,ic:"square-off",t:"none",tx:"Esta semana no hay carta. Suerte para la proxima."}];
+const crCard=id=>CARDS.find(c=>c.id===id);
+const crIc=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${(CR_ICONS[n]||"").split("|").map(d=>`<path d="${d}"/>`).join("")}</svg>`;
+const crChip=(c,extra="")=>`<span class="cr-chip" style="--cc:${CR_CAT[c.cat][1]}">${crIc(c.ic)}${esc(c.n)}${extra}</span>`;
+const crFace=(c,foot,out)=>`<article class="cr ${c.cat==="bla"?"blank":""} ${out?"out":""}" style="--cc:${CR_CAT[c.cat][1]}"><div class="ct"><span>${CR_CAT[c.cat][0]}</span><span>×${c.k}</span></div><div class="ci">${crIc(c.ic)}</div><h3>${esc(c.n)}</h3><p>${esc(c.tx)}</p><div class="cf">${foot||"<span>PPV · T5</span>"}</div></article>`;
+/* simulacion: reparto a quien pierde su serie y jugadas al azar (semilla fija) sobre las series reales de la T4.
+   En el sitio real esto vendria de tablas: mazo, manos, jugadas. */
+function crSim(){
+  let seed=233;const rnd=()=>{seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const pick=a=>a[Math.floor(rnd()*a.length)];
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const deck=shuffle(CARDS.flatMap(c=>Array(c.k).fill(c.id))),total=deck.length;
+  const hands=TEAMS.map(()=>[]),log=[],deals=[],drawn={},byMatch={};let emptyAt=0;
+  const series=(ti,w)=>MATCHES.find(m=>m.w===w&&(m.a===ti||m.b===ti));
+  const rivalOf=(m,ti)=>m.a===ti?m.b:m.a;
+  const lostTo=(ti,w)=>MATCHES.filter(m=>m.w<w&&((m.a===ti&&m.ga<2)||(m.b===ti&&m.gb<2)));
+  const roster=ti=>(PROFILES[ti]&&PROFILES[ti][5])||[];
+  const mon=ti=>{const r=roster(ti);return r.length?pick(r)[0]:"un Pokemon";};
+  const topMon=ti=>{const r=roster(ti).slice().sort((a,b)=>b[1]-a[1]);return r.length?r[0][0]:"su Pokemon mas usado";};
+  const others=ti=>TEAMS.map((_,i)=>i).filter(i=>i!==ti);
+  for(let w=1;w<=CR_NOW;w++){
+    for(const ti of shuffle(TEAMS.map((_,i)=>i))){
+      const m=series(ti,w);
+      const ok=hands[ti].filter(id=>{const c=crCard(id);return c.t!=="react"&&!((c.t==="rival"||c.t==="own")&&!m)&&!(c.t==="past"&&!lostTo(ti,w).length);});
+      if(!ok.length||rnd()<.4)continue;
+      const id=pick(ok),c=crCard(id);hands[ti].splice(hands[ti].indexOf(id),1);
+      let tg=null,mi=null,past=null;
+      if(c.t==="rival"){tg=rivalOf(m,ti);mi=m.i;}
+      else if(c.t==="own")mi=m.i;
+      else if(c.t==="past"){past=pick(lostTo(ti,w));tg=rivalOf(past,ti);mi=past.i;}
+      else if(c.t==="azar")tg=pick(others(ti));
+      else if(c.t==="any"){const withCards=others(ti).filter(i=>hands[i].length);tg=id==="robo"&&withCards.length?pick(withCards):m&&id==="prestamo"?rivalOf(m,ti):pick(others(ti));}
+      let res="ok";
+      if(c.t==="rival"||c.t==="any"){const h=hands[tg];if(h.includes("espejo")){h.splice(h.indexOf("espejo"),1);res="mir";}else if(h.includes("escudo")){h.splice(h.indexOf("escudo"),1);res="no";}}
+      const vic=res==="mir"?ti:tg,att=res==="mir"?tg:ti;let det="";
+      if(res!=="no"){
+        if(id==="baneo")det=`<b>${esc(mon(vic))}</b> no se puede usar esta semana`;
+        else if(id==="destierro")det=`<b>${esc(topMon(vic))}</b> queda baneado esta semana`;
+        else if(id==="titular")det=`<b>${esc(mon(vic))}</b> tiene que salir al campo`;
+        else if(id==="novato")det=`debe meter a un Pokemon que no ha usado`;
+        else if(id==="prestamo")det=`<b>${esc(mon(att))}</b> por <b>${esc(mon(vic))}</b> durante la semana`;
+        else if(id==="veto")det=`se cae un trade que ya estaba acordado`;
+        else if(id==="robo"){const h=hands[vic];if(h.length){const s=h.splice(Math.floor(rnd()*h.length),1)[0];hands[att].push(s);det=`se lleva una carta de la mano`;}else det=`no tenia cartas: el robo se pierde`;}
+        else if(id==="cerrado")det=`nadie en la liga puede intercambiar`;
+        else if(id==="ciegas")det=`<b>${esc(mon(ti))}</b> por <b>${esc(mon(tg))}</b>`;
+        else if(id==="doble")det=`su serie vale doble`;
+        else if(id==="subita")det=`su serie se juega al mejor de 1`;
+        else if(id==="revancha")det=`repite la serie de la semana ${past.w}`;
+        else if(id==="ruleta")det=`se re-sortea el calendario de la semana`;
+      }
+      log.push({w,ti,id,tg,res,det});
+      if(mi!=null&&res!=="no")(byMatch[mi]=byMatch[mi]||[]).push({id,ti,res});
+    }
+    const got=[];
+    for(const mm of MATCHES.filter(x=>x.w===w)){const ti=mm.ga===2?mm.b:mm.a;
+      if(!deck.length){if(!emptyAt)emptyAt=w;got.push({ti,why:"vacio"});continue;}
+      if(hands[ti].length>=CR_HAND){got.push({ti,why:"llena"});continue;}
+      const id=deck.pop();drawn[id]=(drawn[id]||0)+1;got.push({ti,id});if(id!=="blanco")hands[ti].push(id);}
+    deals.push({w,got});
+  }
+  return {hands,log,deals,drawn,byMatch,left:deck.length,total,emptyAt};
+}
+function crState(){if(!crState.v){try{crState.v=crSim();}catch(e){return null;}}return crState.v;}
+function crChips(mi){const S=crState();const l=S&&S.byMatch[mi];if(!l)return "";
+  return `<div class="mcx">${l.map(x=>crChip(crCard(x.id))).join("")}</div>`;}
+function renderCartas(){
+  const S=crState(),el=document.getElementById("page-cartas");if(!S){el.innerHTML="";return;}
+  const dealt=S.total-S.left,blocked=S.log.filter(l=>l.res!=="ok").length,mine=S.hands[ME];
+  const logo=document.querySelector(".brand .mark img")?.src||"";
+  const who=ti=>{const t=TEAMS[ti];return `<div class="cr-who">${crest(t)}<div style="min-width:0"><strong>${esc(t.n)}</strong><small>${esc(PROFILES[ti][0])}</small></div></div>`;};
+  const resl={ok:["Aplicada","ok"],no:["Anulada con Escudo","no"],mir:["Reflejada con Espejo","mir"]};
+  const cats=Object.entries(CR_CAT).map(([k,[n,col]])=>{const cs=CARDS.filter(c=>c.cat===k);return `<span style="--cc:${col}"><i></i>${n} <b>${cs.reduce((s,c)=>s+c.k,0)}</b></span>`;}).join("");
+  const weeks=[];for(let w=CR_NOW;w>=1;w--){
+    const pl=S.log.filter(l=>l.w===w),dl=S.deals.find(d=>d.w===w).got;
+    const rows=pl.map(l=>{const c=crCard(l.id),[rt,rc]=resl[l.res];
+      const tgt=l.tg!=null?`contra <b>${esc(TEAMS[l.tg].n)}</b>${l.res==="mir"?`, rebota a <b>${esc(TEAMS[l.ti].n)}</b>`:""}${l.det||l.res==="no"?": ":""}`:"";
+      return `<div class="cr-row">${who(l.ti)}${crChip(c)}<div class="cr-what">${tgt}${l.det||(l.res==="no"?"la carta no tiene efecto":"")}</div><span class="cr-res ${rc}">${rt}</span></div>`;}).join("");
+    const deal=dl.map(d=>{const t=TEAMS[d.ti],mineD=d.ti===ME&&d.id;
+      const what=d.why==="llena"?"mano llena":d.why==="vacio"?"mazo vacio":mineD?esc(crCard(d.id).n):"sobre";
+      return `<span class="d">${crest(t)}${esc(t.ab||t.n)} · ${what}</span>`;}).join("");
+    weeks.push(`<div class="cr-wk"><h3>Semana ${w}<span class="label">${pl.length?pl.length+(pl.length===1?" carta jugada":" cartas jugadas"):"sin cartas jugadas"}</span></h3>
+      ${rows?`<div class="cr-rows">${rows}</div>`:""}
+      <div class="cr-deal"><span class="label">Sobres al cerrar la semana</span>${dl.every(d=>d.why==="vacio")?`<span class="d">Mazo vacio: ya no hay sobres</span>`:deal}</div></div>`);}
+  const handsHtml=TEAMS.map((t,i)=>[t,i]).sort((x,y)=>S.hands[y[1]].length-S.hands[x[1]].length||x[0].n.localeCompare(y[0].n)).map(([t,i])=>
+    `<a class="cr-h ${i===ME?"me":""}" href="#team-${slug(t)}" style="--c:${CONF[t.c].v}">${crest(t)}<strong>${esc(t.n)}</strong><span class="cr-bk" aria-label="${S.hands[i].length} de ${CR_HAND} cartas">${Array.from({length:CR_HAND},(_,k)=>`<i class="${k<S.hands[i].length?"on":""}"></i>`).join("")}</span></a>`).join("");
+  el.innerHTML=`<section class="t-hero cr-hero"><div class="wrap">
+      <div><div class="label">Temporada 5 · Propuesta</div><h1>Cartas</h1></div>
+      <p>Cada semana, quien pierde su serie saca un sobre. Las cartas se juegan en las semanas siguientes: banean Pokemon, cierran el mercado o cambian el formato de una serie. Las manos son secretas; lo que se juega es publico.</p>
+      <div><span class="cr-sim">Simulacion</span> <span class="label" style="margin-left:8px">Sobre las series de la temporada 4 · al cierre de la semana ${CR_NOW} · los marcadores no cambian</span></div>
+      <div class="cr-stats"><div><b class="v">${S.left}</b><span class="label">Sobres en el mazo</span></div><div><b>${dealt}</b><span class="label">Repartidos</span></div><div><b>${S.log.length}</b><span class="label">Cartas jugadas</span></div><div><b>${blocked}</b><span class="label">Anuladas o reflejadas</span></div>${S.emptyAt?`<div><b>Sem ${S.emptyAt}</b><span class="label">Se acabo el mazo</span></div>`:""}</div>
+    </div></section>
+    <div class="wrap s-body">
+      <section><div class="sec-head"><div><div class="label">${esc(TEAMS[ME].n)} · solo tu la ves</div><h2>Tu <em>mano</em></h2></div></div>
+        ${mine.length?`<div class="cr-hand">${mine.map(id=>crFace(crCard(id),"<span>En tu mano</span><b>Juegala</b>")).join("")}</div>`
+          :`<div class="cr-empty"><strong>Sin cartas</strong>Cuando pierdas una serie sacas un sobre.</div>`}
+        <p class="cr-mine-note">Tope de mano: ${CR_HAND} cartas. Si ya tienes ${CR_HAND}, esa semana no sacas sobre.</p></section>
+      <section><div class="sec-head"><div><div class="label">${S.total} sobres · ${S.left} sin repartir</div><h2>El <em>mazo</em></h2></div></div>
+        <div class="cr-cats">${cats}</div>
+        <div class="cr-grid"><article class="cr cr-back">${logo?`<img src="${logo}" alt="">`:""}<span class="label">Sobre · T5</span></article>
+        ${CARDS.map(c=>{const q=c.k-(S.drawn[c.id]||0);return crFace(c,`<span>Quedan</span><b>${q} de ${c.k}</b>`,q===0);}).join("")}</div>
+        <p class="hof-note">Se cuenta lo que ya salio del mazo. Como las manos son secretas, lo que alguien guarda sin jugar no se ve aqui.</p></section>
+      <section><div class="sec-head"><div><div class="label">Publico para toda la liga</div><h2>Cartas <em>jugadas</em></h2></div></div>
+        <div class="cr-log">${weeks.join("")}</div></section>
+      <section><div class="sec-head"><div><div class="label">Cuantas cartas guarda cada equipo</div><h2>Las <em>manos</em></h2></div></div>
+        <div class="cr-hands">${handsHtml}</div></section>
+      <section><div class="sec-head"><div><div class="label">Como funciona</div><h2>Las <em>reglas</em></h2></div></div>
+        <ul class="cr-rules">
+          <li><b>Quien saca</b>Quien pierde su serie saca un sobre al cerrar la semana. Los blancos no hacen nada.</li>
+          <li><b>Una por semana</b>Cada trainer juega una carta por semana. Varias cartas pueden caer sobre la misma serie.</li>
+          <li><b>Tope de mano</b>Maximo ${CR_HAND} cartas. Con la mano llena no sacas sobre.</li>
+          <li><b>Manos secretas</b>Nadie ve tu mano. Lo que se juega es publico, asi todos llevan la cuenta del mazo.</li>
+          <li><b>Defensa</b>Escudo y Espejo se activan solos cuando te lanzan una carta. Espejo va primero.</li>
+          <li><b>Robo</b>Robar es tu jugada de la semana. La carta robada se guarda para despues.</li>
+          <li><b>Fin de temporada</b>Lo que quede en el mazo pasa a la siguiente temporada. Los blancos se rellenan.</li>
+        </ul></section>
+    </div>`;
+}
+
 refreshLeaderNicks();
 /* routing */
 function route(){
   const h=location.hash.slice(1);
-  const PAGES=["home","teams","standings","matches","h2h","pronosticos","playoffs","draft","pokedex","mi-equipo","salon","media"];
+  const PAGES=["home","teams","standings","matches","h2h","pronosticos","playoffs","draft","pokedex","mi-equipo","salon","media","cartas"];
   const ti=h.startsWith("team-")?TEAMS.findIndex(t=>"team-"+slug(t)===h):-1;
   const hm=h.match(/^h2h-(\d+)-(\d+)$/);if(hm&&TEAMS[+hm[1]]&&TEAMS[+hm[2]]&&hm[1]!==hm[2])h2=[+hm[1],+hm[2]];
   const p=ti>=0?"profile":hm?"h2h":PAGES.includes(h)?h:"home";
@@ -3340,6 +3557,7 @@ function route(){
   if(p==="h2h")renderH2H();
   if(p==="pronosticos")renderPicks();
   if(p==="media")renderMedia();
+  if(p==="cartas")renderCartas();
   {const cb=document.getElementById("cmBtn");if(cb)cb.classList.toggle("on",p==="media");}
   [...PAGES,"profile"].forEach(x=>document.getElementById("page-"+x).hidden=p!==x);
   if(p==="draft")requestAnimationFrame(equalizeBoard);
